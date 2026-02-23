@@ -9,7 +9,7 @@ The only prerequisite for the R training is to install the latest version of R a
 
 Your R version should be at least 4.4.3 or above to make sure everyone's code behaves the same way. Likely the version you have is 4.5.1.
 
-<details open><summary class='drop'><b style="color:red">Day 2: Required Packages</b></summary>
+<details open><summary class='drop'><b style="color:red">Required Packages</b></summary>
 A number of packages are required to follow along with data wrangling and visualization sessions. Please try to install these in RStudio ahead of time by running the code below. If you don't know how to run the code, open view the <b>Running Code Screencast</b> below for how to do this. 
 ```{r reqpkg, echo = T, eval = F}
 packages <- c("tidyverse", "ggthemes", "GGally", "RColorBrewer", 
@@ -28,7 +28,7 @@ library(plotly)
 library(patchwork)
 ```
 
-<details><summary class='drop'>Running Code Screencast</summary>
+<details><summary class='drop2'>Running Code Screencast</summary>
 <video height = "650" controls>
 <source src="images/Installing_packages.mp4" type="video/mp4">
 </video>
@@ -37,25 +37,25 @@ library(patchwork)
 <br>
 
 <details open><summary class='drop'>Optional Reading</summary>
-We know you're all busy and have to prioritize how you spend your time. If you have any time before training starts, we highly recommend reading <a href="https://stat545.com/r-basics.html">Chapter 2: R basics and workflows</a> in STAT545. This is an online book based on a graduate level statistics class that Dr. Jenny Bryan teaches and is turning into this book. She's a stats professor turned senior programmer at RStudio, and I really like how she approaches programming R in this book. 
+This is completely optional, but if you have any time before training starts, I highly recommend reading <a href="https://stat545.com/r-basics.html">Chapter 2: R basics and workflows</a> in STAT545. This is an online book based on a graduate level statistics class that Dr. Jenny Bryan teaches and is turning into this book. She's a stats professor turned senior programmer at RStudio, and I really like how she approaches programming R in this book. 
 </details>
 <br>
 
 <details open><summary class='drop'>Structure of training</summary>
-The training will take place over 3 half days. Each day will run from 9 - 1 EST via MS Teams. The hour before and afternoon following training I will be available as office hours, in case there are questions that couldn't be handled during training. 
+<b>Timing: </b>The training will take place over 3 half days. Each day will run from 9 - 1 EST via MS Teams. The hour before and afternoon following training I will be available as office hours, in case there are questions that couldn't be handled during training. 
 
-For most of the training, I will share my screen as I go through the website and then demo with live coding. It will help a lot if you have 2 monitors, to have my screen share on one monitor and your own R session open on the other. 
+<b>Structure: </b>For most of the training, I will share my screen as I go through the website and then demo with live coding. Having 2 screens, one for my screen share and one for your R session, will make following along a lot easier. 
 
-I intentionally included people in this training whom I know to be kind, capable, and to benefit from having better R skills. My hope is that this group is small enough and supportive enough that everyone feels comfortable asking questions and providing feedback. If someone runs into an issue I can't immediately troubleshoot (it happens), we may have to table it until office hours.  
+<b>Getting Help: </b>I intentionally included people in this training I know to be kind, capable, and that will benefit from having better R skills. My hope is that this group is small enough and supportive enough that everyone feels comfortable openly asking questions and providing feedback to the group. However, if you aren't comfortable asking questions openly, you can ask questions in the anonymous <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. Additionally, if someone runs into an issue I can't immediately troubleshoot (it happens), we may have to table it until office hours, then will discuss it with the group the next day (if relevant).  
 
-Three days is barely enough to scratch the surface on what you can do in R. My goals with this training are to:
+<b>Objectives: </b>Three days is barely enough to scratch the surface on what you can do in R. My goals with this training are to:
 <ol>
 <li>Help you get beyond the initial learning curve that can be really challenging to climb on your own.</li>
-<li>Expose you to some of the really useful things R can do for you in your work. </li>
-<li>Provide you with the tools needed to continue advancing your R skills on your own.</li>
+<li>Expose you to some of the really useful things R can do. </li>
+<li>Provide you the tools needed to continue advancing your R skills on your own.</li>
 </ol>
 
-Much of this training was borrowed heavily from <a href = "https://katemmiller.github.io/IMD_R_Training_Intro/">IMD Intro to R</a> training in 2022. A ton of credit for this training goes to the developers of those lessons:
+<b>Credit: </b>Much of this training was borrowed heavily from <a href = "https://katemmiller.github.io/IMD_R_Training_Intro/">IMD Intro to R</a> training in 2022. A ton of credit for this training goes to the developers of those lessons:
 <ul>
 <li>Day 1 Intro to R: Sarah Wright and Andrew Birch</li>
 <li>Day 2 Data Wrangling: John Paul Schmit and Lauren Pandori</li>
@@ -63,8 +63,8 @@ Much of this training was borrowed heavily from <a href = "https://katemmiller.g
 <li>Day 4 Programming Best Practices: Sarah Wright and Thomas Parr </li>
 </ul>
 
-Finally, to help us improve this training for future sessions, please leave feedback in the <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. 
+<b>Feedback: </b>Finally, to help me improve this training for future sessions, please leave feedback in the <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. You can submit feedback multiple times and don't need to answer every question. Responses are anonymous.  
 
 </details>
-<hr>
+<br>
 

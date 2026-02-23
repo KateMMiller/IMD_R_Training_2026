@@ -23,7 +23,10 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 ```{r Intro_to_R_tab, child = "D1_Tab_1_Intro.Rmd"}
 ```
 
-### Day 2: Data Wrangling and Viz I{.tabset}
+```{r R_and_RStudio, child = "D1_Tab_2_R_and_RStudio.Rmd"}
+```
+
+### Day 2: Data Wrangling and Viz I {.tabset}
 
 
 ### Day 3: Data Wrangling and Viz II {.tabset}

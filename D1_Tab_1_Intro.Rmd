@@ -11,6 +11,7 @@ output:
 <img src = "./images/welcome_to_R.png" alt = 'R welcoming illustration' style = "float:right; width:375px;">
 <span class = "capright"><a href="https://allisonhorst.com">Artwork by @allison_horst</a></span>
 
+There are many reasons to use R. Some of my top reasons are below:
 <ul>
 <li>It's free!</li>
 <li>Thorough, helpful, and welcoming user community, including a ton of freely available online help and learning resources.</li>
@@ -51,7 +52,13 @@ Everyone learns differently, but the ingredients I see that most ensure success 
 <break>
 
 <details open><summary class ='drop'>AI soapbox</summary>
-I don't use AI to help me write code. Behind the scenes, AI is taking answers from websites and other sources without crediting them. There's a huge environmental footprint. Research has shown that people who use AI to write for them lose their ability to write and think critically over time. Writing code isn't that different. If you're not actively writing the code you are using, your ability to debug and verify code is doing what you expect may be weakened.  
+Why I don't use AI to write code:
+<ul>
+<li>Behind the scenes, AI is taking answers from websites and other sources without crediting them. </li>
+<li>There's a huge environmental footprint to run the generative AI servers.</li> 
+<li>Research has shown that people who use AI to write for them lose their ability to write and think critically over time. Writing code isn't that different. If you're not actively writing the code you are using, your ability to debug and verify code is doing what you expect may be weakened.</li>
+<li>To not have AI responses returned by google searchers, include -ai in google search box.</li>
+</ul>
 </details>
 
 
