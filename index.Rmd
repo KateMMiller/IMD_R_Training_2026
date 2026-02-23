@@ -40,13 +40,34 @@ body {
 ```{r Project_setup, child = "D1_Tab_3_Project_and_File_Setup.Rmd"}
 ```
 
-- Handy shortcuts
+- Start coding
+- Handy keyboard shortcuts
+- Varibles and functions
+- Importing and exporting data
+- Basic plotting
+- Getting help
 
 ### Day 2: Data Wrangling and Viz I {.tabset}
-
+- Data wrangling I: 
+    - Base R filter, subset, new column, rename column
+    - dplyr: filter, select, mutate, rename, and pipe
+    - dealing with NAs/0s
+- Data visualization philosophy
+- Intro to ggplot2
+    - language of ggplot
+    - basic plotting (default formatting)
 
 ### Day 3: Data Wrangling and Viz II {.tabset}
-
+- Data wrangling II:
+    - group_by and summarize
+    - group_by and mutate
+    - pivot_longer and pivot_wider
+    - joining tables
+- ggplot II:
+    - customizing plots
+    - combining plots
+    - custom color palettes
+    
 
 ### Resources
 There's a lot of great online material for learning new applications of R. The ones we've used the most are listed below. 
