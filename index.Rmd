@@ -10,7 +10,18 @@ title: "2026 IMD Intro to R"
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 ```
 
-<h2>NPS Inventory and Monitoring Division Intro to R Training: March 24 - 26, 2026, 2022</h2> {.tabset .tabset-pills}
+```{css echo = F}
+body {
+  background-color: #EBEBEB;
+}
+
+.tab-content {
+  background-color: #FAFAF0;
+  padding: 0 5px;
+}
+
+```
+<center><h2>NPS Inventory and Monitoring Division Intro to R Training: March 24 - 26, 2026</h2></center> {.tabset .tabset-pills}
 --------------------------------------------------
 
 ### Prep for Training{.tabset}
@@ -25,6 +36,11 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
 ```{r R_and_RStudio, child = "D1_Tab_2_R_and_RStudio.Rmd"}
 ```
+
+```{r Project_setup, child = "D1_Tab_3_Project_and_File_Setup.Rmd"}
+```
+
+- Handy shortcuts
 
 ### Day 2: Data Wrangling and Viz I {.tabset}
 

@@ -23,7 +23,9 @@ RStudio is what's called an _integrated development environment_ (IDE), which is
 
 <details open><summary class = 'drop'>RStudio Anatomy</summary>
 When you open RStudio, you typically see 4 panes:  
+<center>
 <img src = "./images/RStudio_Panes_labeled.png" alt = 'RStudio panes' style = "width:90%;">
+</center>
 
 <details open><summary class='drop2'>Source</summary>  
 This is primarily where you write code. When you create a new script or open an existing one, it displays here. In the screenshot above, there's a script called bat_data_wrangling.R open in the source pane. Note that if you haven't yet opened or created a new script, you won't see this pane until you do.  
@@ -77,7 +79,7 @@ Go to <b>Tools -> Global Options</b> and follow the steps below.
 <li>This may seem like a good thing, but a main point of using R is that your code should return the same results every time you run it. Clearing the environment every time you close RStudio forces you to run your code with a clean slate.</li>  
 <li>Set <b>Save workspace to .RData on exit:</b> to <b>Never</b>. The only reason not to set to "Never" is if you are working with a huge dataset that takes a long time to load and process. In that case, you may want to set <b>Save workspace to .RData on exit</b> to "Ask". When you close RStudio, it will ask you if you want to save your workspace image.</li>  
 </ul>
-<li>Change default pipe to base R pipe by gong to the <b>Code</b> tab, and <b>check</b> the box <b>Use native pipe operator, |> (requires R 4.1+)</b>.</li>
+<li>Change default pipe to base R pipe by gong to the <b>Code</b> tab, and <b>check</b> the box <b>Use native pipe operator, |> (requires R 4.1+)</b>. We will discuss what this pipe means tomorrow.</li>
 <li>Most other settings are whatever you prefer. Note that to change the color of your background and text, go to the <b>Appearance</b> tab. I prefer Cobalt.</li>
 </ol>
 </details>
