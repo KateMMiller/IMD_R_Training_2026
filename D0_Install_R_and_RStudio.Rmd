@@ -1,8 +1,8 @@
 ---
-title: "Preparing for Training"
-author: "Kate Miller"
-date: "3/24/2026"
-output: html_document
+output: 
+  html_document:
+    fig_caption: false
+    css: custom_styles.css
 ---
 <h2>Installing required software</h2>
 The only prerequisite for the R training is to install the latest version of R and RStudio on your computer. These should be available in the Company Portal in Entra, and shouldn't require special permissions to install. We'll talk about the difference between R and RStudio on the first day, but for now, just make sure they're installed. 
