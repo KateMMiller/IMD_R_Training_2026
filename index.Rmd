@@ -67,6 +67,11 @@ body {
     - customizing plots
     - combining plots
     - custom color palettes
+- coding best practices (design with the user in mind)
+    - comment code
+    - parameters, packages, datasets on top
+    - consistent code style
+    - object naming
     
 
 ### Resources
