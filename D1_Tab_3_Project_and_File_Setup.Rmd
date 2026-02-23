@@ -1,0 +1,29 @@
+---
+output: 
+  html_document:
+    fig_caption: false
+    css: custom_styles.css
+---
+
+#### Project and File Setup
+
+File organization is an important part of being a good coder. Keeping code, input data, and results together in one place will protect your sanity and the sanity of the person who inherits the project. R Studio <b>projects</b> help with this. Creating a new R Studio project for each new code project makes it easier to manage settings and file paths.  
+
+Before we create a project, take a look at the <b>Console</b> tab. Notice that at the top of the console there is a folder path. That path is your current working directory.  
+<img src = "./images/WorkingDir_NoProject.png" alt = 'Default working directory' width:60%;>
+
+If you refer to a file in R using a *relative path*, for example `./data/my_data_file.csv`, R will look in your current working directory for a folder called `data` containing a file called `my_data_file.csv`. Using relative paths is a helpful because the full path will be specific to your computer and likely won't work on a different computer. But there's no guarantee that everyone has the same default R working directory. This is
+where projects come in.
+
+Let's make a project for this class. Click <b>File > New Project</b>. In the window that appears, select <b>New Directory</b>, then select <b>New Project</b>. You will be prompted for a directory name.
+This is the name of your project folder. For this class, call it `imd-r-training-intro`. Next, you'll select what folder to keep your project folder in. `Documents/R` is a good place to store all of your
+R projects but it's up to you. When you are done, click on **Create Project**.  
+
++++++++ ENDED HERE +++++++
+
+![Create new project step 1](images/CreateProject_1.PNG){width=450px}
+![Create new project step 2](images/CreateProject_2.PNG){width=450px}
+![Create new project step 3](images/CreateProject_3.PNG){width=450px}
+
+If you successfully started a project named `imd-r-training-intro`, you should see it listed at the very top right of your screen. As you start new projects, you'll want to check that you're working in the right one before you start coding.
+Take a look at the **Console** tab again. Notice that your current working directory is now your project folder. When you look in the **Files** tab of the bottom right pane, you'll see that it also defaults to the project folder.
