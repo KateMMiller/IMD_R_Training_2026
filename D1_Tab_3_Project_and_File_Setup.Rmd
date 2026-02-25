@@ -12,16 +12,28 @@ File organization is an important part of being a good coder. Keeping code, inpu
 Before we create a project, take a look at the <b>Console</b> tab. Notice that at the top of the console there is a folder path. That path is your current working directory.  
 <img src = "./images/WorkingDir_NoProject.png" alt = 'Default working directory' width:60%;>
 
-If you refer to a file in R using a *relative path*, for example `./data/my_data_file.csv`, R will look in your current working directory for a folder called `data` containing a file called `my_data_file.csv`. Using relative paths is a helpful because the full path will be specific to your computer and likely won't work on a different computer. But there's no guarantee that everyone has the same default R working directory. This is
-where projects come in.
+If you refer to a file in R using a <b>relative path</b>, for example `./data/my_data_file.csv`, R will look in your current working directory for a folder called `data` containing a file called `my_data_file.csv`. 
 
-Let's make a project for this class. Click <b>File > New Project</b>. In the window that appears, select <b>New Directory</b>, then select <b>New Project</b>. You will be prompted for a directory name.
-This is the name of your project folder. For this class, call it `imd_r_intro`. Next, you'll select what folder to keep your project folder in. `Documents/R` is a good place to store all of your R projects but it's up to you. When you are done, click on <b>Create Project</b>.  
+Note the use of forward slashes instead of back slashes for file paths. You can either use a forward slash (/) or a double back slash for file paths. The paths below are equivalent and the full file path the relative path above is specifying. 
+
+```{r}
+# forward slash file path approach
+"C:/Users/KMMiller/OneDrive = DOI/data/"
+
+# backward slash file path approach
+"C:\\Users\\KMMiller\\OneDrive = DOI\\data\\"
+
+```
+
+Using relative paths is a helpful because the full path will be specific to your computer and likely won't work on a different computer. But there's no guarantee that everyone has the same default R working directory. This is where projects come in. Projects package all of your code, data, output, etc. into a file type that is easily transferrable to other machines regardless of file location. 
+
+Let's make a project for this class. Click <b>File > New Project</b>. In the window that appears, select <b>New Directory</b>, then select <b>New Project</b>. You will be prompted for a directory name. This is the name of your project folder. For this class, call it `imd_r_intro`. Next, you'll select what folder to keep your project folder in. `Documents/R` is a good place to store all of your R projects but it's up to you. When you are done, click on <b>Create Project</b>.  
 
 <img src = "./images/new_project1.png" alt = 'New project step 1' style = "width:4505px;">
 <img src = "./images/new_project2.png" alt = 'New project step 2' style = "width:4505px;">
 <img src = "./images/new_project3.png" alt = 'New project step 3' style = "width:4505px;">
 
 
-If you successfully started a project named `imd_r_intro`, you should see it listed at the very top right of your screen. As you start new projects, you'll want to check that you're working in the right one before you start coding.
-Take a look at the <b>Console</b> tab again. Notice that your current working directory is now your project folder. When you look in the <b>Files</b> tab of the bottom right pane, you'll see that it also defaults to the project folder.
+If you successfully started a project named `imd_r_intro`, you should see it listed at the very top right of your screen. As you start new projects, you'll want to check that you're working in the right one before you start coding. Take a look at the <b>Console</b> tab again. Notice that your current working directory is now your project folder. When you look in the <b>Files</b> tab of the bottom right pane, you'll see that it also defaults to the project folder.
+
+

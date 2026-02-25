@@ -40,9 +40,13 @@ body {
 ```{r Project_setup, child = "D1_Tab_3_Project_and_File_Setup.Rmd"}
 ```
 
-- Start coding
+
+```{r start_coding, child = "D1_Tab_4_Start_Coding.Rmd"}
+```
+
+
 - Handy keyboard shortcuts
-- Varibles and functions
+- Variables and functions
 - Importing and exporting data
 - Basic plotting
 - Getting help
@@ -51,7 +55,11 @@ body {
 - Data wrangling I: 
     - Base R filter, subset, new column, rename column
     - dplyr: filter, select, mutate, rename, and pipe
+    - Philosophy behind the tidyverse
+      - Tidy data format - rows are observations, columns are variables.
+      - All functions start with specifying the data first, making them pipeable.
     - dealing with NAs/0s
+    - Dates/times in hobo data
 - Data visualization philosophy
 - Intro to ggplot2
     - language of ggplot
@@ -73,6 +81,9 @@ body {
     - consistent code style
     - object naming
     
+### Future
+- R Markdown (stand alone websites/docs) and R Shiny (interactive websites)
+- Writing your own functions and iteration
 
 ### Resources
 There's a lot of great online material for learning new applications of R. The ones we've used the most are listed below. 
