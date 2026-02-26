@@ -26,7 +26,7 @@ When you open RStudio, you typically see 4 panes:
 <center>
 <img src = "./images/RStudio_Panes_labeled.png" alt = 'RStudio panes' style = "width:90%;">
 </center>
-
+<br>
 <details open><summary class='drop2'>Source</summary>  
 This is primarily where you write code. When you create a new script or open an existing one, it displays here. In the screenshot above, there's a script called bat_data_wrangling.R open in the source pane. Note that if you haven't yet opened or created a new script, you won't see this pane until you do.  
   
@@ -40,12 +40,13 @@ When you're ready to run all or part of your script:
 
 At this point, the code is sent to the console (the bottom left pane). You'll first see your code appear in the console, and then you'll see the output if there is any.  
 </details>
-
+<br>
 <details open><summary class='drop2'>Console</summary>  
 This is where the code actually runs. When you first open RStudio, the console will tell you the version of R that you're running (should be R 4.4.1 or greater).
   
 While most often you'll run code from a script in the source pane, you can also run code directly in the console. Code in the console won't get saved to a file, but it's a great way to experiment and test out lines of code before adding them to your script in the source pane. The console is also where errors appear if your code breaks. Deciphering errors can be a challenge that gets easier over time. Googling errors is a good place to start.  
 </details>
+<br>
 <details open><summary class='drop2'>Environment/History/Connections</summary>
 <ul>
 <li><b>Environment:</b> This is where you can see what is currently in your _environment_. Think of the environment as temporary storage for objects - things like datasets and stored values - that you are using in your script(s). You can also click on objects and view them. Anything you see in your environment is temporary and it will disappear when you restart R. If there is something in your environment that you want to access in the future, make sure your script is able to reproduce it (or save it to a file).</li>
@@ -53,9 +54,8 @@ While most often you'll run code from a script in the source pane, you can also 
 <li><b>Connections:</b> This is one way to connect R to a database. </li>
 <li><b>Git:</b> If you have installed Git on your computer, you may see a _Git_ tab. We won't talk much about it this week, but this is where you'll keep track of changes to your code. </li>
 <li><b>Tutorial:</b> This has some interactive tutorials that you can check out if you are interested.</li>  
-</ul>
-</details>
-
+</ul></details>
+<br>
 <details open><summary class='drop2'>Files/Plots/Packages/Help/Viewer</summary>
 <ul>
 <li><b>Files:</b> This tab shows the files within your working directory (typically the folder where your current code project lives). More on this later. </li>

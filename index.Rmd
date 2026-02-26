@@ -40,18 +40,27 @@ body {
 ```{r Project_setup, child = "D1_Tab_3_Project_and_File_Setup.Rmd"}
 ```
 
-
 ```{r start_coding, child = "D1_Tab_4_Start_Coding.Rmd"}
 ```
 
+```{r read_write, child = "D1_Tab_5_Read_Write_Data.Rmd"}
+```
 
-- Handy keyboard shortcuts
-- Variables and functions
-- Importing and exporting data
+
+```{r read_write, child = "D1_Tab_6_Data_structures_and_exploration.Rmd"}
+```
+
+
+```{r read_write, child = "D1_Tab_7_Getting_Help.Rmd"}
+```
+
 - Basic plotting
-- Getting help
 
-### Day 2: Data Wrangling and Viz I {.tabset}
+```{r read_write, child = "D1_Tab_9_Keyboard_Shortcuts.Rmd"}
+```
+
+
+### Day 2: Wrangling and Viz I {.tabset}
 - Data wrangling I: 
     - Base R filter, subset, new column, rename column
     - dplyr: filter, select, mutate, rename, and pipe
@@ -65,7 +74,7 @@ body {
     - language of ggplot
     - basic plotting (default formatting)
 
-### Day 3: Data Wrangling and Viz II {.tabset}
+### Day 3: Wrangling and Viz II {.tabset}
 - Data wrangling II:
     - group_by and summarize
     - group_by and mutate
@@ -81,11 +90,9 @@ body {
     - consistent code style
     - object naming
     
-### Future
-- R Markdown (stand alone websites/docs) and R Shiny (interactive websites)
-- Writing your own functions and iteration
+### Resources {.tabset}
 
-### Resources
+#### Online Resources
 There's a lot of great online material for learning new applications of R. The ones we've used the most are listed below. 
 
 <h3>Online Books</h3>
@@ -108,10 +115,10 @@ There's a lot of great online material for learning new applications of R. The o
 </ul>
 
 <hr>
-<h3>Resources by Topic:</h3>
 
-<h4>Data Visualization</h4>
-
+#### Advanced topics
+- R Markdown (stand alone websites/docs) and R Shiny (interactive websites)
+- Writing your own functions and iteration
 
 ### Code printout {.tabset}
 

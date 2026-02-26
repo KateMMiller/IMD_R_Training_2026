@@ -1,0 +1,37 @@
+---
+output: 
+  html_document:
+    fig_caption: false
+    css: custom_styles.css
+---
+
+##### Getting Help
+<details open><summary class = 'drop'>Help Documentation</summary>
+There are a number of options to get help with R. If you're trying to figure out how to use a function, you can type ?function_name. For example `?plot` will show the R documentation for that function in the Help panel.
+
+```{r, c4, echo=T, eval=F}
+?plot
+?dplyr::filter
+```
+
+You can also press F1 while the cursor is on a function name to access the help for that function. Help documents in R are standardized to help you find what you're looking for. 
+<ul>
+<li>Top left shows the function with the {package}. Base means it's a function in the base R install.</li>
+<li><b>Description:</b> tell you what the function is. </li>
+<li><b>Usage:</b> tells you what the arguments are. The "..." means there are other potential arguments, but isn't something we need to talk about right now. </li>
+<li><b>Arguments:</b> define the arguements and what their inputs take. For example, if an arguement is TRUE or FALSE, or a text string. </li>
+<li><b>Value</b>: Describes more about the function (not always included) </li>
+<li><b>See Also: </b>Sometimes functions build on other functions. This section links to similar or building block functions. </li>
+<li><b>Examples: </b>Functions that provide good examples are invaluable. Sometimes these are afterthoughts or not included in help documentation, which is too bad. Unfortunately, base R functions tend to have some of the most obscure, hard to understand examples.</li>
+</ul>
+</details>
+<br>
+
+<details open><summary class = 'drop'>Troubleshooting errors</summary>
+Great online resources to find answers to questions include <a href="https://stackexchange.com/">Stackexchange</a>, and <a href="https://stackoverflow.com//">Stackoverflow</a>. For tidyverse-related packages/questions, there's also really good documentation for each package and function <a href="https://tidyverse.tidyverse.org/"> here</a>. Google searches are usually my first step, and I include "in R" and the package name (if applicable) in every search related to R code.
+
+If you're troubleshooting an error message, copying and pasting the error message verbatim into a search engine often helps. 
+
+Don't hesitate to reach out to colleagues for help as well! If you are stuck on something and the answers on Google are more confusing than helpful, don't be afraid to ask a human. Every experienced R programmer was a beginner once, so chances are they've encountered the same problem as you at some point. There is an R-focused data science community of practice for I&M folks, which anyone working in R (regardless of experience!) is invited and encouraged to join. The Teams join code will be shared with course participants.
+
+</details>

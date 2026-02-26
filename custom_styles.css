@@ -56,6 +56,12 @@ hr {
   border-color:DimGrey;
 }
 
+br {
+  content: "";
+  margin: 0;
+  font-size: 25%;
+}
+
 .code{
   color:#00008B;
 }

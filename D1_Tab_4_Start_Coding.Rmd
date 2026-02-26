@@ -6,16 +6,16 @@ output:
 ---
 
 #### Start coding
-<h5>Start a new script</h5>
-First let's create a new R script file. Make sure you are working in the `imd_r_intro` project that you just created. Click on the <b>New File</b> icon <img src = "./images/NewFile.PNG" alt = "new script"> in the top left corner. In the dropdown, select <b>R Script</b>. The source pane will appear with an untitled empty script. Go ahead and save it by clicking the <b>Save</b> icon (and make sure the <b>Source on Save</b> checkbox is deselected). Call your new script `day_1_script.R`.
-
-<h5>The basics</h5>
+<details open><summary class='drop'>Start a new script</summary>
+First let's create a new R script file called `day_1_script.R`. Make sure you are working in the `imd_r_intro` project that you just created. Click on the <b>New File</b> icon <img src = "./images/NewFile.PNG" alt = "new script"> in the top left corner. In the dropdown, select <b>R Script</b>. The source pane will appear with an untitled empty script. Go ahead and save it by clicking the <b>Save</b> icon (and make sure the <b>Source on Save</b> checkbox is deselected). Call your new script `day_1_script.R`.
+</details>
+<br>
+<details open><summary class='drop'>Coding basics</summary>
 We'll start with something simple. Basic math in R is pretty straightforward and the syntax is similar to simply using a graphing calculator. You can use the examples below or come up with your own. Even if you're using the examples, try to actually type the code instead of copy-pasting - you’ll learn to code faster that way. 
 
 To run a single line of code in your script, place your cursor anywhere in that line and press <b>CTRL+ENTER</b> (or click the <b>Run</b> button in the top right of the script pane). To run multiple lines of code, highlight the lines you want to run and hit <b>CTRL+ENTER</b> or click <b>Run</b>. 
 
 To leave notes in your script, use the hashtag/pound sign (#). This will change the color of text that R reads as a comment and doesn't run. Commenting your code is one of the best habits you can form. Comments are a gift to your future self and anyone else who tries to use your code.
-
 
 ```{r ExecutingCode}
 # By using this hashtag/pound sign, you are telling R to ignore the text afterwards. This is useful for leaving annotation of notes or instructions for yourself, or someone else using your code
@@ -46,11 +46,15 @@ cos(pi)
 ```
 
 Notice that when you run a line of code, the code and the result appear in the console. You can also type code directly into the console, but it won't be saved anywhere. As you get more comfortable with R, it can be helpful to use the console as a "scratchpad" for experimenting and troubleshooting. For now, it's best to err on the side of saving your code as a script so that you don't accidentally lose useful work.
+</details>
+<br>
 
-<h5>Variables and functions </h5>
+<details open><summary class='drop'>Variables</summary>
 Occasionally, it's enough to just run a line of code and display the result in the console. But typically our code is more complex than adding one plus one, and we want to store the result and use it later in the script. This is where variables come in. Variables allow you to assign a value (whether that's a number, a data table, a chunk of text, or any other type of data that R can handle) to a short, human-readable name. Anywhere you put a variable in your code, R will replace it with its value when your code runs. Variables are also called objects in R. 
 
-R uses the `<-` symbol for variable assignment. If you've used other programming languages (or remember high school algebra), you may be tempted to use `=` instead. It will work, but there are subtle differences between `<-` and `=`, so you should get in the habit of using `<-`.
+R uses the `<-` symbol for variable assignment. If you've used other programming languages, you may be tempted to use `=` instead. It will work, but there are subtle differences between `<-` and `=`, so you should get in the habit of using `<-`.
+
+R is case-sensitive. So if you name one object `treedata` and another `Treedata` or `TREEDATA`, R will interpret these all as unique objects. While you can do things like this, it's best practice not to use the same name for different objects, as it makes code difficult to follow.
 
 ```{r VariableAssignment}
 # the value of 12.098 is assigned to variable 'a'
@@ -73,56 +77,45 @@ In the code above, we assign the variables `a` and `b` once. We can then reuse t
 Also notice that when you assign variables, you can see them listed in your Environment tab (top right pane). Remember, everything you see in the environment is just in R's temporary memory and won't be saved when you close out of RStudio.
 
 All of the examples you've seen so far are fairly contrived for the sake of simplicity. Let's take a look at some code that everyone here will make use of at some point: reading data from a CSV.
+</details>
+<br>
 
-<h5>Functions</h5>
-It's hard to get very far in R without making use of <b>functions</b>. Think of a function as a programmed task that takes some kind of input (the <b>argument(s)</b>) from the user and outputs a result (the <b>return value</b>). 
+<details open><summary class = 'drop'>Functions</summary>
+It's hard to get very far in R without making use of <b>functions</b>. Think of a function as a programmed task that takes some kind of input (the <i>argument(s)</i>) from the user and outputs a result (the <i>return value</i>). 
 
 <img src="./images/FunctionDiagram.PNG" alt = "anatomy of a function">
 
-<h5> Using functions - reading data from CSV </h5>
+<br>
 
-The read.csv function is used to bring in a dataset from a CSV file, and it stores the data in one of the fundamental data structures in R: a data frame. The `read.csv()` function takes the file path or url to the CSV as input, and it outputs a data frame containing the data from the CSV. Here we're going to read a CSV from a website. Then we're going to write that to disc in our project in a data folder.
+Note the difference in how RStudio color codes what it thinks are functions. There are a lot of pre-programmed functions in base R, which is what comes along with R when you install R. Installing R packages will add additional functions. You can also build your own. Names that R recognizes as a function are color coded differently than what R recognizes as text, numbers, etc. It's also good practice to not use existing functions as new object names. 
 
-```{r read_csv}
-# read in the data from ACAD_wetland_data_clean.csv and assign it as a dataframe to the variable "ACAD_wetland"
-ACAD_wetland <- read.csv(
-  "https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/ACAD_wetland_data_clean.csv"
-  )
+Commonly used base R functions include:
+<ul>
+<li>`mean()`: calculate the mean of a set of numbers</li>
+<li>`min()`: calculate the minimum of a set of numbers</li>
+<li>`max()`: calculate the maximum of a set of numbers</li>
+<li>`range()`: calculate the min and max of a set of numbers</li>
+<li>`sd()`: calculate the standard deviation of set of numbers</li>
+<li>`sqrt()`: calculate the square root of a value</li>
+</ul>
+
+```{r introfun}
+
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+# equivalent to x <- 1:10
+
+# bad coding
+#mean <- mean(x)
+
+# good coding 
+mean_x <- mean(x)
+mean_x
+
+range_x <- range(x)
+range_x
 ```
 
-You can view the data in a separate window by running the `View()` function.
-```{r view_aw eval = F}
-# View the ACAD_wetland data frame we just created
-View(ACAD_wetland)
-```
-
-You can also just look at a few records in your console. 
-```{r exp_dat}
-# Look at the top 6 rows of the data frame
-head(ACAD_wetland)
-
-# Look at the bottom 6 rows of the data frame
-tail(ACAD_wetland)
-```
-
-Now we're going to write the csv to disc and show how to import from your computer. 
-```{r write_csv}
-# Create a data folder in your project
-dir.create("./data")
-
-# Write the data frame to your data folder using a relative path. 
-# By default, write.csv adds a column with row names that are numbers. I don't
-# like that, so I turn that off.
-write.csv(ACAD_wetland, "./data/ACAD_wetland_data_clean.csv", row.names = FALSE)
-
-# Read the data frame in using a relative path
-ACAD_wetland <- read.csv("./data/ACAD_wetland_data_clean.csv")
-
-# Read in the data frame using full path (at least on my computer)
-ACAD_wetland <- read.csv("C:/Users/KMMiller/OneDrive - DOI/NETN/R_Dev/IMD_R_Training_2026/data/ACAD_wetland_data_clean.csv")
-
-```
+</details>
+<br>
 
 
-We'll get very familiar with data frames in this class, but for the moment just know that it's a table of data with rows and columns. Data frames are typically organized with rows being records or observations (e.g. sampling locations, individual critters, etc.), and columns being variables that characterize those observations (e.g., species, size, date collected, x/Y coordinates).
-Once you have read the data in, you can take a quick look at its structure by typing the name of the variable it's stored in.

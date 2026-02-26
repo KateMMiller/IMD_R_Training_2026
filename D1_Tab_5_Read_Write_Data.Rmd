@@ -1,0 +1,58 @@
+---
+output: 
+  html_document:
+    fig_caption: false
+    css: custom_styles.css
+---
+
+#### Importing and saving data
+<details open><summary class = "drop">Import CSV</summary>
+The read.csv function is used to bring in a dataset from a CSV file and stores the data in one of the fundamental data structures in R: a data frame. The `read.csv()` function takes the file path or url to the CSV as input and outputs a data frame containing the data from the CSV. Here we're going to read a CSV from a website. Then we're going to write that to disk in our project in a data folder.
+
+```{r read_csv}
+# read in the data from ACAD_wetland_data_clean.csv and assign it as a dataframe to the variable "ACAD_wetland"
+ACAD_wetland <- read.csv(
+  "https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/ACAD_wetland_data_clean.csv"
+  )
+```
+
+You can view the data in a separate window by running the `View()` function.
+```{r view_aw, eval = F}
+# View the ACAD_wetland data frame we just created
+View(ACAD_wetland)
+```
+
+You can also just look at a few or last few records in your console. 
+```{r exp_dat}
+# Look at the top 6 rows of the data frame
+head(ACAD_wetland)
+
+# Look at the bottom 6 rows of the data frame
+tail(ACAD_wetland)
+```
+</details>
+<br>
+<details open><summary class = 'drop'>Save CSV</summary>
+Now we're going to write the csv to disk and show how to import from your computer. 
+```{r write_csv}
+# Create a data folder in your project
+dir.create("./data")
+
+# Write the data frame to your data folder using a relative path. 
+# By default, write.csv adds a column with row names that are numbers. I don't
+# like that, so I turn that off.
+write.csv(ACAD_wetland, "./data/ACAD_wetland_data_clean.csv", row.names = FALSE)
+```
+
+```{r exploredat}
+# Read the data frame in using a relative path
+ACAD_wetland <- read.csv("./data/ACAD_wetland_data_clean.csv")
+
+# Read in the data frame using full path (at least on my computer)
+ACAD_wetland <- read.csv("C:/Users/KMMiller/OneDrive - DOI/NETN/R_Dev/IMD_R_Training_2026/data/ACAD_wetland_data_clean.csv")
+
+```
+
+We'll get very familiar with data frames in this class, but for the moment just know that it's a rectangular table of data with rows and columns. Data frames are typically organized with rows being records or observations (e.g. sampling locations, individual critters, etc.), and columns being variables that characterize those observations (e.g., species, size, date collected, x/Y coordinates). Once you have read the data in, you can take a quick look at its structure by typing the name of the variable it's stored in.
+
+</details>
