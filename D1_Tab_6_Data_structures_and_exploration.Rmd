@@ -15,7 +15,7 @@ is_odd <- rep(c(FALSE, TRUE), 5)  # Use rep(x, n) to create a vector by repeatin
 is_odd
 shoe_sizes <- c(7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5)
 shoe_sizes
-favorite_birds <- c("greater roadrunner", "Costa's hummingbird", "kakapo")
+favorite_birds <- c("black-capped chickadee", "dark-eyed junco", "golden-crowned kinglet")
 favorite_birds
 ```
 
@@ -43,6 +43,7 @@ In the examples above, each vector contains a different type of data. `digits` c
 </details>
 </br>
 
+<details open><summary class='drop'>Data Types</summary>
 In R, there are four *data types* that we will typically encounter:
 
   - **character**  Regular text, denoted with double or single quotation marks (e.g. `"hello"`, `"3"`, `"R is my favorite programming language"`)
@@ -77,14 +78,15 @@ odd_digits <- digits[is_odd]
 odd_digits
 ```
 
+</details>
 
 ##### Data frames
 
-Let's revisit our trees data frame. We've explored the data frame as a whole, but it's often useful to look at one column at a time. To do this, we'll use the `$` syntax:
+Let's revisit our wetland data frame. We've explored the data frame as a whole, but it's often useful to look at one column at a time. To do this, we'll use the `$` syntax:
 
 ```{r DataFrameColumns}
-tree_data$Species
-tree_data$Age_yr
+ACAD_wetland$Site_Name
+ACAD_wetland$Latin_Name
 ```
 
 You can also use square brackets `[]` to access data frame columns. You can specify columns by name or by index (integer indicating position of column). It's almost always best to refer to columns by name when possible - it makes your code easier to read, and it prevents your code from breaking if columns get reordered.
@@ -92,18 +94,18 @@ You can also use square brackets `[]` to access data frame columns. You can spec
 The square bracket syntax allows you to select multiple columns at a time and to select a subset of rows.
 
 ```{r DataFrameColumns_II}
-tree_data[, "Species"]  # Same as tree_data$Species
-tree_data[, c("Species", "Age_yr")]  # Data frame with only Species and Age_yr columns
-tree_data[1:5, "Species"]  # First five elements of Species column
+ACAD_wetland[, "Site_Name"]  # Same as ACAD_wetland$Site_Name
+ACAD_wetland[, c("Latin_Name", "Common")]  # Data frame with only Latin Name and Common columns
+ACAD_wetland[1:5, "Latin_Name"]  # First five elements of Latin Name column
 ```
 
-Now that we've learned about vectors, these data frame columns might look familiar. A data frame is just a collection of vectors of the same length, where each vector is a column.
+Now that we've learned about vectors, these data frame columns might look familiar. A data frame is just a collection of vectors of the same length, where each vector is a column. Every column has the same number of rows (i.e. it's rectangular)
 
 ```{r ColumnsAreVectors}
-is.vector(tree_data$Species)
-class(tree_data$Species)
-is.vector(tree_data$Age_yr)
-class(tree_data$Age_yr)
+is.vector(ACAD_wetland$Latin_Name)
+class(ACAD_wetland$Latin_Name)
+is.vector(ACAD_wetland$PctFreq)
+class(ACAD_wetland$PctFreq)
 
-str(tree_data)  # Check out the abbreviations next to the column names: chr, num, and int. These are the data types of the columns.
+str(ACAD_wetland)  # Check out the abbreviations next to the column names: chr, num, and int. These are the data types of the columns.
 ```

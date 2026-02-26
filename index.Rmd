@@ -46,10 +46,8 @@ body {
 ```{r read_write, child = "D1_Tab_5_Read_Write_Data.Rmd"}
 ```
 
-
 ```{r read_write, child = "D1_Tab_6_Data_structures_and_exploration.Rmd"}
 ```
-
 
 ```{r read_write, child = "D1_Tab_7_Getting_Help.Rmd"}
 ```

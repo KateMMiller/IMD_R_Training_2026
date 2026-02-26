@@ -6,6 +6,8 @@ output:
 ---
 
 #### Importing and saving data
+Most of the work we do in R relies on an existing dataset that we want to query or summarize, rather than creating our own datasets in R. Importing data is therefore an important skill to have in R. R can import most data types, including CSV and MS Excel files. You can also import tables from MS Access and SQL databases using ODBC drivers. That's beyond the scope of this class, but I can share examples for anyone needing to import from a database. 
+
 <details open><summary class = "drop">Import CSV</summary>
 The read.csv function is used to bring in a dataset from a CSV file and stores the data in one of the fundamental data structures in R: a data frame. The `read.csv()` function takes the file path or url to the CSV as input and outputs a data frame containing the data from the CSV. Here we're going to read a CSV from a website. Then we're going to write that to disk in our project in a data folder.
 
@@ -56,3 +58,23 @@ ACAD_wetland <- read.csv("C:/Users/KMMiller/OneDrive - DOI/NETN/R_Dev/IMD_R_Trai
 We'll get very familiar with data frames in this class, but for the moment just know that it's a rectangular table of data with rows and columns. Data frames are typically organized with rows being records or observations (e.g. sampling locations, individual critters, etc.), and columns being variables that characterize those observations (e.g., species, size, date collected, x/Y coordinates). Once you have read the data in, you can take a quick look at its structure by typing the name of the variable it's stored in.
 
 </details>
+
+<details open><summary class = 'drop'>Import from XLSX</summary>
+Base R does not have a way to import MS Excel files. The first step for working with Excel files (i.e., files with .xls or .xlsx extensions), therefore, is to install the `readxl` package to import Excel and `writexl` to write files to .xlsx, and then load the package as shown below. The `readxl` package has a couple of options for loading Excel spreadsheets, depending on whether the extension is .xls, .xlsx, or unknown. The code below shows you how to load files with .xlsx extension. The other options for loading Excel files can be viewed on the <a href="https://readxl.tidyverse.org/reference/read_excel.html">readxl help page</a>.
+```{r, c19b, echo=T, eval=F}
+install.packages("readxl") # only need to run once. 
+install.packages("writexl")
+```
+
+```{r, c19dd, echo=T, eval=F}
+library(readxl)
+ACAD_wetxls <- read_xlsx(path = "./data/ACAD_wetland_data_clean.xlsx", 
+                         sheet = "ACAD_wetland_data_clean")
+
+
+```
+```{r, c19e, echo=T}
+head(bat_capture)
+```
+</details>
+<br>
