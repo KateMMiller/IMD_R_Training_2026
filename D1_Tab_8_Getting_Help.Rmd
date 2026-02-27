@@ -5,7 +5,7 @@ output:
     css: custom_styles.css
 ---
 
-##### Getting Help
+#### Getting Help
 <details open><summary class = 'drop'>Help Documentation</summary>
 There are a number of options to get help with R. If you're trying to figure out how to use a function, you can type ?function_name. For example `?plot` will show the R documentation for that function in the Help panel.
 
