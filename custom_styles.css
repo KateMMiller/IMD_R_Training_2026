@@ -63,7 +63,12 @@ br {
 }
 
 .code{
-  color:#00008B;
+  color:#1C1CB0;
+  font-family: "Arial",Arial,sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  padding:0px 0px 0px 0px;
+  margin:0px 0px 0px 0px;
 }
 
 .ques{

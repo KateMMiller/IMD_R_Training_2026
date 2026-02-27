@@ -79,33 +79,73 @@ odd_digits
 ```
 
 </details>
+<br>
 
-##### Data frames
-
+<details open><summary class = "drop">Data frames</summary>
 Let's revisit our wetland data frame. We've explored the data frame as a whole, but it's often useful to look at one column at a time. To do this, we'll use the `$` syntax:
 
-```{r DataFrameColumns}
+<p class='code'>See list of all sites and species in the wetland data (output truncated at 10 records)</p>
+```{r DataFrameColumn, results = 'hide'}
 ACAD_wetland$Site_Name
 ACAD_wetland$Latin_Name
 ```
 
-You can also use square brackets `[]` to access data frame columns. You can specify columns by name or by index (integer indicating position of column). It's almost always best to refer to columns by name when possible - it makes your code easier to read, and it prevents your code from breaking if columns get reordered.
-
-The square bracket syntax allows you to select multiple columns at a time and to select a subset of rows.
-
-```{r DataFrameColumns_II}
-ACAD_wetland[, "Site_Name"]  # Same as ACAD_wetland$Site_Name
-ACAD_wetland[, c("Latin_Name", "Common")]  # Data frame with only Latin Name and Common columns
-ACAD_wetland[1:5, "Latin_Name"]  # First five elements of Latin Name column
+```{r DataFrameColumn, echo = FALSE}
+ACAD_wetland$Site_Name[1:10]
+ACAD_wetland$Latin_Name[1:10]
 ```
 
-Now that we've learned about vectors, these data frame columns might look familiar. A data frame is just a collection of vectors of the same length, where each vector is a column. Every column has the same number of rows (i.e. it's rectangular)
+You can also use square brackets `[]` to access data frame columns. Square brackets are base R's way to view different subsets of your data. I'm only going to touch briefly on this, so you have a basic understanding of how to interpret square brackets. Tomorrow I'll show you much easier ways to subset your data using tidyverse functions. 
 
-```{r ColumnsAreVectors}
-is.vector(ACAD_wetland$Latin_Name)
-class(ACAD_wetland$Latin_Name)
-is.vector(ACAD_wetland$PctFreq)
-class(ACAD_wetland$PctFreq)
+Every data frame has 2 dimensions. The first dimension is rows and the second is columns. The code below asks for the dimensions of the ACAD_wetland data frame, and returns 508 11. That means there are 508 rows, and 11 columns. The square brackets allow you to either subset rows, columns, or both at the same time, with rows specified first and columns second.
 
-str(ACAD_wetland)  # Check out the abbreviations next to the column names: chr, num, and int. These are the data types of the columns.
+<p class = 'code'>Return data frame number of rows and columns by checking data frame dimensions</p>
+```{r dimdf}
+dim(ACAD_wetland)
 ```
+
+<p class = 'code'>Return first 5 rows of the data frame</p>
+```{r rows}
+ACAD_wetland[1:5,]
+```
+
+<p class = 'code'>Return first 5 rows and a subset of columns of the data frame</p>
+```{r rowscols}
+ACAD_wetland[1:5, c("Site_Name", "Latin_Name", "Common", "Year", "PctFreq")]
+```
+
+You can specify columns by name or by index (integer indicating position of column). It's almost always best to refer to columns by name when possible because it makes your code easier to read and prevents your code from breaking if columns get reordered. But, in case you come across code with numbers in the column part of the brackets, here's what it looks like. Note the empty space to the left of the comma. That means you want all rows, but only the first 4 columns. 
+
+<p class = 'code'>Return all rows and first 4 columns of the data frame</p>
+```{r rowscols}
+ACAD_sub <- ACAD_wetland[ , 1:4] # works, but risky
+ACAD_sub2 <- 
+  ACAD_wetland[,c("Site_Name", "Site_Type", "Latin_Name", "Common")] #same result, but better
+
+# compare the two data frames to the original
+head(ACAD_wetland)
+head(ACAD_sub)
+head(ACAD_sub2)
+```
+
+</details>
+<br>
+
+<details open><summary class = 'drop'>Advanced bracketry</summary>
+You can do more than just subset by row numbers and column names. A couple more advanced use of brackets are below. Again, this is for exposure, like if you're reading through a StackOverflow post. There are easier ways to subset your data in R, which we will cover on Day 2. Another important point about R is that there are often multiple ways to perform a task. The best code is code that works, is easy to follow, and is unlikely to break (e.g. uses column names instead of numbers). That still means there are typically multiple equally valid approaches. There are other ways to judge good code as you advance, but for now, meeting the 3 
+
+<p class = "code">Filter data so only invasive species = T are returned</p>
+```{r inv}
+ACAD_wetland$Latin_Name[ACAD_wetland$Invasive == TRUE]
+ACAD_wetland[ACAD_wetland$Invasive == TRUE, "Latin_Name"] # equivalent
+
+```
+
+<p class = 'code'>Return only unique species sorted alphabetically.</p>
+```{r rows}
+sort(unique(ACAD_wetland[, "Latin_Name"]))
+sort(unique(ACAD_wetland$Latin_Name)) # equivalent
+```
+
+</details>
+

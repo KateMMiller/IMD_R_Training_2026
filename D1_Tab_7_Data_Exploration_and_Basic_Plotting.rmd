@@ -1,0 +1,66 @@
+---
+output: 
+  html_document:
+    fig_caption: false
+    css: custom_styles.css
+---
+
+#### Data Exploration
+We've already explored the wetland data a bit using `head()`, `str()`, and `View()`. These are functions that you will use over and over as you work with data in R. Below, I'm going to show how I get to know a data set in R.
+
+<p class = 'code'>Read in example NETN tree data from url</p>
+```{r}
+trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
+```
+
+<p class = 'code'>Look at head and structure</p>
+```{r}
+head(trees)
+str(trees)
+```
+Note that DecayClassCode, which is an index of class on a scale of 1 - 5, is interpreted by R as a character, not a number. Next step is to figure out why.
+
+<p class = 'code'>Look at unique values for DecayClassCode</p>
+```{r}
+sort(unique(trees$DecayClassCode))
+table(trees$DecayClassCode)
+```
+There are 5 records called "PM", which stands for Permanently Missing in our forest data. We will convert PM to a blank, which R calls NA.
+
+-Convert to NA
+
+<p class = 'code'></p>
+
+```{r}
+
+```
+
+
+- NAs
+
+It's often easier to get a sense of our data by visualizing it, so let's explore the basic tools for taking a first glance at our data.
+
+##### Histogram
+
+We'll start with a histogram. The code below generates a basic histogram plot of a specific column in the dataframe (remember from earlier that this is denoted by the `$` sign) using the `hist()` function. We'll start by creating a histogram for the 'Age_yr' column.
+
+```{r Histogram}
+hist(x = ACAD_wetland$Ave_Cov)
+```
+
+Looking at the histogram, we can see that most percent cover values are less than 10%.
+
+##### Scatter plot
+
+The data frame also includes information on DBH, and height of the trees. What if we want to quickly take a look at how these two variables relate to one another? To get a basic plot, you can use the `plot()` function. A simple call to `plot()` takes two arguments: x (a vector of x coordinates) and y (a vector of y coordinates). You can learn more about `plot()` by typing `?plot` at the console. 
+
+```{r Scatter_I, eval = F}
+# this should generate an ugly but effective scatterplot of tree height vs age. It would appear that older trees are taller!
+plot(x = tree_data$Age_yr, y = tree_data$Height_ft)
+```
+
+```{r Scatter_II, eval = F}
+# let's try the same, but with DBH as the dependent variable on the y axis:
+# again, we should see a plot below showing that, even in a make-believe forest, older trees of both species tend to be thicker!
+plot(x = tree_data$Age_yr, y = tree_data$DBH_in)
+```

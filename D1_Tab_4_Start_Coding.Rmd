@@ -17,6 +17,7 @@ To run a single line of code in your script, place your cursor anywhere in that 
 
 To leave notes in your script, use the hashtag/pound sign (#). This will change the color of text that R reads as a comment and doesn't run. Commenting your code is one of the best habits you can form. Comments are a gift to your future self and anyone else who tries to use your code.
 
+<p class = 'code'>Type code below in your script and run each line</p>
 ```{r ExecutingCode}
 # By using this hashtag/pound sign, you are telling R to ignore the text afterwards. This is useful for leaving annotation of notes or instructions for yourself, or someone else using your code
 
@@ -56,6 +57,7 @@ R uses the `<-` symbol for variable assignment. If you've used other programming
 
 R is case-sensitive. So if you name one object `treedata` and another `Treedata` or `TREEDATA`, R will interpret these all as unique objects. While you can do things like this, it's best practice not to use the same name for different objects, as it makes code difficult to follow.
 
+<p class = 'code'>Type code below to assign values to variables named a and b</p>
 ```{r VariableAssignment}
 # the value of 12.098 is assigned to variable 'a'
 a <- 12.098
@@ -99,6 +101,7 @@ Commonly used base R functions include:
 <li>`sqrt()`: calculate the square root of a value</li>
 </ul>
 
+<p class = 'code'>Calculate mean and range to see how functions work</p>
 ```{r introfun}
 
 x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
