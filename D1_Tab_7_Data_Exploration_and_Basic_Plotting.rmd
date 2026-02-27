@@ -99,7 +99,6 @@ Again, you can see there's one value that's greater than all of the others, and 
 
 <div class="alert alert-info">
 <strong>CHALLENGE: Using the skills you just learned, find the DBH record that's > 400cm DBH.</strong>
-</div>
 
 <details><summary class='drop2'>Answer</summary>
 There are multiple ways to do this. Two examples are below.
@@ -116,10 +115,11 @@ trees[trees$DBHcm == max_dbh,]
 ```
 
 </details>
+</div>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: Using the skills you just learned, what is the value of the largest DBH, and which record does it belong to?</strong>
-</div>
+
 
 <details><summary class='drop2'>Answer</summary>
 There are multiple ways to do this. Two examples are below.
@@ -138,6 +138,7 @@ trees[trees$DBHcm == max_dbh,]
 ```
 
 </details>
+</div>
 
 <details open><summary 'drop'>Replace value based on pattern matching</summary>
 Now let's say that you looked at the datasheet, and the actual DBH for that tree was 44.3 instead of 443.0. You can change that value in the original CSV by hand. But even better is to document that change in code. I always create a new data frame when I modify the original data frame, so I can always refer back to the original while I'm coding. I also use a pretty specific filter to make sure I'm not accidentally changing other data.
