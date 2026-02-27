@@ -61,7 +61,6 @@ body {
 ```{r keyshorts, child = "D1_Tab_9_Keyboard_Shortcuts.Rmd"}
 ```
 
-
 ### Day 2: Wrangling and Viz I {.tabset}
 - Data wrangling I: 
     - Base R filter, subset, new column, rename column
@@ -127,3 +126,9 @@ There's a lot of great online material for learning new applications of R. The o
 ```{r, include = F}
 rm(list = ls())
 ```
+
+<script>
+  $(".toggle").click(function() {
+    $(this).toggleClass("open");
+  });
+</script>

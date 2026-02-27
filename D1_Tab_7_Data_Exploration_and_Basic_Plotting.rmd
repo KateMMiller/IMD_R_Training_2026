@@ -23,6 +23,7 @@ head(trees)
 ```{r sumtree}
 summary(trees)
 ```
+
 There's a lot to digest from the summary results. 
 <ul>
 <li>We can see that Plot_Name, Network, and Park_Unit are treated as characters.</li>
