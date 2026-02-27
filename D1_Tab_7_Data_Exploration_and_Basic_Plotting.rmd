@@ -96,6 +96,9 @@ plot(DBHcm ~ CrownClassCode, data = trees) # equivalent but cleaner axis titles
 
 ```
 Again, you can see there's one value that's greater than all of the others, and it's crown class code 3 (codominant). 
+</details>
+</br>
+<details open><summary class='drop'>Challenge your skills!</summary>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: Using the skills you just learned, find the DBH record that's > 400cm DBH.</strong>
@@ -154,7 +157,6 @@ trees_fix$DBHcm[trees_fix$Plot_Name == "MIMA-016" & trees_fix$TagCode == 1 & tre
 
 <div class="alert alert-info">
 <strong>CHALLENGE: How would you check that the line of code above worked?</strong>
-</div>
 
 <details><summary class='drop2'>Answer</summary>
 There are multiple ways to do this. Two examples are below.
@@ -177,5 +179,8 @@ max(trees$DBHcm)
 max(trees_fix$DBHcm)
 ```
 
-
 </details>
+</div>
+</details>
+<br>
+
