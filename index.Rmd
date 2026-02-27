@@ -31,6 +31,9 @@ body {
 
 ### Day 1: Intro to R {.tabset}
 
+```{r D1_goals, child = "D1_Tab_0_Goals.Rmd"}
+```
+
 ```{r Intro_to_R_tab, child = "D1_Tab_1_Intro.Rmd"}
 ```
 

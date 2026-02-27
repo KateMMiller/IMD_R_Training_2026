@@ -38,9 +38,6 @@ tail(ACAD_wetland)
 <details open><summary class = 'drop'>Save CSV</summary>
 <p class = "code">Now write the csv to disk and show how to import from your computer. </p>
 ```{r write_csv}
-# Create a data folder in your project
-dir.create("./data")
-
 # Write the data frame to your data folder using a relative path. 
 # By default, write.csv adds a column with row names that are numbers. I don't
 # like that, so I turn that off.
@@ -53,7 +50,7 @@ write.csv(ACAD_wetland, "./data/ACAD_wetland_data_clean.csv", row.names = FALSE)
 # Read the data frame in using a relative path
 ACAD_wetland <- read.csv("./data/ACAD_wetland_data_clean.csv")
 
-# Read in the data frame using full path (at least on my computer)
+# Equivalent code to read in the data frame using full path on my computer, but won't match another user.
 ACAD_wetland <- read.csv("C:/Users/KMMiller/OneDrive - DOI/NETN/R_Dev/IMD_R_Training_2026/data/ACAD_wetland_data_clean.csv")
 
 ```
@@ -80,7 +77,7 @@ library(writexl) # saving xlsx
 library(readxl) # importing xlsx
 ```
 
-<li class = "code">Write CSV to .xlsx to data folder. Doing it this way to keep this training stand-alone.</li>
+<li class = "code">Write CSV to .xlsx to data folder. I'm going in this order to keep this training stand-alone. The `read_xlsx()` function can't read from a url like `read.csv()` can.</li>
 ```{r writexl}
 write_xlsx(ACAD_wetland, "./data/ACAD_wetland_data_clean.xlsx")
 ```
