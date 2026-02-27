@@ -55,7 +55,7 @@ There are two more data types, complex and raw, but you are unlikely to encounte
 
 You can use the `class()` function to get the data type of a vector:
 
-```{r}
+```{r cls}
 class(favorite_birds)
 class(shoe_sizes)
 class(digits)
@@ -90,7 +90,7 @@ ACAD_wetland$Site_Name
 ACAD_wetland$Latin_Name
 ```
 
-```{r DataFrameColumn, echo = FALSE}
+```{r DataFrameColumn2, echo = FALSE}
 ACAD_wetland$Site_Name[1:10]
 ACAD_wetland$Latin_Name[1:10]
 ```
@@ -102,11 +102,14 @@ Every data frame has 2 dimensions. The first dimension is rows and the second is
 <p class = 'code'>Return data frame number of rows and columns by checking data frame dimensions</p>
 ```{r dimdf}
 dim(ACAD_wetland)
+nrow(ACAD_wetland) # first dim
+ncol(ACAD_wetland) # second dim
 ```
 
 <p class = 'code'>Return first 5 rows of the data frame</p>
 ```{r rows}
 ACAD_wetland[1:5,]
+ACAD_wetland[c(1, 2, 3, 4, 5)] #equivalent but more typing
 ```
 
 <p class = 'code'>Return first 5 rows and a subset of columns of the data frame</p>
@@ -114,10 +117,21 @@ ACAD_wetland[1:5,]
 ACAD_wetland[1:5, c("Site_Name", "Latin_Name", "Common", "Year", "PctFreq")]
 ```
 
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you look at the the first 4 even rows (2, 4, 6, 8)?</strong>
+</div>
+
+<details><summary class='drop2'>Answer</summary>
+```{r chal1}
+ACAD_wetland[c(2, 4, 6, 8),]
+```
+
+</details>
+
 You can specify columns by name or by index (integer indicating position of column). It's almost always best to refer to columns by name when possible because it makes your code easier to read and prevents your code from breaking if columns get reordered. But, in case you come across code with numbers in the column part of the brackets, here's what it looks like. Note the empty space to the left of the comma. That means you want all rows, but only the first 4 columns. 
 
 <p class = 'code'>Return all rows and first 4 columns of the data frame</p>
-```{r rowscols}
+```{r rowscols2}
 ACAD_sub <- ACAD_wetland[ , 1:4] # works, but risky
 ACAD_sub2 <- 
   ACAD_wetland[,c("Site_Name", "Site_Type", "Latin_Name", "Common")] #same result, but better
@@ -142,7 +156,7 @@ ACAD_wetland[ACAD_wetland$Invasive == TRUE, "Latin_Name"] # equivalent
 ```
 
 <p class = 'code'>Return only unique species sorted alphabetically.</p>
-```{r rows}
+```{r rows2}
 sort(unique(ACAD_wetland[, "Latin_Name"]))
 sort(unique(ACAD_wetland$Latin_Name)) # equivalent
 ```

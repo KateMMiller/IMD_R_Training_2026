@@ -37,34 +37,44 @@ Don't hesitate to reach out to colleagues for help as well! If you are stuck on 
 
 <details open><summary class = 'drop'>Common errors and how to fix them</summary>
 <ol>
-<li><p class = "code>Unmatched parenthesis</p></li>
-```{r eval = F}
+<li><p class = "code">Unmatched parenthesis</p></li>
+```{r par, eval = F}
 mean_x <- mean(c(1, 3, 5, 7, 8, 21) # missing closing parentheses
 mean_x <- mean(c(1, 3, 5, 7, 8, 21)) # correct
                
 ```
 
-<li><p class = "code>Unmatched quotes</p></li>
-```{r eval = F}
+<li><p class = "code">Unmatched quotes</p></li>
+```{r birb, eval = F}
 birds <- c("black-capped chickadee", "golden-crowned kinglet, "wood thrush",) # missing quote after kinglet
 ```
-```{r eval = F}
+```{r birb2, eval = F}
 birds <- c("black-capped chickadee", "golden-crowned kinglet", "wood thrush") # corrected
 
 ```
 
-<li><p class = "code>Missing a comma between elements</p></li>
-```{r eval = F}
+<li><p class = "code">Missing a comma between elements</p></li>
+```{r birb3, eval = F}
 birds <- c("black-capped chickadee", "golden-crowned kinglet" "wood thrush") # missing comma after kinglet
 birds <- c("black-capped chickadee", "golden-crowned kinglet", "wood thrush") # corrected
 ```
 
-<li><p class = "code>Misspelled function name</p></li>
-```{r eval = F}
+<li><p class = "code">Misspelled function name</p></li>
+```{r typo, eval = F}
 x_mean <- maen(x) # mispelled mean
 x_mean <- mean(x) # Corrected
 
 ```
+
+<li><p class = 'code'>Incorrect use of dimensions with brackets</p>
+```{r brac, error = T}
+# Missing comma to indicate subsetting rows (records)
+ACAD_wetland2 <- ACAD_wetland[!is.na(ACAD_wetland$Site_Name)]
+# Correct
+ACAD_wetland2 <- ACAD_wetland[!is.na(ACAD_wetland$Site_Name), ]
+
+```
+
 </ol>
 
 Other resources that may help: 

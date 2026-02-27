@@ -6,61 +6,174 @@ output:
 ---
 
 #### Data Exploration
+<details open><summary class = 'drop'>Exploring data and fixing</summary>
 We've already explored the wetland data a bit using `head()`, `str()`, and `View()`. These are functions that you will use over and over as you work with data in R. Below, I'm going to show how I get to know a data set in R.
 
 <p class = 'code'>Read in example NETN tree data from url</p>
-```{r}
+```{r readtree}
 trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
 ```
 
-<p class = 'code'>Look at head and structure</p>
-```{r}
+<p class = 'code'>Look at first few records</p>
+```{r headt}
 head(trees)
+```
+
+<p class = 'code'>Look at summary of the columns</p>
+```{r sumtree}
+summary(trees)
+```
+There's a lot to digest from the summary results. 
+<ul>
+<li>We can see that Plot_Name, Network, and Park_Unit are treated as characters.</li>
+<li>The range of plot numbers is 1 to 20, and there are no blanks (NAs) </li>
+<li>SampleDate is being interpreted as a character, not date. We'll fix that.</li>
+<li>IsQAQC is being treated as TRUE/FALSE. We'll use that to filter out QAQC visits.</li>
+<li>SampleYear is all 2022.</li>
+<li>DBH ranges from 10 to 443.0, with 14 blanks (NAs).</li>
+<li>DecayClassCode is reading in as a character, not a number. We will look deeper into that next.</li>
+</ul>
+
+<p class = 'code'>Look at structure of each column</p>
+```{r strt}
 str(trees)
 ```
-Note that DecayClassCode, which is an index of class on a scale of 1 - 5, is interpreted by R as a character, not a number. Next step is to figure out why.
 
-<p class = 'code'>Look at unique values for DecayClassCode</p>
-```{r}
-sort(unique(trees$DecayClassCode))
-table(trees$DecayClassCode)
-```
-There are 5 records called "PM", which stands for Permanently Missing in our forest data. We will convert PM to a blank, which R calls NA.
-
--Convert to NA
-
-<p class = 'code'></p>
-
-```{r}
-
+<p class = 'code'>Look at unique values for DecayClassCode.</p>
+```{r trdecay}
+sort(unique(trees$DecayClassCode)) # sorts the unique values in the column
+table(trees$DecayClassCode) # shows the number of records per value - very handy
 ```
 
+There are 2 records called "PM", which stands for Permanently Missing in our forest data. We will convert PM to a blank, which R calls NA, and create a new decay class column that is converted to numeric.
 
-- NAs
+<p class = 'code'>Convert "PM" to blank. I will first make a copy of the data frame.</p>
+```{r tr2}
+trees2 <- trees
+trees2$DecayClassCode[trees2$DecayClassCode == "PM"] <- NA
+trees2$DecayClassCode_num <- as.numeric(trees2$DecayClassCode)
 
-It's often easier to get a sense of our data by visualizing it, so let's explore the basic tools for taking a first glance at our data.
-
-##### Histogram
-
-We'll start with a histogram. The code below generates a basic histogram plot of a specific column in the dataframe (remember from earlier that this is denoted by the `$` sign) using the `hist()` function. We'll start by creating a histogram for the 'Age_yr' column.
-
-```{r Histogram}
-hist(x = ACAD_wetland$Ave_Cov)
+# check that it worked
+str(trees2)
+sort(unique(trees2$DecayClassCode_num))
 ```
 
-Looking at the histogram, we can see that most percent cover values are less than 10%.
+The other option would be to drop records with PM. Here we will use the base R `subset()` function. You first have to tell it which data frame you're subsetting. Then you tell it the logic to use to subset. In the case ! is interpreted in R as "NOT". So DecayClassCode != "PM" means to keep all records where the decay code is <i>Not equal to</i> PM. 
 
-##### Scatter plot
-
-The data frame also includes information on DBH, and height of the trees. What if we want to quickly take a look at how these two variables relate to one another? To get a basic plot, you can use the `plot()` function. A simple call to `plot()` takes two arguments: x (a vector of x coordinates) and y (a vector of y coordinates). You can learn more about `plot()` by typing `?plot` at the console. 
-
-```{r Scatter_I, eval = F}
-# this should generate an ugly but effective scatterplot of tree height vs age. It would appear that older trees are taller!
-plot(x = tree_data$Age_yr, y = tree_data$Height_ft)
+<p class = 'code'>Remove records with "PM" as DecayClassCode </p>
+```{r tr3}
+trees3 <- subset(trees, DecayClassCode != "PM")
+trees3 <- trees[trees$DecayClassCode != "PM",] #equivalent but not as easy to follow
 ```
 
-```{r Scatter_II, eval = F}
-# let's try the same, but with DBH as the dependent variable on the y axis:
-# again, we should see a plot below showing that, even in a make-believe forest, older trees of both species tend to be thicker!
-plot(x = tree_data$Age_yr, y = tree_data$DBH_in)
+</details>
+
+<details open><summary class = 'drop'>Basic plotting</summary>
+
+Visualizing the data is also important to get a sense for the data and look for potential errors and outliers. 
+
+Histograms are a great start. The code below generates a basic histogram plot of a specific column in the dataframe using the `hist()` function.
+
+<p class='code'>Plot histogram of DBH measurements</p>
+```{r hist}
+hist(x = trees$DBHcm)
 ```
+Looking at the histogram, it looks like all of the measurements are below 100cm except for one that's way out in 400 range. You can also make a scatterplot of the data. If you only specify one column, the x axis will be the row number for each record, and the y axis will be the specified column.
+
+<p class='code'>Make point plot of DBH measurements</p>
+```{r pdbh1}
+plot(trees$DBHcm)
+```
+Again, you can see there's one value that's greater than all of the others. 
+
+We can also plot two variables in a scatterplot. 
+
+<p class='code'>Make scatterplot of crown class vs. DBH measurements</p>
+```{r pdbh2}
+plot(trees$DBHcm ~ trees$CrownClassCode)
+plot(DBHcm ~ CrownClassCode, data = trees) # equivalent but cleaner axis titles
+
+```
+Again, you can see there's one value that's greater than all of the others, and it's crown class code 3 (codominant). 
+
+<div class="alert alert-info">
+<strong>CHALLENGE: Using the skills you just learned, find the DBH record that's > 400cm DBH.</strong>
+</div>
+
+<details><summary class='drop2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. View the data and sort by DBH.
+```{r vtrees, eval = F}
+View(trees)
+```
+
+Option 2. Find the max DBH value and subset the data frame
+```{r maxdbh}
+max_dbh <- max(trees$DBHcm, na.rm = TRUE)
+trees[trees$DBHcm == max_dbh,]
+```
+
+</details>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: Using the skills you just learned, what is the value of the largest DBH, and which record does it belong to?</strong>
+</div>
+
+<details><summary class='drop2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. View the data and sort by DBH.
+```{r vtrees2, eval = F}
+View(trees)
+```
+
+Option 2. Find the max DBH value and subset the data frame
+```{r maxdbh2}
+max_dbh <- max(trees$DBHcm, na.rm = TRUE)
+max_dbh #443
+trees[trees$DBHcm == max_dbh,]
+# Plot MIMA-016, TagCode = 1.
+```
+
+</details>
+
+<details open><summary 'drop'>Replace value based on pattern matching</summary>
+Now let's say that you looked at the datasheet, and the actual DBH for that tree was 44.3 instead of 443.0. You can change that value in the original CSV by hand. But even better is to document that change in code. I always create a new data frame when I modify the original data frame, so I can always refer back to the original while I'm coding. I also use a pretty specific filter to make sure I'm not accidentally changing other data.
+
+<p class = 'code'>Replace 443 with 44.3 in code</p>
+```{r trfx}
+# create copy of trees data
+trees_fix <- trees
+
+# find the problematic DBH value, and change it to 44.3
+trees_fix$DBHcm[trees_fix$Plot_Name == "MIMA-016" & trees_fix$TagCode == 1 & trees_fix$DBHcm == "443"] <- 44.3
+```
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you check that the line of code above worked?</strong>
+</div>
+
+<details><summary class='drop2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. Show the range of the original and fixed data frames
+```{r check1}
+range(trees$DBHcm)
+range(trees_fix$DBHcm)
+```
+
+Option 2. Plot a histogram of the original and fixed data frames
+```{r check2}
+hist(trees$DBHcm)
+hist(trees_fix$DBHcm) 
+```
+
+Option 3. Calculate max of DBHcm column
+```{r check3}
+max(trees$DBHcm)
+max(trees_fix$DBHcm)
+```
+
+
+</details>
