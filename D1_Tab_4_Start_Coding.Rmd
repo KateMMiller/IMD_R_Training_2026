@@ -5,7 +5,7 @@ output:
     css: custom_styles.css
 ---
 
-#### Start coding
+#### Start coding 
 <details open><summary class='drop'>Start a new script</summary>
 First let's create a new R script file called `day_1_script.R`. Make sure you are working in the `imd_r_intro` project that you just created. Click on the <b>New File</b> icon <img src = "./images/NewFile.PNG" alt = "new script"> in the top left corner. In the dropdown, select <b>R Script</b>. The source pane will appear with an untitled empty script. Go ahead and save it by clicking the <b>Save</b> icon (and make sure the <b>Source on Save</b> checkbox is deselected). Call your new script `day_1_script.R`.
 </details>
@@ -17,33 +17,24 @@ To run a single line of code in your script, place your cursor anywhere in that 
 
 To leave notes in your script, use the hashtag/pound sign (#). This will change the color of text that R reads as a comment and doesn't run. Commenting your code is one of the best habits you can form. Comments are a gift to your future self and anyone else who tries to use your code.
 
-<p class = 'code'>Type code below in your script and run each line</p>
-```{r ExecutingCode}
-# By using this hashtag/pound sign, you are telling R to ignore the text afterwards. This is useful for leaving annotation of notes or instructions for yourself, or someone else using your code
+<p class = 'code'>Type code below in your script and run each line. </p>
+```{r, ExecutingCode, fold.output = FALSE}
+# Commented text: try this line to generate some basic text and become familiar with where results will appear:
+print("Welcome to R!")
 
-# try this line to generate some basic text and become familiar with where results will appear:
-print("Hello, lets do some basic math. Results of operations will appear here")
-
-# one plus one
+# simple math
 1+1
 
-# two times three, divided by four
 (2*3)/4
 
-# basic mathematical and trigonometric functions are fairly similar to what they would be in excel
-
-# calculate the square root of 9
 sqrt(9)
 
-# calculate the cube root of 8 (remember that x^(1/n) gives you the nth root of x)
-8^(1/3)
+# calculate basal area of tree with 14.6cm diameter; note pi is built in constant in R
+(14.6^2)*pi
 
 # get the cosine of 180 degrees - note that trig functions in R expect angles in radians
-# also note that pi is a built-in constant in R
 cos(pi)
 
-# calculate 5 to the tenth power
-5^10
 ```
 
 Notice that when you run a line of code, the code and the result appear in the console. You can also type code directly into the console, but it won't be saved anywhere. As you get more comfortable with R, it can be helpful to use the console as a "scratchpad" for experimenting and troubleshooting. For now, it's best to err on the side of saving your code as a script so that you don't accidentally lose useful work.
@@ -58,7 +49,7 @@ R uses the `<-` symbol for variable assignment. If you've used other programming
 R is case-sensitive. So if you name one object `treedata` and another `Treedata` or `TREEDATA`, R will interpret these all as unique objects. While you can do things like this, it's best practice not to use the same name for different objects, as it makes code difficult to follow.
 
 <p class = 'code'>Type code below to assign values to variables named a and b</p>
-```{r VariableAssignment}
+```{r, VariableAssignment, fold.output = FALSE}
 # the value of 12.098 is assigned to variable 'a'
 a <- 12.098
 
@@ -102,7 +93,7 @@ Commonly used base R functions include:
 </ul>
 
 <p class = 'code'>Calculate mean and range to see how functions work</p>
-```{r introfun}
+```{r, introfun, fold.output = FALSE}
 
 x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 # equivalent to x <- 1:10

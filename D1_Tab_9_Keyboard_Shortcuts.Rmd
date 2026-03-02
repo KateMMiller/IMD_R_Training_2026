@@ -19,7 +19,7 @@ Once you get in the swing of coding, you'll find that minimizing the number of t
 <li>Duplicate line of code: Ctrl Shift D</li>
 <li>Move cursor to beginning of line: Home</li>
 <li>Move cursor to end of line: End</li>
-<li>View help for a given function: Put cursor on function name and press F1</li?
+<li>View help for a given function: Put cursor on function name and press F1</li>
 <li>Esc escapes out of the command currently being executed in the console </li>
 <li>Restart R Session: Ctrl Shift F10</li>
 <li>Insert pipe (|>): Ctrl Shift M</li>

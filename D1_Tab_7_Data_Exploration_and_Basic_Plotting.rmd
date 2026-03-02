@@ -15,8 +15,13 @@ trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_
 ```
 
 <p class = 'code'>Look at first few records</p>
-```{r headt}
+```{r headt, fold.output = TRUE}
 head(trees)
+```
+
+<p class = 'code'>Look at structure of each column</p>
+```{r strt}
+str(trees)
 ```
 
 <p class = 'code'>Look at summary of the columns</p>
@@ -32,13 +37,8 @@ There's a lot to digest from the summary results.
 <li>IsQAQC is being treated as TRUE/FALSE. We'll use that to filter out QAQC visits.</li>
 <li>SampleYear is all 2022.</li>
 <li>DBH ranges from 10 to 443.0, with 14 blanks (NAs).</li>
-<li>DecayClassCode is reading in as a character, not a number. We will look deeper into that next.</li>
+<li>DecayClassCode is reading in as a character, not a number. That's weird. We will look deeper into that next.</li>
 </ul>
-
-<p class = 'code'>Look at structure of each column</p>
-```{r strt}
-str(trees)
-```
 
 <p class = 'code'>Look at unique values for DecayClassCode.</p>
 ```{r trdecay}
@@ -49,7 +49,7 @@ table(trees$DecayClassCode) # shows the number of records per value - very handy
 There are 2 records called "PM", which stands for Permanently Missing in our forest data. We will convert PM to a blank, which R calls NA, and create a new decay class column that is converted to numeric.
 
 <p class = 'code'>Convert "PM" to blank. I will first make a copy of the data frame.</p>
-```{r tr2}
+```{r tr2, fold.output = TRUE}
 trees2 <- trees
 trees2$DecayClassCode[trees2$DecayClassCode == "PM"] <- NA
 trees2$DecayClassCode_num <- as.numeric(trees2$DecayClassCode)
@@ -59,18 +59,50 @@ str(trees2)
 sort(unique(trees2$DecayClassCode_num))
 ```
 
-The other option would be to drop records with PM. Here we will use the base R `subset()` function. You first have to tell it which data frame you're subsetting. Then you tell it the logic to use to subset. In the case ! is interpreted in R as "NOT". So DecayClassCode != "PM" means to keep all records where the decay code is <i>Not equal to</i> PM. 
+The other option would be to drop records with PM. Here we will use the base R `subset()` function, but also show the bracket approach. You first have to tell it which data frame you're subsetting. Then you tell it the logic to use to subset. In the case ! is interpreted in R as "NOT". So `DecayClassCode != "PM"` means to keep all records where the decay code does not match 'PM'. 
+
+Another note is that it generally does not matter whether you use single ' or double ", as long as you open and close with the same. 
 
 <p class = 'code'>Remove records with "PM" as DecayClassCode </p>
 ```{r tr3}
 trees3 <- subset(trees, DecayClassCode != "PM")
-trees3 <- trees[trees$DecayClassCode != "PM",] #equivalent but not as easy to follow
+trees3 <- trees[trees$DecayClassCode != 'PM',] #equivalent but not as easy to follow
 ```
 
 </details>
 
-<details open><summary class = 'drop'>Basic plotting</summary>
+<div class="alert alert-info">
+<strong>CHALLENGE: How many trees are on Plot MIMA-012?</strong>
 
+<details><summary class='drop2'>Answer</summary>
+```{r chal4}
+mima12 <- subset(trees, Plot_Name == "MIMA-012")
+nrow(mima12) # 12
+```
+</details>
+</div>
+<br>
+
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-012?</strong>
+
+<details><summary class='drop2'>Answer</summary>
+```{r chal5}
+# OPTION 1
+mima12_as <- subset(trees, Plot_Name == "MIMA-012" & TreeStatusCode == "AS")
+nrow(mima12_as) # 6
+
+# OPTION 2
+mima12 <- trees[trees$Plot_Name == "MIMA-012",]
+table(mima12$TreeStatusCode) # 6
+
+```
+</details>
+</div>
+<br>
+
+<details open><summary class = 'drop'>Basic plotting</summary>
 Visualizing the data is also important to get a sense for the data and look for potential errors and outliers. 
 
 Histograms are a great start. The code below generates a basic histogram plot of a specific column in the dataframe using the `hist()` function.
@@ -98,7 +130,7 @@ plot(DBHcm ~ CrownClassCode, data = trees) # equivalent but cleaner axis titles
 Again, you can see there's one value that's greater than all of the others, and it's crown class code 3 (codominant). 
 </details>
 </br>
-<details open><summary class='drop'>Challenge your skills!</summary>
+<details open><summary class='drop'>Test your skills!</summary>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: Using the skills you just learned, find the DBH record that's > 400cm DBH.</strong>

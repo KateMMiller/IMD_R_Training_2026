@@ -26,15 +26,18 @@ View(ACAD_wetland)
 ```
 
 <p class = "code">Or, check out the first few or last few records in your console.</p> 
-```{r exp_dat}
+```{r hdat, fold.output = FALSE}
 # Look at the top 6 rows of the data frame
 head(ACAD_wetland)
+```
 
+```{r tdat}
 # Look at the bottom 6 rows of the data frame
 tail(ACAD_wetland)
 ```
 </details>
 <br>
+
 <details open><summary class = 'drop'>Save CSV</summary>
 <p class = "code">Now write the csv to disk and show how to import from your computer. </p>
 ```{r write_csv}

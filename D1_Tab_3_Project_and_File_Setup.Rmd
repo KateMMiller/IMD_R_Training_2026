@@ -16,7 +16,7 @@ If you refer to a file in R using a <b>relative path</b>, for example `./data/my
 
 Note the use of forward slashes instead of back slashes for file paths. You can either use a forward slash (/) or a double back slash for file paths. The paths below are equivalent and the full file path the relative path above is specifying. 
 
-```{r}
+```{r slashes, echo = T, eval = F}
 # forward slash file path approach
 "C:/Users/KMMiller/OneDrive = DOI/data/"
 
@@ -47,7 +47,10 @@ Save project to a place you can find it. Don't worry about whether the git repos
 If you successfully started a project named `imd_r_intro`, you should see it listed at the very top right of your screen. As you start new projects, you'll want to check that you're working in the right one before you start coding. Take a look at the <b>Console</b> tab again. Notice that your current working directory is now your project folder. When you look in the <b>Files</b> tab of the bottom right pane, you'll see that it also defaults to the project folder.
 
 We also want to create a folder called "data", where we will store datasets we're using for this class. To do that, you can either go to Windows Explorer and add a new folder, or you run the code below. As long as you're working within your project (project name should be at the top right of window), a folder named data will appear within your project. You can check that it worked by using the `list.files()` function, which lists everything in the working directory of your project.
+</details>
+<br>
 
+<details open><summary class = 'drop'>Add Data Folder</summary>
 <p class = "code">Create data folder</p>
 ```{r addfold, eval = F}
 dir.create("data")

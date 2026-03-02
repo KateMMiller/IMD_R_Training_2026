@@ -34,6 +34,7 @@ Great online resources to find answers to questions include <a href="https://sta
 Don't hesitate to reach out to colleagues for help as well! If you are stuck on something and the answers on Google are more confusing than helpful, don't be afraid to ask a human. Every experienced R programmer was a beginner once, so chances are they've encountered the same problem as you at some point. There is an R-focused <a href = "https://teams.microsoft.com/l/channel/19%3A114a351486924a7d92eca92dfe5235dd%40thread.tacv2/%5B%20%20%20%20Data%20Sci%20Community%20of%20Practice%20%5D?groupId=066491e4-d2ab-4a8a-931b-c96b970d24a8&tenantId=0693b5ba-4b18-4d7b-9341-f32f400a5494"> Data Science Community of Practice </a> for I&M folks, which anyone working in R (regardless of experience!) is invited and encouraged to join. 
 
 </details>
+<br>
 
 <details open><summary class = 'drop'>Common errors and how to fix them</summary>
 <ol>
@@ -66,7 +67,7 @@ x_mean <- mean(x) # Corrected
 
 ```
 
-<li><p class = 'code'>Incorrect use of dimensions with brackets</p>
+<li><p class = 'code'>Incorrect use of dimensions with brackets</p></li>
 ```{r brac, error = T}
 # Missing comma to indicate subsetting rows (records)
 ACAD_wetland2 <- ACAD_wetland[!is.na(ACAD_wetland$Site_Name)]
@@ -74,7 +75,6 @@ ACAD_wetland2 <- ACAD_wetland[!is.na(ACAD_wetland$Site_Name)]
 ACAD_wetland2 <- ACAD_wetland[!is.na(ACAD_wetland$Site_Name), ]
 
 ```
-
 </ol>
 
 Other resources that may help: 
@@ -82,4 +82,5 @@ Other resources that may help:
 <li><a href = "https://www.r-bloggers.com/2023/02/top-10-errors-in-r-and-how-to-fix-them/">Top 10 errors in R and how to fix them blog</a></li>
 <li><a href = "https://bioinformatics.ccr.cancer.gov/docs/btep-coding-club/CC2023/Troubleshooting_Rprog/">Troubleshooting R</a></li>
 </ul>
-
+<br>
+<br>
