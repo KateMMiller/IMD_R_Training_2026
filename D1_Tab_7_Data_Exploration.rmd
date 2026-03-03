@@ -1,0 +1,179 @@
+
+#### Data Exploration
+<details open><summary class = 'drop'>Exploring data and fixing</summary>
+We've already explored the wetland data a bit using `head()`, `str()`, and `View()`. These are functions that you will use over and over as you work with data in R. Below, I'm going to show how I get to know a data set in R.
+
+<p class = 'code'>Read in example NETN tree data from url</p>
+```{r readtree}
+trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
+```
+
+<p class = 'code'>Look at first few records</p>
+```{r headt, fold.output = TRUE}
+head(trees)
+```
+
+<p class = 'code'>Look at structure of each column</p>
+```{r strt, fold.output = F}
+str(trees)
+```
+
+<p class = 'code'>Look at summary of the columns</p>
+```{r sumtree, fold.output = F}
+summary(trees)
+```
+
+There's a lot to digest from the summary results. 
+<ul>
+<li>We can see that Plot_Name, Network, and Park_Unit are treated as characters.</li>
+<li>The range of plot numbers is 1 to 20, and there are no blanks (NAs) </li>
+<li>SampleDate is being interpreted as a character, not date. We'll fix that.</li>
+<li>IsQAQC is being treated as TRUE/FALSE. We'll use that to filter out QAQC visits.</li>
+<li>SampleYear is all 2022.</li>
+<li>DBH ranges from 10 to 443.0, with 14 blanks (NAs).</li>
+<li>DecayClassCode is reading in as a character, not a number. That's weird. We will look deeper into that next.</li>
+</ul>
+
+<p class = 'code'>Look at unique values for DecayClassCode.</p>
+```{r trdecay, fold.output = F}
+sort(unique(trees$DecayClassCode)) # sorts the unique values in the column
+table(trees$DecayClassCode) # shows the number of records per value - very handy
+```
+
+There are 2 records called "PM", which stands for Permanently Missing in our forest data. We will convert PM to a blank, which R calls NA, and create a new decay class column that is converted to numeric.
+
+<p class = 'code'>Convert "PM" to blank. I will first make a copy of the data frame.</p>
+```{r tr2, fold.output = TRUE}
+trees2 <- trees
+trees2$DecayClassCode[trees2$DecayClassCode == "PM"] <- NA
+trees2$DecayClassCode_num <- as.numeric(trees2$DecayClassCode)
+
+# check that it worked
+str(trees2)
+sort(unique(trees2$DecayClassCode_num))
+```
+
+The other option would be to drop records with PM. Here we will use the base R `subset()` function, but also show the bracket approach. You first have to tell it which data frame you're subsetting. Then you tell it the logic to use to subset. In the case ! is interpreted in R as "NOT". So `DecayClassCode != "PM"` means to keep all records where the decay code does not match 'PM'. 
+
+Another note is that it generally does not matter whether you use single ' or double ", as long as you open and close with the same. 
+
+<p class = 'code'>Remove records with "PM" as DecayClassCode </p>
+```{r tr3}
+trees3 <- subset(trees, DecayClassCode != "PM")
+trees3 <- trees[trees$DecayClassCode != 'PM',] #equivalent but not as easy to follow
+```
+</details>
+
+<details open><summary class = 'drop'>Test your skills!</summary>
+
+<!-- Test skills section -->
+<div class="alert alert-info">
+<strong>CHALLENGE: How many trees are on Plot MIMA-012?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r chal4}
+mima12 <- subset(trees, Plot_Name == "MIMA-012")
+nrow(mima12) # 12
+```
+</div>
+</details>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-012?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r chal5, fold.output = F}
+# OPTION 1
+mima12_as <- subset(trees, Plot_Name == "MIMA-012" & TreeStatusCode == "AS")
+nrow(mima12_as) # 6
+
+# OPTION 2
+mima12 <- trees[trees$Plot_Name == "MIMA-012",]
+table(mima12$TreeStatusCode) # 6
+
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: Find the DBH record that's > 400cm DBH.</strong>
+
+<details><summary class='drop2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. View the data and sort by DBH.
+```{r vtrees, eval = F}
+View(trees)
+```
+
+Option 2. Find the max DBH value and subset the data frame
+```{r maxdbh, fold.output = F}
+max_dbh <- max(trees$DBHcm, na.rm = TRUE)
+trees[trees$DBHcm == max_dbh,]
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: What is the value of the largest DBH, and which record does it belong to?</strong>
+
+<details><summary class='drop2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. View the data and sort by DBH.
+```{r vtrees2, eval = F}
+View(trees)
+```
+
+Option 2. Find the max DBH value and subset the data frame
+```{r maxdbh2}
+max_dbh <- max(trees$DBHcm, na.rm = TRUE)
+max_dbh #443
+trees[trees$DBHcm == max_dbh,]
+# Plot MIMA-016, TagCode = 1.
+```
+</details>
+</div>
+</details>
+
+<details open><summary class='drop'>Replace value based on pattern matching</summary>
+Now let's say that you looked at the datasheet, and the actual DBH for that tree was 44.3 instead of 443.0. You can change that value in the original CSV by hand. But even better is to document that change in code. I always create a new data frame when I modify the original data frame, so I can always refer back to the original while I'm coding. I also use a pretty specific filter to make sure I'm not accidentally changing other data.
+
+<p class = 'code'>Replace 443 with 44.3 in code</p>
+```{r trfx, fold.output = F}
+# create copy of trees data
+trees_fix <- trees
+
+# find the problematic DBH value, and change it to 44.3
+trees_fix$DBHcm[trees_fix$Plot_Name == "MIMA-016" & trees_fix$TagCode == 1 & trees_fix$DBHcm == "443"] <- 44.3
+```
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you check that the line of code above worked?</strong>
+
+<details><summary class='drop2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. Show the range of the original and fixed data frames
+```{r check1, fold.output = F}
+range(trees$DBHcm)
+range(trees_fix$DBHcm)
+```
+
+Option 2. Plot a histogram of the original and fixed data frames
+```{r check2, fold.output = F}
+hist(trees$DBHcm)
+hist(trees_fix$DBHcm)
+```
+
+Option 3. Calculate max of DBHcm column
+```{r check3, fold.output = F}
+max(trees$DBHcm)
+max(trees_fix$DBHcm)
+```
+
+</details>
+</div>
+</details>
+<br>
+</details>
+
+

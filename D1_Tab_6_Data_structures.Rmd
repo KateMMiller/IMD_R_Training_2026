@@ -1,3 +1,4 @@
+
 #### Data structures
 
 We're going to take a little detour into data structures at this point. It'll all tie back in to our tree data.
@@ -8,7 +9,7 @@ The data frame we just examined is a type of data structure. A data structure is
 
 Vectors are the simplest data structure in R. You can think of vectors as one column of data in an Excel spreadsheet, and the elements are each row in the column. Here are some examples of vectors:
 
-```{r Vectors, fold.output = FALSE}
+```{r, Vectors, fold.output=FALSE}
 digits <- 0:9  # Use x:y to create a sequence of integers starting at x and ending at y
 digits
 is_odd <- rep(c(FALSE, TRUE), 5)  # Use rep(x, n) to create a vector by repeating x n times 
@@ -23,7 +24,7 @@ Note the use of `c()`. The `c()` function stands for *combine*, and it combines 
 
 Let's play around with vectors a little more. We can use `is.vector()` to test whether something is a vector. We can get the length of a vector with `length()`. Note that single values in R are just vectors of length one.
 
-```{r Vectors_II}
+```{r, Vectors_II, fold.output=FALSE}
 is.vector(digits)  # Should be TRUE
 is.vector(bird_ids)  # Should also be TRUE
 
@@ -55,7 +56,7 @@ There are two more data types, complex and raw, but you are unlikely to encounte
 
 You can use the `class()` function to get the data type of a vector:
 
-```{r cls}
+```{r, cls, fold.output=FALSE}
 class(bird_ids)
 class(tree_dbh)
 class(digits)
@@ -64,7 +65,7 @@ class(is_odd)
 
 If you need to access a single element of a vector, you can use the syntax `my_vector[x]` where `x` is the element's *index* (the number corresponding to its position in the vector). You can also use a vector of indices to extract multiple elements from the vector. Note that in R, indexing starts at 1 (i.e. `my_vector[1]` is the first element of `my_vector`). If you've coded in other languages, you may be used to indexing starting at 0.
 
-```{r SubsettingVectors}
+```{r, SubsettingVectors, fold.output=FALSE}
 second_bird <- bird_ids[2]
 second_bird
 top_two_birds <- bird_ids[c(1,2)]
@@ -73,14 +74,14 @@ top_two_birds
 
 Logical vectors can also be used to subset a vector. The logical vector must be the length of the vector you are subsetting. 
 
-```{r SubsettingVectorsLogical}
+```{r, SubsettingVectorsLogical, fold.output=FALSE}
 odd_digits <- digits[is_odd]
 odd_digits
 ```
 
 You can also return only unique values from a vector. The `bird_ids` vector has dark-eyed juncos listed twice. To get only unique species, run the following code. I also added `sort()` to sort the list alphabetically.
 
-```{r birdunq}
+```{r birdunq, fold.output=FALSE}
 sort(unique(bird_ids))
 ```
 
@@ -88,42 +89,43 @@ sort(unique(bird_ids))
 <br>
 
 <details open><summary class = "drop">Data frames and brackets</summary>
-<h4>Accessing dta.frame rows and columns</h4>
+
+<h3>Accessing data.frame rows and columns</h3>
 Let's revisit our wetland data frame. We've explored the data frame as a whole, but it's often useful to look at one column at a time. To do this, we'll use the `$` syntax:
 
 <p class='code'>See list of all sites and species in the wetland data. You can view the output by clicking on the R output drop down.</p>
-```{r DataFrameColumn, fold.output = TRUE}
+```{r, DataFrameColumn, fold.output=TRUE}
 ACAD_wetland$Site_Name
 ACAD_wetland$Latin_Name
 ```
 
-<h4>Square brackets</h4>
+<h3>Square brackets</h3>
 Every data frame has 2 dimensions. The first dimension is rows and the second is columns. Square brackets `[,]` are how you access specific rows and columns in a data frame using base R. This was one of the hardest concepts for me to understand when I was starting out. There are easier ways to work with data frame rows and columns, which I'll show you on Day 2. It is still useful to have a basic understanding of how to interpret square brackets, in case you encounter them on StackOverflow or other R help sites. 
 
 The code below asks for the dimensions of the ACAD_wetland data frame, and returns 508 11. That means there are 508 rows, and 11 columns. The square brackets allow you to either subset rows, columns, or both at the same time, with rows specified first and columns second.
 
 <p class = 'code'>Return data frame number of rows and columns by checking data frame dimensions. Click on R output to view results.</p>
-```{r dimdf}
+```{r, dimdf, fold.output=FALSE}
 dim(ACAD_wetland)
 nrow(ACAD_wetland) # first dim
 ncol(ACAD_wetland) # second dim
 ```
 
 <p class = 'code'>Return first 5 rows of the data frame.</p>
-```{r rows}
+```{r, rows, fold.output=TRUE}
 ACAD_wetland[1:5,]
 ACAD_wetland[c(1, 2, 3, 4, 5),] #equivalent but more typing
 ```
 
 <p class = 'code'>Return first 5 rows and a subset of columns of the data frame</p>
-```{r rowscols}
+```{r, rowscols, fold.output=TRUE}
 ACAD_wetland[1:5, c("Site_Name", "Latin_Name", "Common", "Year", "PctFreq")]
 ```
 
 You can specify columns by name or by index (integer indicating position of column). It's almost always best to refer to columns by name when possible because it makes your code easier to read and prevents your code from breaking if columns get reordered. But, in case you come across code with numbers in the column part of the brackets, here's what it looks like. Note the empty space to the left of the comma. That means you want all rows, but only the first 4 columns. 
 
 <p class = 'code'>Return all rows and first 4 columns of the data frame</p>
-```{r rowscols2, fold.output = T}
+```{r rowscols2, fold.output = TRUE}
 ACAD_sub <- ACAD_wetland[ , 1:4] # works, but risky
 ACAD_sub2 <- 
   ACAD_wetland[,c("Site_Name", "Site_Type", "Latin_Name", "Common")] #same result, but better
@@ -133,38 +135,33 @@ head(ACAD_wetland)
 head(ACAD_sub)
 head(ACAD_sub2)
 ```
-
 </details>
-<br>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: How would you look at the the first 4 even rows (2, 4, 6, 8), and first 2 columns?</strong>
 
 <details><summary class='drop2'>Answer</summary>
-```{r chal1}
+```{r chal1, fold.output = F}
 ACAD_wetland[c(2, 4, 6, 8), c(1, 2)]
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: How many unique species are there in the ACAD_wetland data frame?</strong>
 
 <details><summary class='drop2'>Answer</summary>
-```{r rows2a, results = "hide", fold.output = TRUE}
+```{r rows2a, results = "hide"}
 # Option 1
 length(unique(ACAD_wetland[, "Latin_Name"]))
 ```
-<br>
 
-```{r rows2b, fold.output = TRUE}
+```{r rows2b, fold.output = FALSE}
 # Option 2
 length(unique(ACAD_wetland$Latin_Name)) # equivalent
 ```
-</div>
 </details>
-<br>
+</div>
 
 <details open><summary class = 'drop'>Advanced bracketry</summary>
 You can do more than just subset by row numbers and column names. A couple more advanced use of brackets are below. 
@@ -175,29 +172,28 @@ Another important point about R is that there are often multiple ways to perform
 
 
 <p class = "code">Filter data so only invasive species = TRUE are returned. Click on R Output below to view results.</p>
-```{r inv, fold.output = TRUE}
+```{r inv, fold.output = FALSE}
 ACAD_wetland$Latin_Name[ACAD_wetland$Invasive == TRUE]
 ACAD_wetland[ACAD_wetland$Invasive == TRUE, "Latin_Name"] # equivalent
 
 ```
 
-<br>
-
 <div class="alert alert-info">
 <strong>CHALLENGE: Which sites have species that are considered protected on them (Protected = TRUE)?</strong>
 
 <details><summary class='drop2'>Answer</summary>
-```{r rows2a2}
+```{r, rows2a2, results = 'hide'}
 # Option 1 - used unique to just return unique site name
 unique(ACAD_wetland$Site_Name[ACAD_wetland$Protected == TRUE])
 
 ```
-<br>
 
-```{r rows2b2}
+```{r, rows2b2, fold.output=FALSE}
 # Option 2
 unique(ACAD_wetland[ACAD_wetland$Protected == TRUE, "Site_Name"])
 ```
+</details>
 </div>
+<br>
 </details>
 <br>

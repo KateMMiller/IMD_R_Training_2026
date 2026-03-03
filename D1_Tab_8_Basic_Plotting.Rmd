@@ -1,0 +1,41 @@
+
+#### Basic plotting
+Visualizing the data is also important to get a sense for the data and look for potential errors and outliers. 
+
+Histograms are a great start. The code below generates a basic histogram plot of a specific column in the dataframe using the `hist()` function.
+
+```{r readtree2, results = 'hide', echo = F}
+trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
+```
+
+
+<p class='code'>Plot histogram of DBH measurements</p>
+```{r hist, fold.plot = T}
+hist(x = trees$DBHcm)
+```
+<br>
+Looking at the histogram, it looks like all of the measurements are below 100cm except for one that's way out in 400 range. You can also make a scatterplot of the data. If you only specify one column, the x axis will be the row number for each record, and the y axis will be the specified column.
+
+<p class='code'>Make point plot of DBH measurements</p>
+```{r pdbh1, fold.plot = T}
+plot(trees$DBHcm)
+```
+<br>
+Again, you can see there's one value that's greater than all of the others. 
+
+We can also plot two variables in a scatterplot. 
+
+<p class='code'>Make scatterplot of crown class vs. DBH measurements (Option 1)</p>
+```{r pdbh2, fold.plot = T}
+plot(trees$DBHcm ~ trees$CrownClassCode)
+```
+
+<p class='code'>Make scatterplot of crown class vs. DBH measurements (Option 2- better axis labels)</p>
+```{r pdbh3, fold.plot = T}
+plot(DBHcm ~ CrownClassCode, data = trees) # equivalent but cleaner axis titles
+
+```
+<br>
+Again, you can see there's one value that's greater than all of the others, and it's crown class code 3 (codominant). 
+
+

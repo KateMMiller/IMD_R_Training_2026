@@ -1,9 +1,3 @@
----
-output: 
-  html_document:
-    fig_caption: false
-    css: custom_styles.css
----
 
 #### Importing and saving data
 Most of the work we do in R relies on one or more existing datasets that we want to query or summarize, rather than creating our own in R. Importing data in R is therefore an important skill. R can import just about any data type, including CSV and MS Excel files. You can also import tables from MS Access and SQL databases using ODBC drivers. That's beyond the scope of this class, but I can share examples for anyone needing to import from a database. For now, I'll show how to work with CSVs and Excel spreadsheets. 
@@ -25,18 +19,17 @@ ACAD_wetland <- read.csv(
 View(ACAD_wetland)
 ```
 
-<p class = "code">Or, check out the first few or last few records in your console.</p> 
-```{r hdat, fold.output = FALSE}
+<p class = "code">Or, check out the first few or last few records in your console. Click on View R output to view output.</p> 
+```{r hdat, fold.output = TRUE}
 # Look at the top 6 rows of the data frame
 head(ACAD_wetland)
 ```
 
-```{r tdat}
+```{r tdat, fold.output = TRUE}
 # Look at the bottom 6 rows of the data frame
 tail(ACAD_wetland)
 ```
 </details>
-<br>
 
 <details open><summary class = 'drop'>Save CSV</summary>
 <p class = "code">Now write the csv to disk and show how to import from your computer. </p>

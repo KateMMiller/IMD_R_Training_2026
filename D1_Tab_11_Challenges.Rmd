@@ -1,0 +1,162 @@
+#### Day 1 Challenges
+
+If you're starting a new session to answer these questions, you'll need to read in the wetland and tree data frames again.
+
+<p class = 'code'>Read in example ACAD wetland data from url</p>
+```{r c1rdat, eval = F}
+ACAD_wetland <- read.csv(
+  "https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/ACAD_wetland_data_clean.csv"
+  )
+```
+
+<p class = 'code'>Read in example NETN tree data from url</p>
+```{r c1readtree, eval = F}
+trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
+```
+
+
+<div class="alert alert-info">
+<strong>Question 1. How would you look at the the first 4 even rows (2, 4, 6, 8), and first 2 columns?</strong>
+
+<details><summary class='code2'>Answer</summary>
+```{r d1chal1, fold.output = F}
+ACAD_wetland[c(2, 4, 6, 8), c(1, 2)]
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Question 2. How many unique species are there in the ACAD_wetland data frame?</strong>
+
+<details><summary class='code2'>Answer</summary>
+```{r d1rows2a, results = "hide"}
+# Option 1
+length(unique(ACAD_wetland[, "Latin_Name"]))
+```
+
+```{r d1rows2b, fold.output = FALSE}
+# Option 2
+length(unique(ACAD_wetland$Latin_Name)) # equivalent
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Question 3. Which sites have species that are considered protected on them (Protected = TRUE)?</strong>
+
+<details><summary class='code2'>Answer</summary>
+```{r, d1rows2a2, results = 'hide'}
+# Option 1 - used unique to just return unique site name
+unique(ACAD_wetland$Site_Name[ACAD_wetland$Protected == TRUE])
+
+```
+
+```{r, d1rows2b2, fold.output=FALSE}
+# Option 2
+unique(ACAD_wetland[ACAD_wetland$Protected == TRUE, "Site_Name"])
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Question 4. How many trees are on Plot MIMA-012?</strong>
+<details><summary class='code2'>Answer</summary>
+
+
+
+```{r d1chal4}
+mima12 <- subset(trees, Plot_Name == "MIMA-012")
+nrow(mima12) # 12
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Question 5. How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-012?</strong>
+<details><summary class='code2'>Answer</summary>
+```{r d1chal5, fold.output = F}
+# OPTION 1
+mima12_as <- subset(trees, Plot_Name == "MIMA-012" & TreeStatusCode == "AS")
+nrow(mima12_as) # 6
+
+# OPTION 2
+mima12 <- trees[trees$Plot_Name == "MIMA-012",]
+table(mima12$TreeStatusCode) # 6
+
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Question 6. Find the DBH record that's > 400cm DBH.</strong>
+
+<details><summary class='code2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. View the data and sort by DBH.
+```{r d1vtrees, eval = F}
+View(trees)
+```
+
+Option 2. Find the max DBH value and subset the data frame
+```{r d1maxdbh, fold.output = F}
+max_dbh <- max(trees$DBHcm, na.rm = TRUE)
+trees[trees$DBHcm == max_dbh,]
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Question 7. What is the value of the largest DBH, and which record does it belong to?</strong>
+
+<details><summary class='code2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. View the data and sort by DBH.
+```{r d1vtrees2, eval = F}
+View(trees)
+```
+
+Option 2. Find the max DBH value and subset the data frame
+```{r d1maxdbh2}
+max_dbh <- max(trees$DBHcm, na.rm = TRUE)
+max_dbh #443
+trees[trees$DBHcm == max_dbh,]
+# Plot MIMA-016, TagCode = 1.
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Question 8. How would you check that the line of code above worked?</strong>
+
+<details><summary class='code2'>Answer</summary>
+There are multiple ways to do this. Two examples are below.
+
+Option 1. Show the range of the original and fixed data frames
+```{r d1check1, fold.output = F}
+range(trees$DBHcm)
+range(trees_fix$DBHcm)
+```
+
+Option 2. Plot a histogram of the original and fixed data frames
+```{r d1check2, fold.output = F}
+hist(trees$DBHcm)
+hist(trees_fix$DBHcm)
+```
+
+Option 3. Calculate max of DBHcm column
+```{r d1check3, fold.output = F}
+max(trees$DBHcm)
+max(trees_fix$DBHcm)
+```
+</details>
+</div>
+<br>

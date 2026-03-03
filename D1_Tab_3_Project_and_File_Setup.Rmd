@@ -1,9 +1,3 @@
----
-output: 
-  html_document:
-    fig_caption: false
-    css: custom_styles.css
----
 
 #### Project and File Setup
 <details open><summary class='drop'>File organization</summary>

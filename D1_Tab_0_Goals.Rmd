@@ -1,11 +1,5 @@
----
-output: 
-  html_document:
-    fig_caption: false
-    css: custom_styles.css
----
 
-#### Day 1 Goals
+#### Day 1 Goals {.tabset}
 <b>Overall goals for the first day are: </b>
 
 1. Get comfortable navigating RStudio IDE, such as opening a new project or script, running code and viewing the output, etc. 
