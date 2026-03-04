@@ -1,13 +1,13 @@
 
 #### Data structures
 
-We're going to take a little detour into data structures at this point. It'll all tie back in to our tree data.
+We're going to take a little detour into data structures at this point. 
 
 The data frame we just examined is a type of data structure. A data structure is what it sounds like: it's a structure that holds data in an organized way. There are multiple data structures in R, including vectors, lists, arrays, matrices, data frames, and tibbles (more on this unfortunately-named data structure later). Today we'll focus on vectors and data frames.
 
 <details open><summary class = 'drop'>Vectors</summary>
 
-Vectors are the simplest data structure in R. You can think of vectors as one column of data in an Excel spreadsheet, and the elements are each row in the column. Here are some examples of vectors:
+Vectors are the simplest data structure in R. You can think of vectors as one column of data in an Excel spreadsheet. Vectors only have one dimension, and can be accessed by their row number. Here are some examples of vectors:
 
 ```{r, Vectors, fold.output=FALSE}
 digits <- 0:9  # Use x:y to create a sequence of integers starting at x and ending at y
@@ -22,38 +22,19 @@ bird_ids
 
 Note the use of `c()`. The `c()` function stands for *combine*, and it combines elements into a single vector. The c() function is a fairly universal way to combine multiple elements in R, and you’re going to see it over and over.
 
-Let's play around with vectors a little more. We can use `is.vector()` to test whether something is a vector. We can get the length of a vector with `length()`. Note that single values in R are just vectors of length one.
-
-```{r, Vectors_II, fold.output=FALSE}
-is.vector(digits)  # Should be TRUE
-is.vector(bird_ids)  # Should also be TRUE
-
-length(digits)  # Hopefully this is 10
-length(tree_dbh)
-
-# Even single values in R are stored as vectors
-length_one_chr <- "length one vector"
-length_one_int <- 4
-is.vector(length_one_chr)
-is.vector(length_one_int)
-length(length_one_chr)
-length(length_one_int)
-```
-
 In the examples above, each vector contains a different type of data. `digits` contains integers, `is_odd` contains logical (true/false) values, `bird_ids` contains text, and tree_dbh contains decimal numbers. That's because a given vector can only contain a single type of data. 
 </details>
 </br>
 
 <details open><summary class='drop'>Data Types</summary>
-In R, there are four *data types* that we will typically encounter:
+In R, there are five main *data types* that we will typically encounter:
 
   - **character**  Regular text, denoted with double or single quotation marks (e.g. `"hello"`, `"3"`, `"R is my favorite programming language"`)
   - **numeric**  Decimal numbers (e.g. `23`, `3.1415`)
   - **integer**  Integers. If you want to explicitly denote a number as an integer in R, append `L` to it or use `as.integer()` (e.g. `5L`, `as.integer(30)`).
   - **logical**  True or false values (`TRUE`, `FALSE`). Note that `TRUE` and `FALSE` must be all-uppercase.
+  - **date-time** specially formatted field for dates or time using POSIX format.
   
-There are two more data types, complex and raw, but you are unlikely to encounter these so we won't cover them here.
-
 You can use the `class()` function to get the data type of a vector:
 
 ```{r, cls, fold.output=FALSE}
@@ -72,13 +53,6 @@ top_two_birds <- bird_ids[c(1,2)]
 top_two_birds
 ```
 
-Logical vectors can also be used to subset a vector. The logical vector must be the length of the vector you are subsetting. 
-
-```{r, SubsettingVectorsLogical, fold.output=FALSE}
-odd_digits <- digits[is_odd]
-odd_digits
-```
-
 You can also return only unique values from a vector. The `bird_ids` vector has dark-eyed juncos listed twice. To get only unique species, run the following code. I also added `sort()` to sort the list alphabetically.
 
 ```{r birdunq, fold.output=FALSE}
@@ -88,10 +62,36 @@ sort(unique(bird_ids))
 </details>
 <br>
 
-<details open><summary class = "drop">Data frames and brackets</summary>
+<details open><summary class = "drop">Data Frame Properties</summary>
+Data frames are the main way will will be interacting with data in R. They're essentially like spreadsheets in excel with specific properties. If you've ever heard of tibbles, they're a slightly fancier version of data frames, but in general behave like data frames.
 
-<h3>Accessing data.frame rows and columns</h3>
-Let's revisit our wetland data frame. We've explored the data frame as a whole, but it's often useful to look at one column at a time. To do this, we'll use the `$` syntax:
+Properties of data frames: 
+<ol>
+<li>Just as the name implies, data frames are rectangular. That means each column has the same number of rows. Each row has the same number of columns. But data frames can have different number of columns and rows (ie rectangular, not square).</li>
+<li>Data frames have 2 dimensions: 1 = Rows, and 2 = Columns.</li>
+<li>You can access the data within data frames by specifying the row, the column, or both at the same time.</li>
+<li>Each column in a data frame is assigned one of five main data types: numeric, integer, character, logical, or date-time
+</ol>
+
+R is strict about assigning data types to columns, such that any text in an otherwise numeric field will turn the entire column into a character. Similarly, if there's anything besides TRUE, FALSE, or a blank in a field meant to be TRUE/FALSE, R will treat that as a character field instead of logical. So, if R treats as a character something that should be a numeric field, it's a good clue there may be a typo or issue in your data needing attention. You can check the assigned data types using the `str()` function.
+
+
+```{r dfp}
+str(ACAD_wetland)
+```
+
+</details>
+<br>
+<details open><summary class = 'drop'>Accessing Data Frame Rows and Columns</summary>
+<h3>Show me the money</h3>
+One way to access the column dimension in data frames is to use the `$` syntax. The `$` is used to separate the data frame name from the column name. It's similar to the [].[] or []![] syntax in Access, where the left side of the ./! is the table or query name, and the right side is the column name. 
+
+To view the names of the columns in a data frame, you can use the `names()` function, or use `head()` to see the first 6 rows with column names. Whatever you prefer. I'll use the former for now.
+
+<p class='code'>See column names in wetland data.</p>
+```{r, DataFrameColumnames, fold.output=TRUE}
+names(ACAD_wetland)
+```
 
 <p class='code'>See list of all sites and species in the wetland data. You can view the output by clicking on the R output drop down.</p>
 ```{r, DataFrameColumn, fold.output=TRUE}
@@ -99,10 +99,10 @@ ACAD_wetland$Site_Name
 ACAD_wetland$Latin_Name
 ```
 
-<h3>Square brackets</h3>
-Every data frame has 2 dimensions. The first dimension is rows and the second is columns. Square brackets `[,]` are how you access specific rows and columns in a data frame using base R. This was one of the hardest concepts for me to understand when I was starting out. There are easier ways to work with data frame rows and columns, which I'll show you on Day 2. It is still useful to have a basic understanding of how to interpret square brackets, in case you encounter them on StackOverflow or other R help sites. 
+<h3>Square brackets `[ , ]`</h3>
+Remember that every data frame has 2 dimensions. The first dimension is rows and the second is columns. I
 
-The code below asks for the dimensions of the ACAD_wetland data frame, and returns 508 11. That means there are 508 rows, and 11 columns. The square brackets allow you to either subset rows, columns, or both at the same time, with rows specified first and columns second.
+The code below asks for the dimensions of the ACAD_wetland data frame, and returns 508 11. That means there are 508 rows, and 11 columns. 
 
 <p class = 'code'>Return data frame number of rows and columns by checking data frame dimensions. Click on R output to view results.</p>
 ```{r, dimdf, fold.output=FALSE}
@@ -111,7 +111,17 @@ nrow(ACAD_wetland) # first dim
 ncol(ACAD_wetland) # second dim
 ```
 
-<p class = 'code'>Return first 5 rows of the data frame.</p>
+Square brackets `[rows, columns]` are how you access specific rows and columns in a data frame using base R. 
+<ul>
+<li>You can specify row numbers or match specific patterns, like return all TRUE values.</li>
+<li>You can specify column numbers or names to return specific columns</li>
+<li>If you want to return specific columns and all rows, you can leave the left side of the "," blank.</li>
+<li>If you want to return specific rows and all columns, you can leave the right side of the "," blank.</li>
+</ul>
+
+This was one of the hardest concepts when I was starting out. Don't worry if this isn't immediately intuitive. There are easier ways to work with data frame rows and columns, which I'll show you on Day 2. It is still useful to have a basic understanding of how to interpret square brackets, in case you encounter them on StackOverflow or other R help sites. Let's work through some examples of using the square brackets to access rows, columns and/or both.
+
+<p class = 'code'>Return first 5 rows of the wetland data frame.</p>
 ```{r, rows, fold.output=TRUE}
 ACAD_wetland[1:5,]
 ACAD_wetland[c(1, 2, 3, 4, 5),] #equivalent but more typing
@@ -135,7 +145,33 @@ head(ACAD_wetland)
 head(ACAD_sub)
 head(ACAD_sub2)
 ```
+
+
+#+++++ ENDED HERE +++++
+<p class = 'code'>Pattern match to return species that are not invasive</p>
+```{r rowscols2, fold.output = TRUE}
+ACAD_sub <- ACAD_wetland[ , 1:4] # works, but risky
+ACAD_sub2 <- 
+  ACAD_wetland[,c("Site_Name", "Site_Type", "Latin_Name", "Common")] #same result, but better
+
+# compare the two data frames to the original
+head(ACAD_wetland)
+head(ACAD_sub)
+head(ACAD_sub2)
+```
+
+
+
 </details>
+<br>
+
+<details open><summary class = "drop">Tidy Data format</summary>
+For most of the tasks you will do in R, you will want your data organized in a particular format, often called Tidy Data. 
+
+<img src="./images/tidy_data/png" alt = "Tidy Data">
+<a href = "https://r4ds.hadley.nz/data-tidy.html">Figure From R for Data Science</a>
+</details>
+<br>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: How would you look at the the first 4 even rows (2, 4, 6, 8), and first 2 columns?</strong>
