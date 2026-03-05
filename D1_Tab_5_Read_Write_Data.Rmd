@@ -72,7 +72,7 @@ library(readxl) # importing xlsx
 ```
 
 <li class = "code">Write CSV to .xlsx to data folder. I'm going in this order to keep this training stand-alone. The `read_xlsx()` function can't read from a url like `read.csv()` can.</li>
-```{r writexl}
+```{r writexl, eval = F}
 write_xlsx(ACAD_wetland, "./data/ACAD_wetland_data_clean.xlsx")
 ```
 
