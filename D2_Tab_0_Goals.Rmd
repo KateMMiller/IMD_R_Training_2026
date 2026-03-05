@@ -1,0 +1,16 @@
+---
+output: 
+  html_document:
+    css: custom_styles.css
+---
+#### Day 2 Goals
+
+Goals for Day 2: 
+<ol>
+<li>Exposure to the main tidyverse packages and philosophy behind it.</li>
+<li>Comfortable filtering and selecting data, renaming and creating new columns in `dplyr` </li>
+<li>dealing with NAs/0s</li>
+<li>Working with dates</li>
+<li>Data visualization best practices</li>
+<li>Introduction to ggplot2</li>
+</ol>

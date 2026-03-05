@@ -7,7 +7,9 @@
 3. Basic understanding of variables, functions, and data frames.
 4. Ability to explore data frames, such as the number of columns, min/max of different columns, data type of column, basic plotting, etc. 
 5. Basic understanding of square brackets to view and filter data[,]. This is probably the hardest concept you'll learn this week. The next two days I will show you easier ways to work with your data that don't involve brackets.
-6. Able to access help within and outside of R.
+6. Understanding of tidy data format (rows are observations; columns are variables).
+7. Able to access help within and outside of R.
+
 
 <img src = "./images/R_journey.png" alt = 'R journey' style = "display:block;margin-left:auto;margin-right:auto;width:450px;">
 <center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://allisonhorst.com">Artwork by @allison_horst</a></center>

@@ -40,13 +40,14 @@ sort(unique(bird_ids))
 <details open><summary class='drop'>Data Types</summary>
 In the examples above, each vector contains a different type of data: `digits` contains integers, `is_odd` contains logical (TRUE/FALSE) values, `bird_ids` contains text, and `tree_dbh` contains decimal numbers. That's because a given vector can only contain a single type of data. 
 
-In R, there are five main *data types*:
+In R, there are six main *data types*:
 
   - **character**  Regular text, denoted with double or single quotation marks (e.g. `"hello"`, `"3"`, `"R is my favorite programming language"`)
   - **numeric**  Decimal numbers (e.g. `23`, `3.1415`)
   - **integer**  Integers. If you want to explicitly denote a number as an integer in R, append `L` to it or use `as.integer()` (e.g. `5L`, `as.integer(30)`).
   - **logical**  True or false values (`TRUE`, `FALSE`). Note that `TRUE` and `FALSE` must be all-uppercase.
   - **date-time** specially formatted field for dates or time using POSIX format.
+  - **factor** These are strings that have defined levels (e.g., Parks in your network) that are kept with the column even if no records exist for a given factor level. Factors used to be a lot more common in R. I typically only use them in plotting to force an order level that's not alphabetical.
   
 You can use the `class()` function to get the data type of a vector:
 

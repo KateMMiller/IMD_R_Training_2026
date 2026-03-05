@@ -8,7 +8,8 @@ Your R version should be at least 4.4.3 or above to make sure everyone's code be
 A number of packages are required to follow along with data wrangling and visualization sessions. Please try to install these in RStudio ahead of time by running the code below. If you don't know how to run the code, open view the <b>Running Code Screencast</b> below for how to do this. 
 ```{r reqpkg, echo = T, eval = F}
 packages <- c("tidyverse", "ggthemes", "GGally", "RColorBrewer", 
-              "viridis", "scales", "plotly", "patchwork")
+              "viridis", "scales", "plotly", "patchwork", 
+              "readxl", "writexl")
 
 install.packages(setdiff(packages, rownames(installed.packages())))  
 

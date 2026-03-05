@@ -1,3 +1,8 @@
+---
+output: 
+  html_document:
+    css: custom_styles.css
+---
 
 #### Data Exploration
 <details open><summary class = 'drop'>Exploring and fixing data</summary>
@@ -61,13 +66,13 @@ sort(unique(trees2$DecayClassCode_num)) # Only numbers show in table
 <br>
 
 <details open><summary class ='drop'>Remove QAQC visits</summary>
-Using the `trees2` data frame, which fixed the decay class column by making the `DecayClassCode_num` field numeric, we're now going to drop visits that were for QAQC using a new base R function called `subset()`. I will also show the bracket approach. 
+Using the `trees2` data frame, which fixed the decay class column by making the `DecayClassCode_num` field numeric, we're now going to drop visits that were for QAQC using a new base R function called `subset()`. The `subset()` function allows you to reduce the dimensions of a data frame. You can reduce rows, columns, or both in the same function call. I will also show the bracket approach. 
 
-<p class = 'code'>Remove records with "PM" as DecayClassCode </p>
+<p class = 'code'>Remove QAQC visits (IsQAQC == TRUE) and drop the DecayClassCode column </p>
 ```{r tr3}
-trees3 <- subset(trees2, IsQAQC == FALSE) # Note the importance of FALSE all caps
-trees3 <- subset(trees2, IsQAQC != TRUE) # equivalent
-trees3 <- trees2[trees2$IsQAQC == FALSE,] #equivalent but not as easy to follow
+trees3 <- subset(trees2, IsQAQC == FALSE, select = -DecayClassCode) # Note the importance of FALSE all caps
+trees3 <- subset(trees2, IsQAQC != TRUE, select = -DecayClassCode) # equivalent
+trees3 <- trees2[trees2$IsQAQC == FALSE, -12] #equivalent but not as easy to follow
 ```
 </details><br>
 
@@ -84,12 +89,24 @@ str(trees3)
 ```
 </details><br>
 
+<details open><summary class = 'drop'>Rename ScientificName to Species for shorter typing</summary>
+Renaming columns in base R is kind of a pain, to the point that I have to look it up every time I need to do it. I'll show you an easier way to do that tomorrow.
+
+<p class = 'code'>Rename ScientificName column</p>
+```{r rename, fold.output = T}
+names(trees3) # original names
+names(trees3)[names(trees3) == "ScientificName"] <- "Species"
+names(trees3) # check that it worked
+```
+</details>
+<br>
+
 <details open><summary class = 'drop'>Create a `Plot_Name` column via `paste()`</summary>
 The `paste()` and `paste0()` functions are very handy for creating new columns that are combinations of existing functions. The code below will create a new column named `Plot_Name` that's a combination of `ParkUnit` and `PlotCode`. 
 
 <p class ='code'>Create new `Plot_Name` column</p>
 ```{r paste1}
-trees3$Plot_Name <- paste(trees3$ParkUnit, "-", trees3$PlotCode, sep = "")
+trees3$Plot_Name <- paste(trees3$ParkUnit, trees3$PlotCode, sep = "-")
 trees3$Plot_Name <- paste0(trees3$ParkUnit, "-", trees3$PlotCode) #equivalent- by default no separation between elements of paste.
 
 ```
