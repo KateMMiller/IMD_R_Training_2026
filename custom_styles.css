@@ -16,7 +16,7 @@ h2 {
   font-weight: bold;
 }
 
-h3 {
+h5 {
   font-family: "Arial",Arial,sans-serif;
   font-size:16px;
   font-style: italic;
@@ -25,7 +25,7 @@ h3 {
   margin:0px 0px 0px 0px;
 }
 
-h3.title{
+h5.title{
   padding-bottom:10px
 }
 
@@ -39,8 +39,8 @@ h4 {
 h5 {
   font-family: "Arial",Arial,sans-serif;
   font-size:16px;
-  font-style: italic;
   font-weight: bold;
+  font-style: normal;
   padding:0px 0px 0px 0px;
   margin:0px 0px 0px 0px;
 }
@@ -84,6 +84,9 @@ br {
   margin:0px 0px 0px 0px;
 }
 
+.note{
+  background-color: #C7E8BE; /*#FFFBA3;*/
+}
 
 .ques{
   color:Red;

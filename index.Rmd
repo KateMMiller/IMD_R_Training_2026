@@ -83,17 +83,6 @@ body {
 ```{r basic, child = "D1_Tab_8_Basic_Plotting.Rmd", eval = T}
 ```
 
-```{r help, child = "D1_Tab_9_Getting_Help.Rmd", eval = T}
-```
-
-```{r keyshorts, child = "D1_Tab_10_Keyboard_Shortcuts.Rmd", eval = T}
-```
-
-```{r chall_d1, child = "D1_Tab_11_Challenges.Rmd", eval = T}
-```
-
-
-
 ### Day 2: Wrangling and Viz I {.tabset}
 - Data wrangling I: 
     - Base R filter, subset, new column, rename column
@@ -124,12 +113,21 @@ body {
     - consistent code style
     - object naming
     
+### Challenges {.tabset}
+
+```{r chall_d1, child = "D1_Tab_C1_Challenges.Rmd", eval = T}
+```
+
+### Getting Help {.tabset}
+```{r help, child = "R_Tab_1_Getting_Help.Rmd", eval = T}
+```
+
 ### Resources {.tabset}
 
 #### Online Resources
 There's a lot of great online material for learning new applications of R. The ones we've used the most are listed below. 
 
-<h3>Online Books</h3>
+<h5>Online Books</h5>
 <ul>
 <li><a href="https://r4ds.had.co.nz/">R for Data Science</a> First author is Hadley Wickham, the programmer behind the tidyverse. There's a lot of good stuff in here, including a chapter on using R Markdown, which is what we used to generate this training website.</li>
 <li><a href="https://ggplot2-book.org//">ggplot2: Elegant Graphics for Data Analysis</a> A great reference on ggplot2 also by Hadley Wickham.</li> 
@@ -139,7 +137,7 @@ There's a lot of great online material for learning new applications of R. The o
 <li><a href="https://mastering-shiny.org/">Mastering Shiny</a> And another Hadley Wickham book on building shiny apps.</li>
 </ul>
 
-<h3>Other useful sites</h3>
+<h5>Other useful sites</h5>
 <ul>
 <li><a href="https://teams.microsoft.com/l/channel/19%3a278f30e624114373a65d9611498bd4fe%40thread.skype/Community%2520of%2520Practice?groupId=e4a2e021-b4cf-4cf6-acef-d0978b86c1a0&tenantId=0693b5ba-4b18-4d7b-9341-f32f400a5494">NPS_IMD_Data_Science_and_Visualization > Community of Practice</a> is an IMD work group that meets once a month talk about R and Data Science. There are also notes, materials and recordings from previous meetings, a Wiki with helpful tips, and the chat is a great place to post questions or cool tips you've come across. </li>
 <li><a href="https://stat545.com/index.html">STAT545</a> Jenny Bryan's site that accompanies the graduate level stats class of the same name. She includes topics on best practices for coding, and not just how to make scripts work. It's really well done.</li> 
@@ -149,6 +147,9 @@ There's a lot of great online material for learning new applications of R. The o
 </ul>
 
 <hr>
+
+```{r keyshorts, child = "R_Tab_2_Keyboard_Shortcuts.Rmd", eval = T}
+```
 
 #### Advanced topics
 - R Markdown (stand alone websites/docs) and R Shiny (interactive websites)

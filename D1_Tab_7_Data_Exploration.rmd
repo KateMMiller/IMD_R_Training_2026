@@ -1,15 +1,15 @@
 
 #### Data Exploration
-<details open><summary class = 'drop'>Exploring data and fixing</summary>
-We've already explored the wetland data a bit using `head()`, `str()`, and `View()`. These are functions that you will use over and over as you work with data in R. Below, I'm going to show how I get to know a data set in R.
+<details open><summary class = 'drop'>Exploring and fixing data</summary>
+We've already explored the wetland data a bit using `head()`, `str()`, `names()`, and `View()`. These are functions that you will use over and over as you work with data in R. Below, I'm going to show how I get to know a data set in R.
 
-<p class = 'code'>Read in example NETN tree data from url</p>
+<p class = 'code'>Read in example NETN tree data</p>
 ```{r readtree}
 trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
 ```
 
 <p class = 'code'>Look at first few records</p>
-```{r headt, fold.output = TRUE}
+```{r headt, fold.output = F}
 head(trees)
 ```
 
@@ -25,15 +25,20 @@ summary(trees)
 
 There's a lot to digest from the summary results. 
 <ul>
-<li>We can see that Plot_Name, Network, and Park_Unit are treated as characters.</li>
-<li>The range of plot numbers is 1 to 20, and there are no blanks (NAs) </li>
-<li>SampleDate is being interpreted as a character, not date. We'll fix that.</li>
+<li>We can see that Park_Unit and ScientificName are treated as characters, which makes sense.</li>
+<li>PlotCode is numeric, the range of plot numbers is 1 to 20, and there are no blanks (NAs) </li>
+<li>SampleDate is being interpreted as a character, not date. We'll fix that later.</li>
 <li>IsQAQC is being treated as TRUE/FALSE. We'll use that to filter out QAQC visits.</li>
 <li>SampleYear is all 2022.</li>
 <li>DBH ranges from 10 to 443.0, with 14 blanks (NAs).</li>
 <li>DecayClassCode is reading in as a character, not a number. That's weird. We will look deeper into that next.</li>
 </ul>
 
+Now we're going to clean up the various issues identified during exploration.
+
+</details><br>
+
+<details open><summary class ='drop'>Fix DecayClassCode</summary>
 <p class = 'code'>Look at unique values for DecayClassCode.</p>
 ```{r trdecay, fold.output = F}
 sort(unique(trees$DecayClassCode)) # sorts the unique values in the column
@@ -49,44 +54,76 @@ trees2$DecayClassCode[trees2$DecayClassCode == "PM"] <- NA
 trees2$DecayClassCode_num <- as.numeric(trees2$DecayClassCode)
 
 # check that it worked
-str(trees2)
-sort(unique(trees2$DecayClassCode_num))
+str(trees2) # DecayClassCode_num is numeric
+sort(unique(trees2$DecayClassCode_num)) # Only numbers show in table
 ```
+</details>
+<br>
 
-The other option would be to drop records with PM. Here we will use the base R `subset()` function, but also show the bracket approach. You first have to tell it which data frame you're subsetting. Then you tell it the logic to use to subset. In the case ! is interpreted in R as "NOT". So `DecayClassCode != "PM"` means to keep all records where the decay code does not match 'PM'. 
-
-Another note is that it generally does not matter whether you use single ' or double ", as long as you open and close with the same. 
+<details open><summary class ='drop'>Remove QAQC visits</summary>
+Using the `trees2` data frame, which fixed the decay class column by making the `DecayClassCode_num` field numeric, we're now going to drop visits that were for QAQC using a new base R function called `subset()`. I will also show the bracket approach. 
 
 <p class = 'code'>Remove records with "PM" as DecayClassCode </p>
 ```{r tr3}
-trees3 <- subset(trees, DecayClassCode != "PM")
-trees3 <- trees[trees$DecayClassCode != 'PM',] #equivalent but not as easy to follow
+trees3 <- subset(trees2, IsQAQC == FALSE) # Note the importance of FALSE all caps
+trees3 <- subset(trees2, IsQAQC != TRUE) # equivalent
+trees3 <- trees2[trees2$IsQAQC == FALSE,] #equivalent but not as easy to follow
 ```
-</details>
+</details><br>
+
+<details open><summary class = "drop">Convert SampleDate to Date</summary>
+<p class = 'code'>Convert SampleDate into a date-time instead of character. </p>
+```{r tr3dt}
+# Look at the sample date format
+head(trees3$SampleDate) # month/day/year
+
+# Create new column called Date
+trees3$Date <- as.Date(trees3$SampleDate, format = "%m/%d/%Y")
+str(trees3)
+
+```
+</details><br>
+
+<details open><summary class = 'drop'>Create a `Plot_Name` column via `paste()`</summary>
+The `paste()` and `paste0()` functions are very handy for creating new columns that are combinations of existing functions. The code below will create a new column named `Plot_Name` that's a combination of `ParkUnit` and `PlotCode`. 
+
+<p class ='code'>Create new `Plot_Name` column</p>
+```{r paste1}
+trees3$Plot_Name <- paste(trees3$ParkUnit, "-", trees3$PlotCode, sep = "")
+trees3$Plot_Name <- paste0(trees3$ParkUnit, "-", trees3$PlotCode) #equivalent- by default no separation between elements of paste.
+
+```
+
+<p class = 'note'>Coding Advice: In most cases, it does not matter whether you use single ' or double ", as long as you open and close with the same. The cases where it matters are where you have quotes within quotes. There you have to alternate your usage, like `print("Text in outer quote 'text printed as being within quotes' end with closing quote")`. </p>
+</details><br>
 
 <details open><summary class = 'drop'>Test your skills!</summary>
 
 <!-- Test skills section -->
 <div class="alert alert-info">
-<strong>CHALLENGE: How many trees are on Plot MIMA-012?</strong>
+<strong>CHALLENGE: How many trees are on Plot MIMA-12?</strong>
 <details><summary class='drop2'>Answer</summary>
 ```{r chal4}
-mima12 <- subset(trees, Plot_Name == "MIMA-012")
+mima12 <- subset(trees3, Plot_Name == "MIMA-12")
 nrow(mima12) # 12
 ```
 </div>
 </details>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-012?</strong>
+<strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12?</strong>
 <details><summary class='drop2'>Answer</summary>
-```{r chal5, fold.output = F}
-# OPTION 1
-mima12_as <- subset(trees, Plot_Name == "MIMA-012" & TreeStatusCode == "AS")
-nrow(mima12_as) # 6
 
+Option 1. Subset data then calculate number of rows
+```{r chal5, fold.output = F}
+mima12_as <- subset(trees3, Plot_Name == "MIMA-12" & TreeStatusCode == "AS")
+nrow(mima12_as) # 6
+```
+
+Option 2. Subset the data with brackets and use the `table()` function to tally status codes.
+```{r chal5b, fold.output = F}
 # OPTION 2
-mima12 <- trees[trees$Plot_Name == "MIMA-012",]
+mima12 <- trees3[trees3$Plot_Name == "MIMA-12",]
 table(mima12$TreeStatusCode) # 6
 
 ```
@@ -101,19 +138,19 @@ There are multiple ways to do this. Two examples are below.
 
 Option 1. View the data and sort by DBH.
 ```{r vtrees, eval = F}
-View(trees)
+View(trees3)
 ```
 
 Option 2. Find the max DBH value and subset the data frame
 ```{r maxdbh, fold.output = F}
-max_dbh <- max(trees$DBHcm, na.rm = TRUE)
-trees[trees$DBHcm == max_dbh,]
+max_dbh <- max(trees3$DBHcm, na.rm = TRUE)
+trees3[trees3$DBHcm == max_dbh,]
 ```
 </details>
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: What is the value of the largest DBH, and which record does it belong to?</strong>
+<strong>CHALLENGE: What is the exact value of the largest DBH, and which record does it belong to?</strong>
 
 <details><summary class='drop2'>Answer</summary>
 There are multiple ways to do this. Two examples are below.
@@ -125,55 +162,41 @@ View(trees)
 
 Option 2. Find the max DBH value and subset the data frame
 ```{r maxdbh2}
-max_dbh <- max(trees$DBHcm, na.rm = TRUE)
+max_dbh <- max(trees3$DBHcm, na.rm = TRUE)
 max_dbh #443
-trees[trees$DBHcm == max_dbh,]
+trees[trees3$DBHcm == max_dbh,]
 # Plot MIMA-016, TagCode = 1.
 ```
 </details>
 </div>
-</details>
 
-<details open><summary class='drop'>Replace value based on pattern matching</summary>
-Now let's say that you looked at the datasheet, and the actual DBH for that tree was 44.3 instead of 443.0. You can change that value in the original CSV by hand. But even better is to document that change in code. I always create a new data frame when I modify the original data frame, so I can always refer back to the original while I'm coding. I also use a pretty specific filter to make sure I'm not accidentally changing other data.
+<div class="alert alert-info">
+<strong>CHALLENGE: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
 
-<p class = 'code'>Replace 443 with 44.3 in code</p>
+<details><summary class = 'drop2'>Answer</summary>
+Let's say that you looked at the datasheet, and the actual DBH for that tree was 44.3 instead of 443.0. You can change that value in the original CSV by hand. But even better is to document that change in code. There are multiple ways to do this. Two examples are below.
+
+But first, it's good to create a new data frame when modifying the original data frame, so you can refer back to the original if needed. I also use a really specific filter to make sure I'm not accidentally changing other data.
+
+<p class = 'code'>Replace 443 with 44.3</p>
 ```{r trfx, fold.output = F}
 # create copy of trees data
-trees_fix <- trees
+trees_fix <- trees3
 
 # find the problematic DBH value, and change it to 44.3
 trees_fix$DBHcm[trees_fix$Plot_Name == "MIMA-016" & trees_fix$TagCode == 1 & trees_fix$DBHcm == "443"] <- 44.3
 ```
 
-<div class="alert alert-info">
-<strong>CHALLENGE: How would you check that the line of code above worked?</strong>
-
-<details><summary class='drop2'>Answer</summary>
-There are multiple ways to do this. Two examples are below.
-
-Option 1. Show the range of the original and fixed data frames
+Check that it worked by showing the range of the original and fixed data frames.
 ```{r check1, fold.output = F}
 range(trees$DBHcm)
 range(trees_fix$DBHcm)
-```
-
-Option 2. Plot a histogram of the original and fixed data frames
-```{r check2, fold.output = F}
-hist(trees$DBHcm)
-hist(trees_fix$DBHcm)
-```
-
-Option 3. Calculate max of DBHcm column
-```{r check3, fold.output = F}
-max(trees$DBHcm)
-max(trees_fix$DBHcm)
 ```
 
 </details>
 </div>
 </details>
 <br>
-</details>
+
 
 

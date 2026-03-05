@@ -1,5 +1,5 @@
 
-#### Start coding 
+#### Start Coding 
 <details open><summary class='drop'>Start a new script</summary>
 First let's create a new R script file called `day_1_script.R`. Make sure you are working in the `imd_r_intro` project that you just created. Click on the <b>New File</b> icon <img src = "./images/NewFile.PNG" alt = "new script"> in the top left corner. In the dropdown, select <b>R Script</b>. The source pane will appear with an untitled empty script. Go ahead and save it by clicking the <b>Save</b> icon (and make sure the <b>Source on Save</b> checkbox is deselected). Call your new script `day_1_script.R`.
 </details>
@@ -30,8 +30,8 @@ sqrt(9)
 cos(pi)
 
 ```
-
-Notice that when you run a line of code, the code and the result appear in the console. You can also type code directly into the console, but it won't be saved anywhere. As you get more comfortable with R, it can be helpful to use the console as a "scratchpad" for experimenting and troubleshooting. For now, it's best to err on the side of saving your code as a script so that you don't accidentally lose useful work.
+<br>
+<p class = 'note'> Coding Advice: Notice that when you run a line of code, the code and the result appear in the console. You can also type code directly into the console, but it won't be saved anywhere. As you get more comfortable with R, it can be helpful to use the console as a "scratchpad" for experimenting and troubleshooting. For now, it's best to err on the side of saving your code as a script so that you don't accidentally lose useful work. </p>
 </details>
 <br>
 
@@ -74,7 +74,8 @@ It's hard to get very far in R without making use of <b>functions</b>. Think of 
 
 <br>
 
-Note the difference in how RStudio color codes what it thinks are functions. There are a lot of pre-programmed functions in base R, which is what comes along with R when you install R. Installing R packages will add additional functions. You can also build your own. Names that R recognizes as a function are color coded differently than what R recognizes as text, numbers, etc. It's also good practice to not use existing functions as new object names. 
+<p class = "note">
+Coding Advice: Note the difference in how RStudio color codes what it thinks are functions. There are a lot of pre-programmed functions in base R, which is what comes along with R when you install R. Installing R packages will add additional functions. You can also build your own. Names that R recognizes as a function are color coded differently than what R recognizes as text, numbers, etc. It's good practice to not use existing functions as new object names.  </p>
 
 Commonly used base R functions include:
 <ul>

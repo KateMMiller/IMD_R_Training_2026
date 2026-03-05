@@ -75,6 +75,6 @@ Go to <b>Tools -> Global Options</b> and follow the steps below.
 <li>Set <b>Save workspace to .RData on exit:</b> to <b>Never</b>. The only reason not to set to "Never" is if you are working with a huge dataset that takes a long time to load and process. In that case, you may want to set <b>Save workspace to .RData on exit</b> to "Ask". When you close RStudio, it will ask you if you want to save your workspace image.</li>  
 </ul>
 <li>Change default pipe to base R pipe by gong to the <b>Code</b> tab, and <b>check</b> the box <b>Use native pipe operator, |> (requires R 4.1+)</b>. We will discuss what this pipe means tomorrow.</li>
-<li>Most other settings are whatever you prefer. Note that to change the color of your background and text, go to the <b>Appearance</b> tab. I prefer Cobalt.</li>
+<li>Most other settings are whatever you prefer. For example, to change the color of your background and text, go to the <b>Appearance</b> tab. I prefer Cobalt.</li>
 </ol>
 </details>
