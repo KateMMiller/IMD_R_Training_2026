@@ -3,8 +3,8 @@ output:
   html_document:
     css: custom_styles.css
 ---
-
 #### Tidyverse 
+
 <details open><summary class = 'drop'>Tidyverse background</summary>
 <img src = "./images/tidyverse_hex.png" alt = 'Tidyverse packages' style = "float:right; width:200px;">
 <span class = "capright"><a href="https://tidyverse.org?">From tidyverse.org</a></span>
@@ -17,6 +17,7 @@ Why I like the tidyverse:
 <li>Functions assume the tidy data format (rows = observations; columns = variables).</li>
 <li>Availability of tidyverse help and free online learning materials is excellent.</li>
 <li>Functions take data as the first argument, making it easy to pipe together multiple tasks (more on pipes later).</li>
+<li>Column names don't need to be quoted to refer to them in function arguments (called non-standard evaluation), making typing faster. </li>
 <li>Taken together, these features make the learning curve much shallower than base R.</li>
 </ul>
 
@@ -32,13 +33,21 @@ install.packages('tidyverse')
 library(tidyverse)
 ```
 
-<p class='note'>Coding Advice: When you type `library(tidyverse)`, you're loading all nine the packages in the tidyverse. If you're only using one or two packages, it's better to just load those to packages. It's clearer to the user which packages are needed to run your code and reduces dependencies. For this session, we're only going to use `dplyr`, so I will just load that.</p>
+<p class='note'><b>Coding Tip:</b> When you type `library(tidyverse)`, you're loading all nine the packages in the tidyverse. If you're only using one or two packages, it's better to just load those to packages. It's clearer to the user which packages are needed to run your code and reduces dependencies. For this session, we're only going to use `dplyr`, so I will just load that.</p>
 
 ```{r dplyr, message = F, warning = F}
 library(dplyr)
 ```
-</details><br>
+</details>
+<br>
+<details open><summary class = "drop">Tidy Data Format</summary>
+For most of the tasks you will do in R, you will want your data organized in a particular format, often referred to as Tidy Data (see below). Tidy data is organized such that columns are variables, like plot_number, date, measurement, and rows are observations. Each cell is a value. Base R and most R packages are designed to work with data in this format. Always following this approach saves mental and coding time in trying to figure out how to organize your data. The tidyverse suite of packages, which we'll talk about tomorrow, are especially optimized to work with data in this format. </p>
 
+<img src="./images/tidy_data.png" alt = "Tidy Data"  style = "width:90%;"><br>
+<a href = "https://r4ds.hadley.nz/data-tidy.html">Figure From R for Data Science</a>
+
+</details>
+<br>
 <details open><summary class = 'drop'>Core tidyverse packages (ordered from my most to least used): </summary>
 <ul>
 <li><b>ggplot2:</b> plotting package based on The Grammar of Graphics (more on that later).</li>

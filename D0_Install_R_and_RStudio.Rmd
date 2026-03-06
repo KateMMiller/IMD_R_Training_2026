@@ -37,30 +37,35 @@ This is completely optional, but if you have any time before training starts, I 
 </details>
 <br>
 
-<details open><summary class='drop'>Structure of training</summary>
-<b>Timing: </b>The training will take place over 3 half days. Each day will run from 9 - 1 EST via MS Teams. The hour before and afternoon following training I will be available as office hours, in case there are questions that couldn't be handled during training. 
+<details open><summary class='drop'>About the Training</summary>
+<ul>
+<li><u>Timing:</u> The training will take place over 3 half days. Each day will run from 9am - 1pm EST via MS Teams. </li>
 
-<b>Structure: </b>For most of the training, I will share my screen as I go through the website and then demo with live coding. Having 2 screens, one for my screen share and one for your R session, will make following along a lot easier. 
+<li><u>Office Hours:</u> For the day prior to training and each afternoon following training, I will be available from 1 - 3pm EST for office hours in case there are questions that couldn't be handled before or during training. I will send a Teams link to participants for this office hours. Teams chats are also fine for posing questions. </li>
 
-<b>Getting Help: </b>I intentionally included people in this training I know to be kind, capable, and that will benefit from having better R skills. My hope is that this group is small enough and supportive enough that everyone feels comfortable openly asking questions and providing feedback to the group. However, if you aren't comfortable asking questions openly, you can ask questions in the anonymous <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. Additionally, if someone runs into an issue I can't immediately troubleshoot (it happens), we may have to table it until office hours, then will discuss it with the group the next day (if relevant).  
+<li><u>Structure:</u> For most of the training, I will share my screen as I go through the website and then demo with live coding. Having 2 screens, one for my screen share and one for your R session, will make following along a lot easier. </li>
 
-<b>Objectives: </b>Three days is barely enough to scratch the surface on what you can do in R. My goals with this training are to:
+<li><u>Getting Help:</u> I intentionally included people in this training I know to be kind, capable, and that will benefit from having better R skills. My hope is that this group is small enough and supportive enough that everyone feels comfortable openly asking questions and providing feedback to the group. However, if you aren't comfortable asking questions openly, you can ask questions in the anonymous <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. Additionally, if someone runs into an issue I can't immediately troubleshoot (it happens), we may have to table it until office hours, then will discuss it with the group the next day (if relevant). </li>
+
+<li><u>Objectives:</u> Three days is barely enough to scratch the surface on what you can do in R. My goals with this training are to:
 <ol>
 <li>Help you get beyond the initial learning curve that can be really challenging to climb on your own.</li>
 <li>Expose you to some of the really useful things R can do. </li>
 <li>Provide you the tools needed to continue advancing your R skills on your own.</li>
 </ol>
+</li>
 
-<b>Credit: </b>Much of this training was borrowed heavily from <a href = "https://katemmiller.github.io/IMD_R_Training_Intro/">IMD Intro to R</a> training in 2022. A ton of credit for this training goes to the developers of those lessons:
+<li><u>Credit:</u> Much of this training was borrowed heavily from <a href = "https://katemmiller.github.io/IMD_R_Training_Intro/">IMD Intro to R</a> training in 2022. A ton of credit for this training goes to the developers of those lessons:
 <ul>
 <li>Day 1 Intro to R: Sarah Wright and Andrew Birch</li>
 <li>Day 2 Data Wrangling: John Paul Schmit and Lauren Pandori</li>
 <li>Day 3 Data Visualization: Ellen Cheng and Kate Miller (Spatial Data) </li>
 <li>Day 4 Programming Best Practices: Sarah Wright and Thomas Parr </li>
 </ul>
+</li>
 
-<b>Feedback: </b>Finally, to help me improve this training for future sessions, please leave feedback in the <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. You can submit feedback multiple times and don't need to answer every question. Responses are anonymous.  
-
+<li><u>Feedback:</u> Finally, to help me improve this training for future sessions, please leave feedback in the <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. You can submit feedback multiple times and don't need to answer every question. Responses are anonymous.  </li>
+</ul>
 </details>
 <br>
 

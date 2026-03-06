@@ -5,12 +5,24 @@ output:
 ---
 #### Day 2 Goals
 
-Goals for Day 2: 
+<b>Goals for Day 2: </b>
 <ol>
+<li>Understanding of tidy data format (rows are observations; columns are variables).</li>
 <li>Exposure to the main tidyverse packages and philosophy behind it.</li>
-<li>Comfortable filtering and selecting data, renaming and creating new columns in `dplyr` </li>
-<li>dealing with NAs/0s</li>
-<li>Working with dates</li>
-<li>Data visualization best practices</li>
-<li>Introduction to ggplot2</li>
+<li>Comfortable filtering and selecting data, and renaming and creating new columns in `dplyr`. </li>
+<li>Comfortable grouping and summarizing data in `dplyr`. </li>
+<li>Difference between summarize and mutate. </li>
+<li>How to use `ifelse()` and `case_when()` statements.</li>
+<li>Data visualization best practices.</li>
+<li>Introduction to ggplot2.</li>
 </ol>
+
+<br>
+<b>Feedback: </b>Please leave feedback in the <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. You can submit feedback multiple times and don't need to answer every question. Responses are anonymous.
+<br>
+<br>
+<img src = "./images/make_friends_with_tidy_data.jpg" alt = 'friends with tidy' style = "display:block;margin-left:auto;margin-right:auto;width:550px;">
+<center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://allisonhorst.com">Artwork by @allison_horst</a></center>
+</details>
+<br>
+

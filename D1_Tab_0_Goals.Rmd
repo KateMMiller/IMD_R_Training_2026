@@ -2,16 +2,19 @@
 #### Day 1 Goals {.tabset}
 <b>Overall goals for the first day are: </b>
 
-1. Get comfortable navigating RStudio IDE, such as opening a new project or script, running code and viewing the output, etc. 
-2. Ability to import and save CSV and .xlsx files.
-3. Basic understanding of variables, functions, and data frames.
-4. Ability to explore data frames, such as the number of columns, min/max of different columns, data type of column, basic plotting, etc. 
-5. Basic understanding of square brackets to view and filter data[,]. This is probably the hardest concept you'll learn this week. The next two days I will show you easier ways to work with your data that don't involve brackets.
-6. Understanding of tidy data format (rows are observations; columns are variables).
-7. Able to access help within and outside of R.
-
+<ol>
+<li>Get comfortable navigating RStudio IDE, such as opening a new project or script, running code and viewing the output, etc.</li>
+<li>Ability to import and save .csv and .xlsx files.</li>
+<li>Basic understanding of variables, functions, and data frames.</li>
+<li>Ability to explore data frame, such as dimensions (rows and columns), min/max of different columns, data type of column, basic plotting, etc.</li> 
+<li>Basic understanding of square brackets to view and filter data[ , ]. </li>
+<li>Exposure to NAs</li>
+<li>Able to access help within and outside of R.</li>
+</ol>
+<br>
+<b>Feedback: </b>Please leave feedback in the <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. You can submit feedback multiple times and don't need to answer every question. Responses are anonymous.
 
 <img src = "./images/R_journey.png" alt = 'R journey' style = "display:block;margin-left:auto;margin-right:auto;width:450px;">
 <center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://allisonhorst.com">Artwork by @allison_horst</a></center>
 </details>
-<break>
+<br>

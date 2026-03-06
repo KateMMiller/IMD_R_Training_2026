@@ -94,17 +94,22 @@ body {
 ```{r datw1, child = "D2_Tab_2_Data_Wrangling_I.Rmd", eval = T}
 ```
 
+```{r sum1, child = "D2_Tab_3_Summarizing.Rmd", eval = T}
+
+```
+
 
 ### Day 3: Wrangling and Viz II {.tabset}
 - Data wrangling II:
-    - group_by and summarize
-    - group_by and mutate
     - pivot_longer and pivot_wider
     - joining tables
+    - more dealing with NAs/0s.
+    - dates
 - ggplot II:
     - customizing plots
     - combining plots
     - custom color palettes
+    - legends
 - coding best practices (design with the user in mind)
     - comment code
     - parameters, packages, datasets on top
@@ -115,6 +120,10 @@ body {
 
 ```{r chall_d1, child = "D1_Tab_C1_Challenges.Rmd", eval = T}
 ```
+
+```{r chall_d2, child = "D2_Tab_C1_Challenges.Rmd", eval = T}
+```
+
 
 ### Getting Help {.tabset}
 ```{r help, child = "R_Tab_1_Getting_Help.Rmd", eval = T}
@@ -159,8 +168,3 @@ There's a lot of great online material for learning new applications of R. The o
 rm(list = ls())
 ```
 
-<script>
-  $(".toggle").click(function() {
-    $(this).toggleClass("open");
-  });
-</script>

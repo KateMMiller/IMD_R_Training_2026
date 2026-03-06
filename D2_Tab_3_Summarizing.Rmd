@@ -1,0 +1,23 @@
+---
+output: 
+  html_document:
+    css: custom_styles.css
+---
+
+#### Summarizing with `dplyr`
+<details open><summary class = 'drop'>Using `group_by()` and `summarize()`</summary>
+Yesterday, we used functions like `mean()`, `min()`, and `max()` to summarize on the entire dataset. Now we're going to use those same functions to summarize data by grouping variables, such as park, year, plot, etc. The process is similar to using Totals in Access or subtotals in Excel, although it is much more flexible and efficient in R.
+
+The `summarize()` function in dplyr is similar to `mutate()` in that it creates a new column in your data frame. The important difference is that `mutate()` always returns the same number of rows as the original data frame. The `summarize()` function returns the same number of rows as there are grouping levels in the original data frame. I will demonstrate this concept to help understand that difference.
+
+
+
+
+</details>
+<br>
+
+#### Functions `ifelse()` and `case_when()`
+
+
+
+

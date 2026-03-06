@@ -5,7 +5,7 @@ output:
 ---
 
 #### Data Exploration
-<details open><summary class = 'drop'>Exploring and fixing data</summary>
+<details open><summary class = 'drop'>Exploring the data</summary>
 We've already explored the wetland data a bit using `head()`, `str()`, `names()`, and `View()`. These are functions that you will use over and over as you work with data in R. Below, I'm going to show how I get to know a data set in R.
 
 <p class = 'code'>Read in example NETN tree data</p>
@@ -28,6 +28,11 @@ str(trees)
 summary(trees)
 ```
 
+<p class = 'code'>Check for complete cases for the first 10 columns that should always have data.</p>
+```{r}
+table(complete.cases(trees[,1:10]))# all true
+```
+
 There's a lot to digest from the summary results. 
 <ul>
 <li>We can see that Park_Unit and ScientificName are treated as characters, which makes sense.</li>
@@ -39,11 +44,35 @@ There's a lot to digest from the summary results.
 <li>DecayClassCode is reading in as a character, not a number. That's weird. We will look deeper into that next.</li>
 </ul>
 
-Now we're going to clean up the various issues identified during exploration.
-
 </details><br>
 
-<details open><summary class ='drop'>Fix DecayClassCode</summary>
+<details open><summary class = 'drop'>Sidebar on NAs</summary>
+To keep data frames rectangular, R treats missing data (i.e. blanks) as NA (stands for not available). A foundational philosophy of R is that the user must tell R functions what do to if NAs are in the data. Ideally that forces the user to investigate the NAs to determine their reason for being there, whether there's a way to fix it, if those records should be dropped, etc. If you try to calculate the mean of a column that has a blank in it, and you don't tell R what to do with NAs, the returned value will be `NA`. Most summary functions in R have an argument `na.rm`, which is logical (TRUE/FALSE). To drop NAs, you include `na.rm = TRUE`. 
+
+It's important every time you have NAs in your data to think about what they mean and how best to treat them. Sometimes, it's best to drop them. Other times, converting the blanks to 0 is the best approach. It depends entirely on your data and what you intend to do with it.    
+
+<p class = 'code'>Test NA use with `mean()` function</p>
+```{r nad1, fold.output = F}
+x <- c(1, 3, 8, 3, 5, NA)
+mean(x) # returns NA
+mean(x, na.rm = TRUE) 
+```
+</details>
+<br>
+
+<details open><summary class ='drop'>Fix the data </summary>
+The steps we are going to take with the NETN tree data were: 
+<ol>
+<li>Replace decay class code "PM" with NA (blank).</li>
+<li>Convert SampleDate (character) to Date (date-time). </li>
+<li>Rename the ScientificName column to Species.</li>
+<li>Create a Plot_Name column that's a combination of ParkUnit and PlotCode.</li>
+<li>Change tree DBH that's 443.0 to 44.3.</li>
+<li>Drop records that are QAQC visits. </li>
+</ol>
+</details>
+
+<details open><summary class ='drop2'>Fix DecayClassCode</summary>
 <p class = 'code'>Look at unique values for DecayClassCode.</p>
 ```{r trdecay, fold.output = F}
 sort(unique(trees$DecayClassCode)) # sorts the unique values in the column
@@ -63,9 +92,8 @@ str(trees2) # DecayClassCode_num is numeric
 sort(unique(trees2$DecayClassCode_num)) # Only numbers show in table
 ```
 </details>
-<br>
 
-<details open><summary class ='drop'>Remove QAQC visits</summary>
+<details open><summary class ='drop2'>Remove QAQC visits</summary>
 Using the `trees2` data frame, which fixed the decay class column by making the `DecayClassCode_num` field numeric, we're now going to drop visits that were for QAQC using a new base R function called `subset()`. The `subset()` function allows you to reduce the dimensions of a data frame. You can reduce rows, columns, or both in the same function call. I will also show the bracket approach. 
 
 <p class = 'code'>Remove QAQC visits (IsQAQC == TRUE) and drop the DecayClassCode column </p>
@@ -74,9 +102,9 @@ trees3 <- subset(trees2, IsQAQC == FALSE, select = -DecayClassCode) # Note the i
 trees3 <- subset(trees2, IsQAQC != TRUE, select = -DecayClassCode) # equivalent
 trees3 <- trees2[trees2$IsQAQC == FALSE, -12] #equivalent but not as easy to follow
 ```
-</details><br>
+</details>
 
-<details open><summary class = "drop">Convert SampleDate to Date</summary>
+<details open><summary class = "drop2">Convert SampleDate to Date</summary>
 <p class = 'code'>Convert SampleDate into a date-time instead of character. </p>
 ```{r tr3dt}
 # Look at the sample date format
@@ -87,9 +115,9 @@ trees3$Date <- as.Date(trees3$SampleDate, format = "%m/%d/%Y")
 str(trees3)
 
 ```
-</details><br>
+</details>
 
-<details open><summary class = 'drop'>Rename ScientificName to Species for shorter typing</summary>
+<details open><summary class = 'drop2'>Rename ScientificName to Species for shorter typing</summary>
 Renaming columns in base R is kind of a pain, to the point that I have to look it up every time I need to do it. I'll show you an easier way to do that tomorrow.
 
 <p class = 'code'>Rename ScientificName column</p>
@@ -99,9 +127,8 @@ names(trees3)[names(trees3) == "ScientificName"] <- "Species"
 names(trees3) # check that it worked
 ```
 </details>
-<br>
 
-<details open><summary class = 'drop'>Create a `Plot_Name` column via `paste()`</summary>
+<details open><summary class = 'drop2'>Create a `Plot_Name` column via `paste()`</summary>
 The `paste()` and `paste0()` functions are very handy for creating new columns that are combinations of existing functions. The code below will create a new column named `Plot_Name` that's a combination of `ParkUnit` and `PlotCode`. 
 
 <p class ='code'>Create new `Plot_Name` column</p>
@@ -111,11 +138,12 @@ trees3$Plot_Name <- paste0(trees3$ParkUnit, "-", trees3$PlotCode) #equivalent- b
 
 ```
 
-<p class = 'note'>Coding Advice: In most cases, it does not matter whether you use single ' or double ", as long as you open and close with the same. The cases where it matters are where you have quotes within quotes. There you have to alternate your usage, like `print("Text in outer quote 'text printed as being within quotes' end with closing quote")`. </p>
-</details><br>
+<p class = 'note'><b>Coding Tip:</b> In most cases, it does not matter whether you use single ' or double ", as long as you open and close with the same. The cases where it matters are where you have quotes within quotes. There you have to alternate your usage, like `print("Text in outer quote 'text printed as being within quotes' end with closing quote")`. </p>
+</details>
+</details>
+<br>
 
 <details open><summary class = 'drop'>Test your skills!</summary>
-
 <!-- Test skills section -->
 <div class="alert alert-info">
 <strong>CHALLENGE: How many trees are on Plot MIMA-12?</strong>

@@ -1,4 +1,4 @@
-#### Day 1 Challenges
+#### Day 1 Questions
 
 If you're starting a new session to answer these questions, you'll need to read in the wetland and tree data frames again.
 
@@ -24,7 +24,6 @@ ACAD_wetland[c(2, 4, 6, 8), c(1, 2)]
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Question 2. How many unique species are there in the ACAD_wetland data frame?</strong>
@@ -41,7 +40,6 @@ length(unique(ACAD_wetland$Latin_Name)) # equivalent
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Question 3. Which sites have species that are considered protected on them (Protected = TRUE)?</strong>
@@ -59,7 +57,6 @@ unique(ACAD_wetland[ACAD_wetland$Protected == TRUE, "Site_Name"])
 ```
 </details>
 </div>
-<br>
 
 <h5>Data Exploration</h5>
 <div class="alert alert-info">
@@ -72,7 +69,6 @@ nrow(mima12) # 12
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Question 5. How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot 12?</strong>
@@ -92,7 +88,6 @@ table(mima12$TreeStatusCode) # 6
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Question 6. Find the DBH record that's > 400cm DBH.</strong>
@@ -112,7 +107,6 @@ trees[trees$DBHcm == max_dbh,]
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Question 7. What is the exact value of the largest DBH, and which record does it belong to?</strong>
@@ -134,7 +128,6 @@ trees[trees$DBHcm == max_dbh,]
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Question 8: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
@@ -172,4 +165,3 @@ hist(ACAD_wetland$Ave_Cov)
 ```
 </details>
 </div>
-<br>

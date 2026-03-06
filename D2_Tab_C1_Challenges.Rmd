@@ -1,0 +1,89 @@
+#### Day 2 Questions
+
+If you're starting a new session to answer these questions, you'll need to load dplyr and read in the tree data frame again.
+
+<p class = 'code'>Load dplyr</p>
+```{r ldpd2c}
+library(dplyr)
+```
+
+<p class = 'code'>Read in example NETN tree data from url</p>
+```{r c1readtree2c, eval = F}
+trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
+```
+
+<p class = 'code'>Create the tree_final data frame</p>
+```{r tfc22c}
+trees_final <- trees |> 
+  mutate(DecayClassCode_num = as.numeric(DecayClassCode),
+         Plot_Name = paste(ParkUnit, PlotCode, sep = "-"),
+         Date = as.Date(SampleDate, format = "%m/%d/%Y")) |> 
+  rename("Species" = "ScientificName") |> 
+  filter(IsQAQC == FALSE) |> 
+  select(-DecayClassCode)
+```
+
+<h5>Data Wrangling with dplyr </h5>
+<div class="alert alert-info">
+<strong>CHALLENGE: How many trees are on Plot MIMA-12 (using trees_final)?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r chal4_d22c}
+trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
+```
+</div>
+</details>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12 (using trees_final)?</strong>
+<details><summary class='drop2'>Answer</summary>
+
+```{r chal5d22c, fold.output = F}
+trees_final |> filter(Plot_Name == "MIMA-12" & TreeStatusCode == "AS") |> nrow()
+```
+
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: What is the exact value of the largest DBH, and which record does it belong to?</strong>
+
+<details><summary class='drop2'>Answer</summary>
+```{r maxdbhd22c, fold.output = T}
+# Base R and dplyr combo
+max_dbh <- max(trees_final$DBHcm, na.rm = TRUE)
+trees_final |> 
+  filter(DBHcm == max_dbh) |> 
+  select(Plot_Name, SampleYear, TagCode, Species, DBHcm)
+
+# dplyr with slice
+trees_final |> 
+  arrange(desc(DBHcm)) |> # arrange DBHcm high to low via desc()
+  slice(1) |> # slice the top record
+  select(Plot_Name, SampleYear, TagCode, Species, DBHcm)
+
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
+
+<details><summary class = 'drop2'>Answer</summary>
+```{r trfxd22c, fold.output = F}
+# Base R
+# create copy of trees data
+trees_fix <- trees3
+# find the problematic DBH value, and change it to 44.3
+trees_fix$DBHcm[trees_fix$Plot_Name == "MIMA-016" & trees_fix$TagCode == 1 & trees_fix$DBHcm == "443"] <- 44.3
+
+# dplyr via replace
+trees_fix <- trees |> mutate(DBHcm = replace(DBHcm, DBHcm == 443.0, 44.3))
+```
+
+Check that it worked by showing the range of the original and fixed data frames.
+```{r check1d22c, fold.output = F}
+range(trees$DBHcm)
+range(trees_fix$DBHcm)
+```
+</details>
+</div>
