@@ -183,8 +183,16 @@ ACAD_wetland[c(2, 4, 6, 8), c("Site_Name", "Site_Type")]
 <details open><summary class = 'drop'>Advanced Bracketry</summary>
 You can do more than just subset by row numbers and column names. Pattern matching to return certain rows or columns is a common and more advanced used of brackets.  
 <br>
-<h5>Using `=` vs `==` </h5>
-A key point in R is that when you're using the equals symbol to match a value, you use the double `==`. Conversely, `!=` is interpreted as not equal to for similar use. When using the equals to assign a value to a new object or column (stay tuned for tomorrow), use the single `=`. As you get more comfortable with R, this will become natural. If you forget, R will error and may even give you a hint when you used `=` instead of `==`.
+<h5>Using `=` vs `==` vs `%in%` </h5>
+A key point in R is knowing when to use a single `=` or a double `==`. 
+<ul>
+<li>When using the equals to assign a value to a new object or column (stay tuned for tomorrow), use the single `=`.</li> 
+<li>When you're using the equals symbol to match a value, you use the double `==`.</li>
+<li>Conversely, `!=` is interpreted as not equal to for similar use. </li>
+<li>Another operator is `%in%`. This operator works just like `==`, but for multiple conditions. The `==` operator is not designed to take more than 1 condition, even though it won't give you an error. Instead, it will stop after it makes the first match. </li>
+</ul>
+
+As you get more comfortable with R, this will become natural. If you forget, R will error and may even give you a hint when you used `=` instead of `==`.
 
 <p class = 'code'>Pattern match (filter) to return a data frame of species that are not invasive and return all columns</p>
 ```{r rowscols2b, fold.output = TRUE}
@@ -200,6 +208,14 @@ table(ACAD_nat$Invasive) # No T
 ACAD_wetland$Latin_Name[ACAD_wetland$Invasive == TRUE]
 ACAD_wetland[ACAD_wetland$Invasive == TRUE, "Latin_Name"] # equivalent
 
+```
+
+<p class = 'code'>Filter data to return any plot where Arethusa bulbosa, Calopogon tuberosus, or Pogonia ophioglossoides were detected. </p>
+```{r orchids}
+orchid_spp <- c("Arethusa bulbosa", "Calopogon tuberosus", "Pogonia ophioglossoides")
+ACAD_orchid_plots <- ACAD_wetland[ACAD_wetland$Latin_Name %in% orchid_spp, 
+                                  c("Site_Name", "Year", "Latin_Name")]
+ACAD_orchid_plots
 ```
 
 <p class = 'note'><b>Coding Tip:</b> There are often multiple ways to perform a task. The best code is code that 1) works, 2) is easy to follow, and 3) is unlikely to break (e.g. use column names instead of numbers). That still means there are typically multiple equally valid approaches. There are other ways to judge good code as you advance, but for now, aspire to write code that meets these three qualities.</p>

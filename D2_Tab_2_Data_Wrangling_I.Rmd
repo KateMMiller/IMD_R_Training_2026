@@ -143,8 +143,8 @@ If you've ever seen the `%>%`, that also functions as a pipe with code. The `%>%
 ```{r chal4_d2}
 trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
 ```
-</div>
 </details>
+</div>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12 (using trees_final)?</strong>
@@ -153,7 +153,6 @@ trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
 ```{r chal5d2, fold.output = F}
 trees_final |> filter(Plot_Name == "MIMA-12" & TreeStatusCode == "AS") |> nrow()
 ```
-
 </details>
 </div>
 

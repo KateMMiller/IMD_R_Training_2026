@@ -70,7 +70,6 @@ The steps we are going to take with the NETN tree data were:
 <li>Change tree DBH that's 443.0 to 44.3.</li>
 <li>Drop records that are QAQC visits. </li>
 </ol>
-</details>
 
 <details open><summary class ='drop2'>Fix DecayClassCode</summary>
 <p class = 'code'>Look at unique values for DecayClassCode.</p>
@@ -152,8 +151,8 @@ trees3$Plot_Name <- paste0(trees3$ParkUnit, "-", trees3$PlotCode) #equivalent- b
 mima12 <- subset(trees3, Plot_Name == "MIMA-12")
 nrow(mima12) # 12
 ```
-</div>
 </details>
+</div>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12?</strong>
