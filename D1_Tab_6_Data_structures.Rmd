@@ -179,7 +179,8 @@ ACAD_wetland[c(2, 4, 6, 8), c("Site_Name", "Site_Type")]
 
 </details>
 </div>
-
+</details>
+<br>
 <details open><summary class = 'drop'>Advanced Bracketry</summary>
 You can do more than just subset by row numbers and column names. Pattern matching to return certain rows or columns is a common and more advanced used of brackets.  
 <br>

@@ -12,9 +12,8 @@ The main differences between the most common conditional functions:
 <ul>
 <li>`ifelse()`: Primarily for use with data frames. Takes 3 arguments: 1) the condition to test; 2) the value to return if condition is true; 3) the value to return of the condition is false. Function can only handle 2 possible outcomes, although nested `ifelse()` statements are possible (see example below). This function is vectorized, which means it's optimized for working on columns in data frames. Of the 3 conditionals, it tends to perform the fastest on large data sets.</li>
 <li>`case_when()`: Primarily for use with data frames. Can take any number of condition statements and their value to return. Requires `dplyr` package to be loaded. Syntax is a bit tricky to figure out at first, but once you have it, it's about as easy as using `ifelse()`. This function is akin to SQL CASE WHEN. On large data sets, it consistently performs slower than `ifelse()`. </li>
-<li>`if(){ }else{ }`: Can be used with data frames, but is more commonly used for operations outside of data frames. An example would be only running a chunk of code if a certain condition is met (e.g., if the data frame has > 0 rows, run next line of code.)<li>
+<li>`if(){ }else{ }`: Can be used with data frames, but is more commonly used for operations outside of data frames. An example would be only running a chunk of code if a certain condition is met (e.g., if the data frame has > 0 rows, run next line of code.)</li>
 </ul>
-
 </details>
 <br>
 
@@ -46,10 +45,44 @@ Remember that we used `%in%` instead of `==` because alive has multiple status c
 </details>
 <br>
 
-R also has if/else statements that look like: `if(condition 1){do this} else {do this instead}`. The separate if/else statements are better for operations outside of data frames, 
+<details open><summary class = 'drop'>`case_when()`</summary>
+The `case_when()` function allows you to have multiple conditions, each with their own return. The syntax is a bit different than `ifelse()` to allow for the multiple conditions and returns. Using the same approach as above, we'll create a third status code with `case_when()`. We'll specify the output for when a tree status code is in the dead category, recruit, and live category. We'll then add a fourth output for status codes that don't match any of the previous conditions and set that as 'unknown'. Basically the `TRUE` just means, any records left are assigned 'unknown'. Note also the order of operations in `case_when()`. The alive group includes "RS", but is not assigned "live", because it was alreay matched. The `case_when()` function starts with the first statement at the top (i.e. dead trees). Any record that matches the first statement is then dropped from additional statements. The second statement considers all trees not matched as dead. The third statment considers all trees not matched as dead or recruit. Then the fourth statement considers any trees not matched as dead, recruit, or live. Rather than relying on this function behavior, it's better to not have overlapping categories (e.g. not include "RS" in alive). I include it here to demonstrate the point. 
+
+<p class = 'code'>Create status column conditioning on TreeStatusCode</p>
+```{r statc}
+# Check the levels of TreeStatusCode
+alive <- c("AB", "AL", "AS", "RS")
+dead <- c("DB", "DM", "DS")
+
+trees_final <- trees_final |> 
+  mutate(status3 = case_when(TreeStatusCode %in% dead ~ 'dead',
+                             TreeStatusCode == 'RS' ~ 'recruit',
+                             TreeStatusCode %in% alive ~ 'live', 
+                             TRUE ~ 'unknown'))
+
+table(trees_final$status2, trees_final$status3) # check that the output is the same
+
+```
+</details>
+<br>
+
+<details open><summary class = 'drop'>`if(){ }else{ }`</summary>
+This style of `if(){ }else{ }`, hereafter called if/else, conditionals is best used for operations outside of data frames, like turning code on or off based on specific conditions. I use if/else with ggplot (graphing R package we'll cover later) to turn certain features on or off based on a condition in the data or a condition I set. If/else statements are also helpful for bug handling in your code. For example, if you want the code to send a warning when your data frame is empty (no rows), you can have an if/else statement that prints to the console. 
+
+<p class = 'code'>Print warning in console that indicates if invasive species are found in wetland data</p>
+```{r ifelsebug1}
+inv <- ACAD_wetland |> filter(Invasive == TRUE)
+
+if(nrow(inv) > 0){print("Invasive species were detected in the data.")
+  } else {print("No invasive species were detected in the data.")}
+
+```
 
 
-#### Summarizing with `dplyr`
+</details>
+
+
+#### Summarizing with dplyr
 <details open><summary class = 'drop'>Using `group_by()` and `summarize()`</summary>
 Yesterday, we used functions like `mean()`, `min()`, and `max()` to summarize on the entire dataset. Now we're going to use those same functions to summarize data by grouping variables, such as park, year, plot, etc. The process is similar to using Totals in Access or subtotals in Excel, although it is much more flexible and efficient in R.
 
