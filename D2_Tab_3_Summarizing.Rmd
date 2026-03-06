@@ -23,9 +23,9 @@ The `ifelse()` function takes 3 arguments organized like: `ifelse(condition == T
 Let's start by adding a column to the NETN tree data that uses the `TreeStatusCode` to create a new column called `status` that is either live or dead conditional on the abbreviated code in `TreeStatusCode` in `trees_final`.
 
 <p class = 'code'>Create status column conditioning on TreeStatusCode</p>
-```{r statc}
+```{r statc, results = 'hide'}
 # Check the levels of TreeStatusCode
-table(trees_final$TreeStatusCode)
+sort(unique(trees_final$TreeStatusCode))
 alive <- c("AB", "AL", "AS", "RS")
 dead <- c("DB", "DM", "DS")
 
@@ -41,15 +41,13 @@ trees_final <- trees_final |>
 ```
 
 Remember that we used `%in%` instead of `==` because alive has multiple status codes. We used `==` in `TreeStatusCode == "RS"` because there's only one status code considered a recruit. We could have also used `%in%` with the same results, but that would not be true for matching the alive status codes.
-
 </details>
-<br>
 
 <details open><summary class = 'drop'>`case_when()`</summary>
 The `case_when()` function allows you to have multiple conditions, each with their own return. The syntax is a bit different than `ifelse()` to allow for the multiple conditions and returns. Using the same approach as above, we'll create a third status code with `case_when()`. We'll specify the output for when a tree status code is in the dead category, recruit, and live category. We'll then add a fourth output for status codes that don't match any of the previous conditions and set that as 'unknown'. Basically the `TRUE` just means, any records left are assigned 'unknown'. Note also the order of operations in `case_when()`. The alive group includes "RS", but is not assigned "live", because it was alreay matched. The `case_when()` function starts with the first statement at the top (i.e. dead trees). Any record that matches the first statement is then dropped from additional statements. The second statement considers all trees not matched as dead. The third statment considers all trees not matched as dead or recruit. Then the fourth statement considers any trees not matched as dead, recruit, or live. Rather than relying on this function behavior, it's better to not have overlapping categories (e.g. not include "RS" in alive). I include it here to demonstrate the point. 
 
 <p class = 'code'>Create status column conditioning on TreeStatusCode</p>
-```{r statc}
+```{r statc2}
 # Check the levels of TreeStatusCode
 alive <- c("AB", "AL", "AS", "RS")
 dead <- c("DB", "DM", "DS")
@@ -64,13 +62,12 @@ table(trees_final$status2, trees_final$status3) # check that the output is the s
 
 ```
 </details>
-<br>
 
 <details open><summary class = 'drop'>`if(){ }else{ }`</summary>
-This style of `if(){ }else{ }`, hereafter called if/else, conditionals is best used for operations outside of data frames, like turning code on or off based on specific conditions. I use if/else with ggplot (graphing R package we'll cover later) to turn certain features on or off based on a condition in the data or a condition I set. If/else statements are also helpful for bug handling in your code. For example, if you want the code to send a warning when your data frame is empty (no rows), you can have an if/else statement that prints to the console. 
+This style of `if(){ }else{ }`, hereafter called if/else, conditionals is best used for operations outside of data frames, like turning code on or off based on specific conditions. I use if/else with ggplot (graphing R package we'll cover later) to turn certain features on or off based on a condition in the data or a condition I set. If/else statements are also helpful for bug handling in your code. For example, if you want the code to send a warning when your data frame is empty (no rows), you can have an if/else statement that prints to the console. You can string together multiple conditions to test by adding more `else{ }` statements.
 
 <p class = 'code'>Print warning in console that indicates if invasive species are found in wetland data</p>
-```{r ifelsebug1}
+```{r ifelsebug1, fold.output = F}
 inv <- ACAD_wetland |> filter(Invasive == TRUE)
 
 if(nrow(inv) > 0){print("Invasive species were detected in the data.")
@@ -78,21 +75,92 @@ if(nrow(inv) > 0){print("Invasive species were detected in the data.")
 
 ```
 
+<p class = 'code'>Force the else statement to print, by filtering out invasive species before testing. I added another potential else statment just to show that syntax.</p>
+```{r ifelsebug2, fold.output = F}
+native_only <- ACAD_wetland |> filter(Invasive == FALSE) 
+inv2 <- native_only |> filter(Invasive == TRUE)
+
+if(nrow(inv2) > 0){print("Invasive species were detected in the data.")
+  } else if(nrow(inv2) == 0){print("No invasive species were detected in the data.")
+    } else {"Invasive species detections unclear"}
+
+```
 
 </details>
 
-
 #### Summarizing with dplyr
 <details open><summary class = 'drop'>Using `group_by()` and `summarize()`</summary>
-Yesterday, we used functions like `mean()`, `min()`, and `max()` to summarize on the entire dataset. Now we're going to use those same functions to summarize data by grouping variables, such as park, year, plot, etc. The process is similar to using Totals in Access or subtotals in Excel, although it is much more flexible and efficient in R.
+Yesterday, we used functions like `mean()`, `min()`, and `max()` to summarize entire datasets. Now we're going to use those same functions to summarize data by grouping variables, such as park, year, plot, etc. The process is similar to using Totals in Access or subtotals in Excel, although it is more flexible and efficient in R.
 
-The `summarize()` function in dplyr is similar to `mutate()` in that it creates a new column in your data frame. The important difference is that `mutate()` always returns the same number of rows as the original data frame. The `summarize()` function returns the same number of rows as there are grouping levels in the original data frame. I will demonstrate this concept to help understand that difference.
+Difference between `summarize()` and `mutate()`:
+<ul>
+<li>`mutate()` returns the same number of <b>rows</b> as the original data frame. This function also returns all of the rows that were in the original data frame.</li>
+<li>`summarize()` returns the same number of rows as there are <b>grouping levels</b> in the original data frame. This function only returns the rows that were part of the `group_by()` and that were created in the `summarize()` function. 
+</ul>
 
+Common functions used to summarize:
+<ul>
+<li>`mean()`: calculate the group means</li>
+<li>`min()`: calculate the group minimums</li>
+<li>`max()`: calculate the group maximums</li>
+<li>`sum()`: calculate the group sums</li>
+<li>`sd()`: calculate the group standard deviations</li>
+<li>`n()`: tally the number of rows within each group</li>
+</ul>
 
+<p class = 'code'>Sum the number of trees per plot, year, and species using mutate. </p>
+Note the use of `n()`, which counts the number of rows within a group. Be careful here. If there are NAs in a group, they are counted by `n()`. Whether that's okay or not depends on the data. 
+```{r ttrsummut, message = F, warning = F}
+num_trees_mut <- trees_final |> 
+  group_by(Plot_Name, SampleYear, Species) |> 
+  mutate(num_trees = n()) |> 
+  select(Plot_Name, SampleYear, Species, num_trees)
+
+nrow(trees_final) #164
+nrow(num_trees_mut) #164
+head(num_trees_mut)
+```
+
+<p class = 'code'>Sum the number of trees per plot, year, and species using mutate.</p>
+```{r ttrsumsum}
+num_trees_sum <- trees_final |> 
+  group_by(Plot_Name, SampleYear, Species) |> 
+  summarize(num_trees = n()) 
+
+nrow(trees_final) #164
+nrow(num_trees_sum) #164
+head(num_trees_sum)
+```
+
+The `group_by()` + `mutate()` approach is helpful if you're trying to standardize values within your group. But in most cases, the `group_by()` + `summarize()` approach, which collapses to the group level, is what you're looking for. 
+
+Note the warning that `summarize()` gave you in the console. The tidyverse is chatty. They have a lot of checks built into their functions based on how the developers think you should be using their functions. The warning with `summarize()` is particularly annoying. To turn the warning off, you can specify `.groups = 'drop'`. I'll show that next. 
+
+There's also a new `.by` argument in summarize that allows you to skip the `group_by()` step. It came after I learned dplyr, so I often forget to use it, and I see most examples online using the original way too. I include both approaches below.
+
+<p class = 'code'>Summarize the average and standard error of tree DBH by plot and year</p>
+```{r trdbhsum}
+tree_dbh <- trees_final |> 
+  group_by(Plot_Name, SampleYear) |> 
+  summarize(mean_dbh = mean(DBHcm),
+            num_trees = n(),
+            se_dbh = sd(DBHcm)/sqrt(num_trees),
+            .groups = 'drop') # prevents warning in console
+
+tree_dbh2 <- trees_final |> 
+  summarize(mean_dbh = mean(DBHcm),
+            num_trees = n(),
+            se_dbh = sd(DBHcm)/sqrt(num_trees),
+           .by = c(Plot_Name, SampleYear))
+
+tree_dbh == tree_dbh2 # tests that all the values in 1 data frame match the 2nd. 
+
+```
 
 
 </details>
 <br>
 
-
+#+++++ ENDED HERE +++++
+Add challenges
 
