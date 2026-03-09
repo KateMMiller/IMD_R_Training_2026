@@ -1,8 +1,4 @@
-U.S. All Grades All Formulations Retail Gasoline Prices
-https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=pet&s=emm_epm0_pte_nus_dpg&f=a
-11:31:49 GMT-0400 (Eastern Daylight Time)
-Data source: U.S. Energy Information Administration
-Year,U.S. All Grades All Formulations Retail Gasoline Prices Dollars per Gallon
+Year,price_per_gal
 2025,3.224
 2024,3.424
 2023,3.635
