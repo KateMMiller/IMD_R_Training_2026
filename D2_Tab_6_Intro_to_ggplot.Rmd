@@ -66,25 +66,25 @@ str(visit_vs_gas$Annual_Visits) #check that it worked
 ```
 
 <p class = 'code'>Step 4. Create the ggplot template of annual visitation per 1000 visitors over time</p>
-```{r p1, fold.plot = F, fig.height = 3, fig.width = 5}
+```{r p1, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
 p <- ggplot(data = visit_vs_gas, aes(x = Year, y = Annual_Visits/1000))
 p
 ```
 
 <p class = 'code'>Step 5. Add point geometry</p>
-```{r p2, fold.plot = F, fig.height = 3, fig.width = 5}
+```{r p2, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
 p1 <- p + geom_point()
 p1
 ```
 
 <p class = 'code'>Step 6. Add line graph geometry</p>
-```{r p3, fold.plot = F, fig.height = 3, fig.width = 5}
+```{r p3, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
 p2 <- p1 + geom_line()
 p2
 ```
 
 <p class = 'code'>Step 7. Fine tune the Y and X axis breaks</p>
-```{r p4, fold.plot = F, fig.height = 3, fig.width = 5}
+```{r p4, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
 p3 <- p2 + scale_y_continuous(name = "Annual visitors in 1000's",
                               limits = c(2000, 4500),
                               breaks = seq(2000, 4500, by = 500)) + # label axis at 2000, 2500, 3000,... up to 4500
@@ -94,7 +94,7 @@ p3
 ```
 
 <p class = 'code'>Step 8. Change the labels</p>
-```{r p5, fold.plot = F, fig.height = 3, fig.width = 5}
+```{r p5, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
 p4 <- p3 + labs(x = "Year", 
                 title = "Annual visitation/1000 people in Acadia National Park 1994 - 2024")
 p4
@@ -105,10 +105,15 @@ Note how the axis labels can be specified either in the scale (step 4) or in the
 <p class = 'code'>Step 9. Modify the theme</p>
 There are built in themes that change the default formatting of the plot. Here I show `theme_bw()`, but there are many options. Play around with the other themes to get a feel for the options: `theme_linedraw()`, `theme_light()`, `theme_dark()`, `theme_minimal()`, `theme_classic()`, `theme_void()`. The two I use most often are `theme_bw()` and `theme_classic()`.  There's a package called `ggthemes` that you can install with even more themes. You can also create your own themes.
 
-```{r p6, fold.plot = F, fig.height = 3, fig.width = 5}
+```{r p6, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
 p5 <- p4 + theme_bw() 
 p5
 ```
+
+
+#++++ ENDED HERE ++++
+- Turn off gridlines manually
+- add another plot where group, color, facets are used.
 
 </details>
 
