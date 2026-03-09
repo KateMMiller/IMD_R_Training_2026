@@ -46,6 +46,10 @@ body {
 }
 
 ```
+```{r libsindex, echo = F, results = "hide", warning = F, message = F}
+library(tidyverse)
+```
+
 <center><h2>NPS IMD Intro to R Training: March 24 - 26, 2026</h2></center> {.tabset .tabset-pills}
 --------------------------------------------------
 
@@ -100,7 +104,11 @@ body {
 ```{r sum1, child = "D2_Tab_4_Summarizing.Rmd", eval = T}
 ```
 
-```{r datviz, child = "D2_Tab_5_Basic_data_viz.Rmd", eval = T}
+```{r datviz, child = "D2_Tab_5_Data_Viz_Best_Practices.Rmd", eval = T}
+```
+
+```{r ggplot, child = "D2_Tab_6_Intro_to_ggplot.Rmd", eval = T}
+
 ```
 
 
