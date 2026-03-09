@@ -138,7 +138,7 @@ If you've ever seen the `%>%`, that also functions as a pipe with code. The `%>%
 
 <!-- Test skills section -->
 <div class="alert alert-info">
-<strong>CHALLENGE: How many trees are on Plot MIMA-12 (using trees_final)?</strong>
+<strong>Question: How many trees are on Plot MIMA-12 (using trees_final)?</strong>
 <details><summary class='drop2'>Answer</summary>
 ```{r chal4_d2}
 trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
@@ -147,7 +147,7 @@ trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12 (using trees_final)?</strong>
+<strong>Question: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12 (using trees_final)?</strong>
 <details><summary class='drop2'>Answer</summary>
 
 ```{r chal5d2, fold.output = F}
@@ -157,7 +157,7 @@ trees_final |> filter(Plot_Name == "MIMA-12" & TreeStatusCode == "AS") |> nrow()
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: What is the exact value of the largest DBH, and which record does it belong to?</strong>
+<strong>Question: What is the exact value of the largest DBH, and which record does it belong to?</strong>
 
 <details><summary class='drop2'>Answer</summary>
 ```{r maxdbhd2, fold.output = T}
@@ -178,7 +178,7 @@ trees_final |>
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
+<strong>Question: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
 
 <details><summary class = 'drop2'>Answer</summary>
 ```{r trfxd2, fold.output = F}

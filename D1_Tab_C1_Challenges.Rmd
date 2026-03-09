@@ -1,9 +1,9 @@
 #### Day 1 Questions
-
-If you're starting a new session to answer these questions, you'll need to read in the wetland and tree data frames again.
+<details open><summary class = 'drop'>Load Data </summary>
+If you're starting a new R session to answer these questions, you'll need to read in the wetland and tree data frames again.
 
 <p class = 'code'>Read in example ACAD wetland data from url</p>
-```{r c1rdat, eval = F}
+```{r c1rdatc1, eval = F}
 ACAD_wetland <- read.csv(
   "https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/ACAD_wetland_data_clean.csv"
   )
@@ -13,10 +13,11 @@ ACAD_wetland <- read.csv(
 ```{r c1readtree, eval = F}
 trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
 ```
+</details><br>
 
-<h5>Data Structures</h5>
+<details open><summary class = 'drop'>Data Structures</summary>
 <div class="alert alert-info">
-<strong>Question 1. How would you look at the the first 4 even rows (2, 4, 6, 8), and first 2 columns?</strong>
+<strong>How would you look at the the first 4 even rows (2, 4, 6, 8), and first 2 columns?</strong>
 
 <details><summary class='code2'>Answer</summary>
 ```{r d1chal1, fold.output = F}
@@ -26,7 +27,7 @@ ACAD_wetland[c(2, 4, 6, 8), c(1, 2)]
 </div>
 
 <div class="alert alert-info">
-<strong>Question 2. How many unique species are there in the ACAD_wetland data frame?</strong>
+<strong>How many unique species are there in the ACAD_wetland data frame?</strong>
 
 <details><summary class='code2'>Answer</summary>
 ```{r d1rows2a, results = "hide"}
@@ -42,7 +43,7 @@ length(unique(ACAD_wetland$Latin_Name)) # equivalent
 </div>
 
 <div class="alert alert-info">
-<strong>Question 3. Which sites have species that are considered protected on them (Protected = TRUE)?</strong>
+<strong>Which sites have species that are considered protected on them (Protected = TRUE)?</strong>
 
 <details><summary class='code2'>Answer</summary>
 ```{r, d1rows2a2, results = 'hide'}
@@ -57,10 +58,11 @@ unique(ACAD_wetland[ACAD_wetland$Protected == TRUE, "Site_Name"])
 ```
 </details>
 </div>
+</details><br>
 
-<h5>Data Exploration</h5>
+<details open><summary class = 'drop'>Data Exploration</summary>
 <div class="alert alert-info">
-<strong>Question 4. How many trees are on Plot 12?</strong>
+<strong>How many trees are on Plot 12?</strong>
 <details><summary class='code2'>Answer</summary>
 
 ```{r d1chal4}
@@ -71,7 +73,7 @@ nrow(mima12) # 12
 </div>
 
 <div class="alert alert-info">
-<strong>Question 5. How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot 12?</strong>
+<strong>How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot 12?</strong>
 <details><summary class='code2'>Answer</summary>
 
 Option 1. Subset data then calculate number of rows
@@ -90,7 +92,7 @@ table(mima12$TreeStatusCode) # 6
 </div>
 
 <div class="alert alert-info">
-<strong>Question 6. Find the DBH record that's > 400cm DBH.</strong>
+<strong>Find the DBH record that's > 400cm DBH.</strong>
 
 <details><summary class='code2'>Answer</summary>
 There are multiple ways to do this. Two examples are below.
@@ -109,7 +111,7 @@ trees[trees$DBHcm == max_dbh,]
 </div>
 
 <div class="alert alert-info">
-<strong>Question 7. What is the exact value of the largest DBH, and which record does it belong to?</strong>
+<strong>What is the exact value of the largest DBH, and which record does it belong to?</strong>
 
 <details><summary class='code2'>Answer</summary>
 There are multiple ways to do this. Two examples are below.
@@ -130,7 +132,7 @@ trees[trees$DBHcm == max_dbh,]
 </div>
 
 <div class="alert alert-info">
-<strong>Question 8: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
+<strong>Fix the DBH typo by replacing 443.0 with 44.3.</strong>
 
 <details><summary class = 'drop2'>Answer</summary>
 Let's say that you looked at the datasheet, and the actual DBH for that tree was 44.3 instead of 443.0. You can change that value in the original CSV by hand. But even better is to document that change in code. There are multiple ways to do this. Two examples are below.
@@ -154,10 +156,11 @@ range(trees_fix$DBHcm)
 
 </details>
 </div>
+</details><br>
 
-<h5>Basic Plotting</h5>
+<details open><summary class = 'drop'>Basic Plotting</summary>
 <div class="alert alert-info">
-<strong>Question 9: Plot a histogram of percent cover (`Ave_Cov`) in the `ACAD_wetland` </strong>
+<strong>Plot a histogram of percent cover (`Ave_Cov`) in the `ACAD_wetland` </strong>
 
 <details><summary class='code2'>Answer</summary>
 ```{r wethist2}
@@ -165,3 +168,5 @@ hist(ACAD_wetland$Ave_Cov)
 ```
 </details>
 </div>
+</details>
+<br>

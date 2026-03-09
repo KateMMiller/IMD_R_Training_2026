@@ -94,8 +94,13 @@ body {
 ```{r datw1, child = "D2_Tab_2_Data_Wrangling_I.Rmd", eval = T}
 ```
 
-```{r sum1, child = "D2_Tab_3_Summarizing.Rmd", eval = T}
+```{r cond1, child = "D2_Tab_3_Conditionals.Rmd", eval = T}
+```
 
+```{r sum1, child = "D2_Tab_4_Summarizing.Rmd", eval = T}
+```
+
+```{r datviz, child = "D2_Tab_5_Basic_data_viz.Rmd", eval = T}
 ```
 
 
@@ -107,7 +112,7 @@ body {
     - dates
 - ggplot II:
     - customizing plots
-    - combining plots
+    - combining plots with facets and patchwork
     - custom color palettes
     - legends
 - coding best practices (design with the user in mind)

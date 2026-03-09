@@ -163,7 +163,7 @@ head(ACAD_sub2)
 
 <details open><summary class = 'drop'>Test your skills!</summary>
 <div class="alert alert-info">
-<strong>CHALLENGE: How would you look at the the first 4 even rows (2, 4, 6, 8), and first 2 columns of the `ACAD_wetland` data frame?</strong>
+<strong>Question: How would you look at the the first 4 even rows (2, 4, 6, 8), and first 2 columns of the `ACAD_wetland` data frame?</strong>
 
 <details><summary class='drop2'>Answer</summary>
 <h5>Answer that works<h5>
@@ -243,7 +243,7 @@ length(sites_unique) # 8
 </br>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: How many unique species are there in the `ACAD_wetland` data frame?</strong>
+<strong>Question: How many unique species are there in the `ACAD_wetland` data frame?</strong>
 
 <details><summary class='drop2'>Answer</summary>
 ```{r rows2a, results = "hide"}
@@ -259,7 +259,7 @@ length(unique(ACAD_wetland$Latin_Name)) # equivalent
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: Which sites have species that are considered protected on them (Protected = TRUE)?</strong>
+<strong>Question: Which sites have species that are considered protected on them (Protected = TRUE)?</strong>
 
 <details><summary class='drop2'>Answer</summary>
 ```{r, rows2a2, results = 'hide'}

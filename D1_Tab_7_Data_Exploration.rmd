@@ -145,7 +145,7 @@ trees3$Plot_Name <- paste0(trees3$ParkUnit, "-", trees3$PlotCode) #equivalent- b
 <details open><summary class = 'drop'>Test your skills!</summary>
 <!-- Test skills section -->
 <div class="alert alert-info">
-<strong>CHALLENGE: How many trees are on Plot MIMA-12?</strong>
+<strong>Question: How many trees are on Plot MIMA-12?</strong>
 <details><summary class='drop2'>Answer</summary>
 ```{r chal4}
 mima12 <- subset(trees3, Plot_Name == "MIMA-12")
@@ -155,7 +155,7 @@ nrow(mima12) # 12
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12?</strong>
+<strong>Question: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12?</strong>
 <details><summary class='drop2'>Answer</summary>
 
 Option 1. Subset data then calculate number of rows
@@ -175,7 +175,7 @@ table(mima12$TreeStatusCode) # 6
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: Find the DBH record that's > 400cm DBH.</strong>
+<strong>Question: Find the DBH record that's > 400cm DBH.</strong>
 
 <details><summary class='drop2'>Answer</summary>
 There are multiple ways to do this. Two examples are below.
@@ -194,7 +194,7 @@ trees3[trees3$DBHcm == max_dbh,]
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: What is the exact value of the largest DBH, and which record does it belong to?</strong>
+<strong>Question: What is the exact value of the largest DBH, and which record does it belong to?</strong>
 
 <details><summary class='drop2'>Answer</summary>
 There are multiple ways to do this. Two examples are below.
@@ -215,7 +215,7 @@ trees[trees3$DBHcm == max_dbh,]
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
+<strong>Question: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
 
 <details><summary class = 'drop2'>Answer</summary>
 Let's say that you looked at the datasheet, and the actual DBH for that tree was 44.3 instead of 443.0. You can change that value in the original CSV by hand. But even better is to document that change in code. There are multiple ways to do this. Two examples are below.

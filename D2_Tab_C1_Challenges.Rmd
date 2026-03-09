@@ -1,6 +1,6 @@
 #### Day 2 Questions
-
-If you're starting a new session to answer these questions, you'll need to load dplyr and read in the tree data frame again.
+<details open><summary class = 'drop'>Load Data and Packages</summary>
+If you're starting a new session to answer these questions, you'll need to load dplyr and read in the tree and wetland data frames again.
 
 <p class = 'code'>Load dplyr</p>
 ```{r ldpd2c}
@@ -23,9 +23,17 @@ trees_final <- trees |>
   select(-DecayClassCode)
 ```
 
-<h5>Data Wrangling with dplyr </h5>
+<p class = 'code'>Read in example ACAD wetland data from url</p>
+```{r c1rdat, eval = F}
+ACAD_wetland <- read.csv(
+  "https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/ACAD_wetland_data_clean.csv"
+  )
+```
+</details><br>
+
+<details open><summary class = 'drop'>Data Wrangling with dplyr </summary>
 <div class="alert alert-info">
-<strong>CHALLENGE: How many trees are on Plot MIMA-12 (using trees_final)?</strong>
+<strong>How many trees are on Plot MIMA-12 (using trees_final)?</strong>
 <details><summary class='drop2'>Answer</summary>
 ```{r chal4_d22c}
 trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
@@ -34,7 +42,7 @@ trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
 </details>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12 (using trees_final)?</strong>
+<strong>How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12 (using trees_final)?</strong>
 <details><summary class='drop2'>Answer</summary>
 
 ```{r chal5d22c, fold.output = F}
@@ -45,7 +53,7 @@ trees_final |> filter(Plot_Name == "MIMA-12" & TreeStatusCode == "AS") |> nrow()
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: What is the exact value of the largest DBH, and which record does it belong to?</strong>
+<strong>What is the exact value of the largest DBH, and which record does it belong to?</strong>
 
 <details><summary class='drop2'>Answer</summary>
 ```{r maxdbhd22c, fold.output = T}
@@ -66,7 +74,7 @@ trees_final |>
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: Fix the DBH typo by replacing 443.0 with 44.3.</strong>
+<strong>Fix the DBH typo by replacing 443.0 with 44.3.</strong>
 
 <details><summary class = 'drop2'>Answer</summary>
 ```{r trfxd22c, fold.output = F}
@@ -87,3 +95,138 @@ range(trees_fix$DBHcm)
 ```
 </details>
 </div>
+</details><br>
+
+<details open><summary class = 'drop'>Conditionals</summary>
+<div class="alert alert-info">
+<strong>Using the ACAD_wetlands data, create a new column called Status that has "protected" for Protected = TRUE and "public" values for Protected = FALSE. </strong>
+
+<details><summary class='drop2'>Answer</summary>
+```{r wetcondc1, eval = F}
+# read in wetland data if you don't already have it loaded.
+ACAD_wetland <- read.csv("./data/ACAD_wetland_data_clean.csv")
+
+# Base R using the with() function
+ACAD_wetland$Status <- with(ACAD_wetland, ifelse(Protected == TRUE, "protected", "public"))
+table(ACAD_wetland$Status, ACAD_wetland$Protected)
+```
+
+```{r wetcond2c1, eval = T}
+# Tidyverse
+ACAD_wetland <- ACAD_wetland |> mutate(Status = ifelse(Protected == TRUE, "protected", "public"))
+table(ACAD_wetland$Status, ACAD_wetland$Protected) # check your work
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>Using the ACAD_wetlands data, create a new column called abundance_cat that has levels High, Medium, Low, based on Ave_Cov, where "High" is >50%, "Medium" is 10-50%, and "Low" is < 10%. </strong>
+<details><summary class='drop2'>Answer</summary>
+```{r wetabc12, eval = F}
+# Base R using the with() function and nested ifelse()
+ACAD_wetland$abundance_cat <- with(ACAD_wetland, ifelse(Ave_Cov < 10, "Low",
+                                                        ifelse(Ave_Cov >= 10 & Ave_Cov <= 50, "Medium", "High")))
+```
+
+```{r wetab2c12, eval = T}
+# Tidyverse using case_when() and between
+ACAD_wetland <- ACAD_wetland |> mutate(abundance_cat = case_when(Ave_Cov < 10 ~ "Low",
+                                                                 between(Ave_Cov, 10, 50) ~ "Medium", 
+                                                                 TRUE ~ "High"))
+table(ACAD_wetland$abundance_cat)
+```
+Note the use of the `between()` function that saves typing. This function matches as >= and <=. 
+
+</details>
+</div>
+</details>
+<br>
+
+<details open><summary class='drop'>Summarizing</summary>
+<div class="alert alert-info">
+<strong>Using the ACAD_wetland data, calculate the average percent cover of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
+<details><summary class='code2'>Answer</summary>
+```{r wetinvcovc1}
+# Using group_by()
+ACAD_inv <- ACAD_wetland |> group_by(Site_Name, Year, Invasive) |> 
+  summarize(Pct_Cov = sum(Ave_Cov), 
+            .groups = 'drop') |>  # optional line to keep console from being chatty
+  arrange(Site_Name) # sort by Site_Name for easier comparison
+
+head(ACAD_inv)
+
+# Using summarize(.by)
+ACAD_inv2 <- ACAD_wetland |> 
+  summarize(Pct_Cov = sum(Ave_Cov), .by = c(Site_Name, Year, Invasive)) |> 
+  arrange(Site_Name) # sort by Site_Name for easier comparison
+
+head(ACAD_inv2) # should be the same as ACAD_inv
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Question: Using the ACAD_wetland data, count the number of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
+<details><summary class='code2'>Answer</summary>
+```{r wetinvrc1}
+# Using group_by()
+ACAD_spp <- ACAD_wetland |> group_by(Site_Name, Year, Invasive) |> 
+  summarize(num_spp = n(), 
+            .groups = 'drop') |>  # optional line to keep console from being chatty
+  arrange(Site_Name) # sort by Site_Name for easier comparison
+
+head(ACAD_spp)
+
+# Using summarize(.by)
+ACAD_spp2 <- ACAD_wetland |> 
+  summarize(num_spp = n(), .by = c(Site_Name, Year, Invasive)) |> 
+  arrange(Site_Name) # sort by Site_Name for easier comparison
+
+head(ACAD_spp2) # should be the same as ACAD_inv
+```
+</details>
+</div>
+<br>
+
+<div class="alert alert-info">
+<strong>Using ACAD_wetland data, calculate relative % cover of species within each site. This one is challenging! </strong>
+<details><summary class='code2'>Answer</summary>
+<p class = 'code'>First sum site-level cover using mutate to return a value for every original row.</p>
+```{r wetrelcovc1}
+ACAD_wetland <- ACAD_wetland |> group_by(Site_Name, Year) |> 
+  mutate(Site_Cover = sum(Ave_Cov)) |> 
+  ungroup() # good practice to ungroup after group.
+
+table(ACAD_wetland$Site_Name, ACAD_wetland$Site_Cover) # check that each site has a unique value.
+head(ACAD_wetland)
+```
+
+<p class = 'code'>Next calculate relative cover grouped on Site_Name, Year, Latin_Name, and Common </p> 
+```{r wetrelcov2c1}
+# Create new dataset because collapsing rows on grouping variables
+# Using group_by() and summarize()
+ACAD_wetland_relcov <- ACAD_wetland |> group_by(Site_Name, Year, Latin_Name, Common) |> 
+  summarize(rel_cov = (Ave_Cov/Site_Cover)*100,
+            .groups = 'drop') |> 
+  ungroup()
+
+```
+
+<p class = 'code'>Check that relative cover sums to 100% within each site</p>
+```{r wetrelcovcheckc1}
+# Using summarize(.by = ) 
+ACAD_wetland_relcov2 <- ACAD_wetland |> #group_by(Site_Name, Year, Latin_Name, Common) |> 
+  summarize(rel_cov = Ave_Cov/Site_Cover, 
+            .by = c("Site_Name", "Year", "Latin_Name", "Common"))
+
+# Check that your relative cover sums to 100 for each site
+relcov_check <- ACAD_wetland_relcov2 |> group_by(Site_Name, Year) |> 
+  summarize(tot_relcov = sum(rel_cov)*100, .groups = 'drop')
+table(relcov_check$tot_relcov) # they should all be 100
+
+```
+</details>
+</div>
+<br>
+</details>

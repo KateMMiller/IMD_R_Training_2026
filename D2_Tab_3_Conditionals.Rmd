@@ -3,7 +3,6 @@ output:
   html_document:
     css: custom_styles.css
 ---
-
 #### Conditional functions
 <details open><summary class = 'drop'>Conditionals 101</summary>
 Conditional functions `ifelse()`, `if(){ }else{ }`, and `case_when()` allow you to return results that depends on specified conditions. 
@@ -14,10 +13,8 @@ The main differences between the most common conditional functions:
 <li>`case_when()`: Primarily for use with data frames. Can take any number of condition statements and their value to return. Requires `dplyr` package to be loaded. Syntax is a bit tricky to figure out at first, but once you have it, it's about as easy as using `ifelse()`. This function is akin to SQL CASE WHEN. On large data sets, it consistently performs slower than `ifelse()`. </li>
 <li>`if(){ }else{ }`: Can be used with data frames, but is more commonly used for operations outside of data frames. An example would be only running a chunk of code if a certain condition is met (e.g., if the data frame has > 0 rows, run next line of code.)</li>
 </ul>
-</details>
-<br>
 
-<details open><summary class = 'drop'>`ifelse()`</summary>
+<details open><summary class = 'drop2'>`ifelse()`</summary>
 The `ifelse()` function takes 3 arguments organized like: `ifelse(condition == TRUE, return this, return this instead)`. The first is the condition you're testing. The second argument is what to return if the condition is met. The third is what to return if the condition is not met. You can also nest `ifelse()` to include more than 2 conditions, but it can quickly get out of hand and hard to follow (see below).
 
 Let's start by adding a column to the NETN tree data that uses the `TreeStatusCode` to create a new column called `status` that is either live or dead conditional on the abbreviated code in `TreeStatusCode` in `trees_final`.
@@ -42,8 +39,9 @@ trees_final <- trees_final |>
 
 Remember that we used `%in%` instead of `==` because alive has multiple status codes. We used `==` in `TreeStatusCode == "RS"` because there's only one status code considered a recruit. We could have also used `%in%` with the same results, but that would not be true for matching the alive status codes.
 </details>
+<br>
 
-<details open><summary class = 'drop'>`case_when()`</summary>
+<details open><summary class = 'drop2'>`case_when()`</summary>
 The `case_when()` function allows you to have multiple conditions, each with their own return. The syntax is a bit different than `ifelse()` to allow for the multiple conditions and returns. Using the same approach as above, we'll create a third status code with `case_when()`. We'll specify the output for when a tree status code is in the dead category, recruit, and live category. We'll then add a fourth output for status codes that don't match any of the previous conditions and set that as 'unknown'. Basically the `TRUE` just means, any records left are assigned 'unknown'. Note also the order of operations in `case_when()`. The alive group includes "RS", but is not assigned "live", because it was alreay matched. The `case_when()` function starts with the first statement at the top (i.e. dead trees). Any record that matches the first statement is then dropped from additional statements. The second statement considers all trees not matched as dead. The third statment considers all trees not matched as dead or recruit. Then the fourth statement considers any trees not matched as dead, recruit, or live. Rather than relying on this function behavior, it's better to not have overlapping categories (e.g. not include "RS" in alive). I include it here to demonstrate the point. 
 
 <p class = 'code'>Create status column conditioning on TreeStatusCode</p>
@@ -62,8 +60,8 @@ table(trees_final$status2, trees_final$status3) # check that the output is the s
 
 ```
 </details>
-
-<details open><summary class = 'drop'>`if(){ }else{ }`</summary>
+<br>
+<details open><summary class = 'drop2'>`if(){ }else{ }`</summary>
 This style of `if(){ }else{ }`, hereafter called if/else, conditionals is best used for operations outside of data frames, like turning code on or off based on specific conditions. I use if/else with ggplot (graphing R package we'll cover later) to turn certain features on or off based on a condition in the data or a condition I set. If/else statements are also helpful for bug handling in your code. For example, if you want the code to send a warning when your data frame is empty (no rows), you can have an if/else statement that prints to the console. You can string together multiple conditions to test by adding more `else{ }` statements.
 
 <p class = 'code'>Print warning in console that indicates if invasive species are found in wetland data</p>
@@ -87,80 +85,51 @@ if(nrow(inv2) > 0){print("Invasive species were detected in the data.")
 ```
 
 </details>
-
-#### Summarizing with dplyr
-<details open><summary class = 'drop'>Using `group_by()` and `summarize()`</summary>
-Yesterday, we used functions like `mean()`, `min()`, and `max()` to summarize entire datasets. Now we're going to use those same functions to summarize data by grouping variables, such as park, year, plot, etc. The process is similar to using Totals in Access or subtotals in Excel, although it is more flexible and efficient in R.
-
-Difference between `summarize()` and `mutate()`:
-<ul>
-<li>`mutate()` returns the same number of <b>rows</b> as the original data frame. This function also returns all of the rows that were in the original data frame.</li>
-<li>`summarize()` returns the same number of rows as there are <b>grouping levels</b> in the original data frame. This function only returns the rows that were part of the `group_by()` and that were created in the `summarize()` function. 
-</ul>
-
-Common functions used to summarize:
-<ul>
-<li>`mean()`: calculate the group means</li>
-<li>`min()`: calculate the group minimums</li>
-<li>`max()`: calculate the group maximums</li>
-<li>`sum()`: calculate the group sums</li>
-<li>`sd()`: calculate the group standard deviations</li>
-<li>`n()`: tally the number of rows within each group</li>
-</ul>
-
-<p class = 'code'>Sum the number of trees per plot, year, and species using mutate. </p>
-Note the use of `n()`, which counts the number of rows within a group. Be careful here. If there are NAs in a group, they are counted by `n()`. Whether that's okay or not depends on the data. 
-```{r ttrsummut, message = F, warning = F}
-num_trees_mut <- trees_final |> 
-  group_by(Plot_Name, SampleYear, Species) |> 
-  mutate(num_trees = n()) |> 
-  select(Plot_Name, SampleYear, Species, num_trees)
-
-nrow(trees_final) #164
-nrow(num_trees_mut) #164
-head(num_trees_mut)
-```
-
-<p class = 'code'>Sum the number of trees per plot, year, and species using mutate.</p>
-```{r ttrsumsum}
-num_trees_sum <- trees_final |> 
-  group_by(Plot_Name, SampleYear, Species) |> 
-  summarize(num_trees = n()) 
-
-nrow(trees_final) #164
-nrow(num_trees_sum) #164
-head(num_trees_sum)
-```
-
-The `group_by()` + `mutate()` approach is helpful if you're trying to standardize values within your group. But in most cases, the `group_by()` + `summarize()` approach, which collapses to the group level, is what you're looking for. 
-
-Note the warning that `summarize()` gave you in the console. The tidyverse is chatty. They have a lot of checks built into their functions based on how the developers think you should be using their functions. The warning with `summarize()` is particularly annoying. To turn the warning off, you can specify `.groups = 'drop'`. I'll show that next. 
-
-There's also a new `.by` argument in summarize that allows you to skip the `group_by()` step. It came after I learned dplyr, so I often forget to use it, and I see most examples online using the original way too. I include both approaches below.
-
-<p class = 'code'>Summarize the average and standard error of tree DBH by plot and year</p>
-```{r trdbhsum}
-tree_dbh <- trees_final |> 
-  group_by(Plot_Name, SampleYear) |> 
-  summarize(mean_dbh = mean(DBHcm),
-            num_trees = n(),
-            se_dbh = sd(DBHcm)/sqrt(num_trees),
-            .groups = 'drop') # prevents warning in console
-
-tree_dbh2 <- trees_final |> 
-  summarize(mean_dbh = mean(DBHcm),
-            num_trees = n(),
-            se_dbh = sd(DBHcm)/sqrt(num_trees),
-           .by = c(Plot_Name, SampleYear))
-
-tree_dbh == tree_dbh2 # tests that all the values in 1 data frame match the 2nd. 
-
-```
-
-
 </details>
 <br>
 
-#+++++ ENDED HERE +++++
-Add challenges
+<details open><summary class = "drop">Test your skills with conditionals</summary>
 
+<div class="alert alert-info">
+<strong>Question: Using the ACAD_wetlands data, create a new column called Status that has "protected" for Protected = TRUE and "public" values for Protected = FALSE. </strong>
+<details><summary class='code2'>Answer</summary>
+```{r wetcond, eval = F}
+# read in wetland data if you don't already have it loaded.
+ACAD_wetland <- read.csv("./data/ACAD_wetland_data_clean.csv")
+
+# Base R using the with() function
+ACAD_wetland$Status <- with(ACAD_wetland, ifelse(Protected == TRUE, "protected", "public"))
+table(ACAD_wetland$Status, ACAD_wetland$Protected)
+```
+
+```{r wetcond2, eval = T}
+# Tidyverse
+ACAD_wetland <- ACAD_wetland |> mutate(Status = ifelse(Protected == TRUE, "protected", "public"))
+table(ACAD_wetland$Status, ACAD_wetland$Protected) # check your work
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>Question: Using the ACAD_wetlands data, create a new column called abundance_cat that has levels High, Medium, Low, based on Ave_Cov, where "High" is >50%, "Medium" is 10-50%, and "Low" is < 10%. </strong>
+<details><summary class='code2'>Answer</summary>
+```{r wetab, eval = F}
+# Base R using the with() function and nested ifelse()
+ACAD_wetland$abundance_cat <- with(ACAD_wetland, ifelse(Ave_Cov < 10, "Low",
+                                                        ifelse(Ave_Cov >= 10 & Ave_Cov <= 50, "Medium", "High")))
+```
+
+```{r wetab2, eval = T}
+# Tidyverse using case_when() and between
+ACAD_wetland <- ACAD_wetland |> mutate(abundance_cat = case_when(Ave_Cov < 10 ~ "Low",
+                                                                 between(Ave_Cov, 10, 50) ~ "Medium", 
+                                                                 TRUE ~ "High"))
+table(ACAD_wetland$abundance_cat)
+```
+Note the use of the `between()` function that saves typing. This function matches as >= and <=. 
+
+</details>
+</div>
+<br>
+</details>
+<br>
