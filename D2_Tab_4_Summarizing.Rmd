@@ -74,8 +74,6 @@ tree_dbh2 <- trees_final |>
 tree_dbh == tree_dbh2 # tests that all the values in 1 data frame match the 2nd. 
 
 ```
-
-
 </details>
 <br>
 
@@ -102,7 +100,6 @@ head(ACAD_inv2) # should be the same as ACAD_inv
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Question: Using the ACAD_wetland data, count the number of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
@@ -125,8 +122,6 @@ head(ACAD_spp2) # should be the same as ACAD_inv
 ```
 </details>
 </div>
-<br>
-
 
 <div class="alert alert-info">
 <strong>Question: Using ACAD_wetland data, calculate relative % cover of species within each site. This one is challenging!</strong>

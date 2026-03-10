@@ -3,7 +3,7 @@ output:
   html_document:
     css: custom_styles.css
 ---
-#### Conditional functions
+#### Conditional Functions
 <details open><summary class = 'drop'>Conditionals 101</summary>
 Conditional functions `ifelse()`, `if(){ }else{ }`, and `case_when()` allow you to return results that depends on specified conditions. 
 

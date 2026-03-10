@@ -1,5 +1,5 @@
 
-#### Importing and saving data
+#### Importing and Saving Data
 Most of the work we do in R relies on one or more existing datasets that we want to query or summarize, rather than creating our own in R. Importing data in R is therefore an important skill. R can import just about any data type, including CSV and MS Excel files. You can also import tables from MS Access and SQL databases using ODBC drivers. That's beyond the scope of this class, but I can share examples for anyone needing to import from a database. For now, I'll show how to work with CSVs and Excel spreadsheets. 
 
 <details open><summary class = "drop">Import CSV</summary>

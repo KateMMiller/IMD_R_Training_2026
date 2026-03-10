@@ -5,14 +5,14 @@ output:
 ---
 #### Day 3 Goals
 <b>Goals for Day 3: </b><br>
-<img src = "./images/ggplot.png" alt = 'ggplot2 illustration' style = "float:right; width:375px;">
+<img src = "./images/poor_management.png" alt = 'Poor file management illustration' style = "float:right; width:400px;">
 <span class = "capright"><a href="https://allisonhorst.com">Artwork by @allison_horst</a></span>
 
 <ol>
 <li>More advanced data wrangling</li>
 <ul>
-<li>Learn how to pivot data from long to wide and wide to long</li>
-<li>Learn how to join tables</li>
+<li>Pivoting data from long to wide and wide to long</li>
+<li>Joining tables together</li>
 <li>More advanced handling of NAs</li>
 <li>Working with dates and times</li>
 </ul>
@@ -22,14 +22,14 @@ output:
 <li>Combining plots with facets and patchwork</li>
 <li>Working with legends</li>
 </ul>
-<li>Coding best practices: design with the user in mind, even if that's you!</li>
+<li>Coding best practices</li>
 <ul>
-<li>Comment your code</li>
-<li>Parameters, packages, datasets on top of script</li>
-<li>Use consistent coding style</li>
+<li>Commenting code</li>
+<li>Putting packages, datasets, and parameters on top of script</li>
+<li>Using consistent coding style</li>
 <li>Logical object naming</li>
-<li>Use projects instead of stand alone scripts where possible</li>
-<li>Caution choosing packages for core work</li>
+<li>Using projects instead of stand alone scripts where possible</li>
+<li>Caution choosing R packages</li>
 </ul>
 </ol>
 

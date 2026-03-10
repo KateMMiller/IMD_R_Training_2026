@@ -4,11 +4,11 @@ output:
     css: custom_styles.css
 ---
 
-#### ggplot palettes
+#### Palettes in ggplot
 WIP
 
-#### ggplot facets and grids
+#### Facets and Grids 
 WIP
 
-#### ggplot legends
+#### Legends in ggplot
 WIP

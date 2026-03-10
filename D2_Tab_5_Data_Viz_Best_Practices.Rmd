@@ -107,27 +107,27 @@ sapply(ansc, function(x) c(mean=round(mean(x), 2), var=round(var(x), 2))) |>
 <details open><summary class='drop'>Guidelines for Effective Data Visualizations</summary>
 
 Anscombe used clever thinking and simple plots to demonstrate the importance of data visualizations. But it's not enough to just plot the data. To have impact, a plot must convey a clear message. How can we do this?
-
-- **Have a purpose.** Every data visualization should tell a story. What story does the Covid plot tell? What message does Anscombe's quartet of plots convey?
-
-- **Consider your audience.** Avoid scientific names, acronyms, or jargon unless your audience is well-versed in that language. Use color-blind friendly colors.
-
-- **Use an appropriate visualization.** For example: 
-  - Line graphs work well for showing changes in continuous data over time 
-  - Bar charts compare counts or proportions in categorical data (pie charts get a bad rap in the data viz world, but can be useful in [certain situations](https://chartio.com/learn/charts/what-is-the-difference-between-a-pie-chart-and-a-bar-chart/#:~:text=As%20a%20rule%20of%20thumb%3A%201%20Use%20either,values%20...%203%20Use%20a%20bar%20chart%20otherwise))
-  - For statistics (e.g., means) with confidence intervals, point plots with error bars are preferred over bar charts (nice explanation [here](https://scc.ms.unimelb.edu.au/resources-list/graphs-for-statistical-analysis/graphs))
-  - Scatterplots are useful for showing the relationship (correlation) between two continuous variables.
-  - Matrix heat maps can efficiently compare the magnitude of numbers when we have lots of data structured in table format, especially when colors have a clear connection to the numbers (e.g., scorecard data)
-  - Box plots, violin plots, and histograms show distributions and outliers for continuous data. Dot plots are a useful alternative when sample sizes are small.
-<br>  
-- **Keep it simple**
-  - Every plot element and aesthetic should have a purpose.
-  - Avoid 3D charts unless you have good reason otherwise.
-  - Don't try to cram everything into one plot (e.g., juxtapose two plots instead of adding a secondary y-axis. Nice explanation [here](https://blog.datawrapper.de/dualaxis/)).
-<br>  
-- **Use appropriate font size for axis labels** The audience should not need a magnifying glass to read the axis labels on your figure. This is particularly true for powerpoint slides. Either make the font bigger in R, or manually fix that in powerpoint.
-- **Figures should not require 5 minutes of explaining before people can understand them** If that's the case for your figure, think about how you can simplify or more clearly convey information.
-- **Use informative text and arrows wisely.** Clear, meaningful titles, subtitles, axes titles/labels, and annotations help convey the message of a plot. Use lines and arrows (sparingly but effectively) to emphasize important thresholds, data points or other plot features. Fonts should be large enough with good contrast (against the background) and sufficient white space to be easily readable.
+<ul>
+<li><b>Have a purpose.</b> Every data visualization should tell a story.</li>
+<li><b>Consider your audience.</b> Avoid scientific names, acronyms, or jargon unless your audience is well-versed in that language. Use color-blind friendly colors.</li>
+<li><b>Use an appropriate visualization.</b> For example: </li>
+  <ul>
+  <li>Line graphs work well for showing changes in continuous data over time </li>
+  <li>Bar charts compare counts or proportions in categorical data (pie charts get a bad rap in the data viz world, but can be useful in [certain situations](https://www.atlassian.com/data/charts/how-to-choose-pie-chart-vs-bar-chart))</li>
+  <li>For statistics (e.g., means) with confidence intervals, point plots with error bars are preferred over bar charts (nice explanation [here](https://scc.ms.unimelb.edu.au/resources-list/graphs-for-statistical-analysis/graphs))</li>
+  <li>Scatterplots are useful for showing the relationship (correlation) between two continuous variables.</li>
+  <li>Matrix heat maps can efficiently compare the magnitude of numbers when we have lots of data structured in table format, especially when colors have a clear connection to the numbers (e.g., scorecard data)</li>
+  <li>Box plots, violin plots, and histograms show distributions and outliers for continuous data. Dot plots are a useful alternative when sample sizes are small.</li>
+</ul>
+<li><b>Keep it simple: </b>
+  <ul>
+  <li>Every plot element and aesthetic should have a purpose.</li>
+  <li>Avoid 3D charts unless you have good reason otherwise.</li>
+  <li>Don't try to cram everything into one plot (e.g., juxtapose two plots instead of adding a secondary y-axis. Nice explanation [here](https://blog.datawrapper.de/dualaxis/)).</li>
+  </ul>
+<li><b>Use appropriate font size for axis labels.</b> The audience should not need a magnifying glass to read the axis labels on your figure. This is particularly true for powerpoint slides. Either make the font bigger in R, or manually fix that in powerpoint.</li>
+<li><b>Figures should not require 5 minutes of explaining before people can understand them.</b> If that's the case for your figure, think about how you can simplify or more clearly convey information.</li>
+<li><b>Use informative text and arrows wisely.</b> Clear, meaningful titles, subtitles, axes titles/labels, and annotations help convey the message of a plot. Use lines and arrows (sparingly but effectively) to emphasize important thresholds, data points or other plot features. Fonts should be large enough with good contrast (against the background) and sufficient white space to be easily readable.</li>
 </details>
 <br>
 

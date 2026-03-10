@@ -1,5 +1,5 @@
 
-<h2>Installing required software</h2>
+<h3>Installing required software</h3>
 The only prerequisite for the R training is to install the latest version of R and RStudio on your computer. These should be available in the Company Portal in Entra, and shouldn't require special permissions to install. We'll talk about the difference between R and RStudio on the first day, but for now, just make sure they're installed. 
 
 Your R version should be at least 4.4.3 or above to make sure everyone's code behaves the same way. Likely the version you have is 4.5.1.
