@@ -17,7 +17,7 @@ The `ggplot2` package was developed using the grammar of graphics as the underly
 
 Important concepts with `ggplot2`:
 <ul>
-<li><b>`ggplot(data, aes())`:</b> Every ggplot object starts with this line, which tells R the data you're plotting, and which variables you're plotting where in `aes()` argument.</li>
+<li><b>ggplot(data, aes()):</b> Every ggplot object starts with this line, which tells R the data you're plotting, and which variables you're plotting where in `aes()` argument.</li>
 <li><b>data: </b> every plot requires data. The first argument for every `ggplot()`call is the data. This also means you can pipe data into a ggplot object. </li>
 <li><b>aes: </b> Short for aesthetics. This is where you tell ggplot what your x and y variables are. If you want aesthetics, like color, fill, or size to vary by the data (e.g., color code a figure by park, use a dashed vs. solid line to distinguish between significant/non-significant trend, etc.), those variables are specified within the `aes()` argument either at the `ggplot()` level, or within the specific geom. </li>
 <li><b>geom: </b> Short for geometries, geoms represent what you see in the plot, such as the points in a scatter plot, the lines in a trend plot, or the boxes in a boxplot.</li>
@@ -29,91 +29,182 @@ Important concepts with `ggplot2`:
 </details>
 <br>
 
-<details open><summary class='drop'>Park Visitation vs. Gas prices</summary>
+<details open><summary class='drop'>Plotting Park Visitation in Acadia NP</summary>
 We will build our first ggplot object step-by-step to demonstrate how each component contributes to the final plot. Our first ggplot object will create a line graph of trends in visits to Acadia National Park from 1994 to 2024.
 
-<p class = 'code'>Step 1. Import the visitation and gas prices data</p>
+<p class = 'code'>Step 1. Import the visitation data and load ggplot2</p>
 ```{r import_gvdata, echo = TRUE, eval = F, message = FALSE, warning = FALSE}
-visit_vs_gas <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/ACAD_Visits_vs_Gas_prices.csv")
+library(ggplot2)
+visits <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/ACAD_annual_visits.csv")
 ```
 ```{r import_gvdata2, echo = F, results = 'hide', eval = T, message = FALSE, warning = FALSE}
-visit_vs_gas <- read.csv("./data/ACAD_Visits_vs_Gas_prices.csv")
+library(ggplot2)
+visits <- read.csv("./data/ACAD_annual_visits.csv")
 ```
 
 <p class = 'code'>Step 2. Look over the data for any potential problems.</p>
 
 ```{r view_data, eval = F, message = FALSE, warning = FALSE}
 # Examine the data to understand data structure, data types, and potential problems
-head(visit_vs_gas) 
-summary(visit_vs_gas)
-table(visit_vs_gas$Year) 
-table(complete.cases(visit_vs_gas))
+head(visits) 
+summary(visits)
+table(visits$Year) 
+table(complete.cases(visits))
 ```
 ```{r view_data2, fold.output = F}
-str(visit_vs_gas)
+str(visits)
 ```
 
 <p class = 'code'>Step 3. Fix the annual visitation variable</p>
-Note that Annual visits is treated like a character because there are "," thousands separators. We have to fix that before we can plot the data. There are multiple ways to do this. I'm going to use the `gsub()` function that behaves like `gsub([find "pattern"], [replace with "pattern"], [column to search])`. The empty "" removes the ",". The `as.numeric()` converts a character to numeric. As long as you don't get the "NAs introduced through coersion" warning in the console, all rows in the column of interest were successfully. converted to a number.
+Note that Annual_Visits is treated like a character because there are "," thousands separators. We have to fix that before we can plot the data. There are multiple ways to do this. I'm going to use the `gsub()` function that behaves like `gsub([find "pattern"], [replace with "pattern"], [column to search])`. The empty "" removes the ",". The `as.numeric()` converts a character to numeric. As long as you don't get the "NAs introduced through coersion" warning in the console, all rows in the column of interest were successfully converted to a number.
 
-```{r fixav}
+```{r fixav2, message = F, warning = F}
 # Base R
-visit_vs_gas$Annual_Visits <- as.numeric(gsub(",", "", visit_vs_gas$Annual_Visits))
+visits$Annual_Visits <- as.numeric(gsub(",", "", visits$Annual_Visits))
 
 # Tidyverse
-visit_vs_gas <- visit_vs_gas |> mutate(Annual_Visits = as.numeric(gsub(",", "", Annual_Visits)))
-str(visit_vs_gas$Annual_Visits) #check that it worked
+library(dplyr) # load package first
+visits <- visits |> mutate(Annual_Visits = as.numeric(gsub(",", "", Annual_Visits)))
+str(visits) #check that it worked
 ```
 
 <p class = 'code'>Step 4. Create the ggplot template of annual visitation per 1000 visitors over time</p>
 ```{r p1, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
-p <- ggplot(data = visit_vs_gas, aes(x = Year, y = Annual_Visits/1000))
+p <- ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000))
 p
 ```
 
-<p class = 'code'>Step 5. Add point geometry</p>
+<p class = 'code'>Step 5. Add line and point geometry, starting with default, and ending with customized symbols</p>
+The plot below has custom the shape, color (outline), fill, and size of the points, but all points are the same. Note the hexcode used for the fill color. This is a 6 digit code that gives maximum flexibility on selecting colors. I often use <a href="https://htmlcolorcodes/com">HTML color codes</a> to find colors and their associated hexcode.
+
+Note that I usually specify the `geom_line()` before the `geom_point()`, because the geoms are drawn in the order they're specified. Specifying the opposite order will make the lines cross over the points and doesn't look as nice.
 ```{r p2, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
-p1 <- p + geom_point()
+p1a <- p + geom_line() + geom_point() # default color and shape to points
+p1a
+
+p1 <- p + 
+  geom_line() + 
+  geom_point(color = "black", fill = "#82C2a3", size = 2.5, shape = 24)
 p1
 ```
 
-<p class = 'code'>Step 6. Add line graph geometry</p>
-```{r p3, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
-p2 <- p1 + geom_line()
-p2
-```
-
-<p class = 'code'>Step 7. Fine tune the Y and X axis breaks</p>
+<p class = 'code'>Step 6. Fine tune the Y and X axis breaks</p>
 ```{r p4, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
-p3 <- p2 + scale_y_continuous(name = "Annual visitors in 1000's",
+p2 <- p1 + scale_y_continuous(name = "Annual visitors in 1000's",
                               limits = c(2000, 4500),
                               breaks = seq(2000, 4500, by = 500)) + # label axis at 2000, 2500, 3000,... up to 4500
            scale_x_continuous(limits = c(1994, 2024),
                               breaks = c(seq(1994, 2024, by = 5))) # label axis at 1994, 1999, 2004,... up to 2024
-p3
+p2
 ```
 
-<p class = 'code'>Step 8. Change the labels</p>
+<p class = 'code'>Step 7. Change the labels</p>
 ```{r p5, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
-p4 <- p3 + labs(x = "Year", 
-                title = "Annual visitation/1000 people in Acadia National Park 1994 - 2024")
-p4
+p3 <- p2 + labs(x = "Year", 
+                title = "Annual visitation/1000 people in Acadia NP 1994 - 2024")
+p3
 ```
 <br>
 Note how the axis labels can be specified either in the scale (step 4) or in the `labs()` function.
 
-<p class = 'code'>Step 9. Modify the theme</p>
+<p class = 'code'>Step 8. Modify the theme using built-in themes</p>
 There are built in themes that change the default formatting of the plot. Here I show `theme_bw()`, but there are many options. Play around with the other themes to get a feel for the options: `theme_linedraw()`, `theme_light()`, `theme_dark()`, `theme_minimal()`, `theme_classic()`, `theme_void()`. The two I use most often are `theme_bw()` and `theme_classic()`.  There's a package called `ggthemes` that you can install with even more themes. You can also create your own themes.
 
 ```{r p6, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
-p5 <- p4 + theme_bw() 
-p5
+p4 <- p3 + theme_bw() 
+p4
 ```
 
+<p class ='code'>Or change theme elements manually</p>
+Note that `?theme` takes you to the help that shows all the options. 
 
-#++++ ENDED HERE ++++
-- Turn off gridlines manually
-- add another plot where group, color, facets are used.
+```{r p5b, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
+p4b <- p3 + theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1), # make x axis text bigger and angle
+                  panel.grid.major = element_blank(), # turns of major grids
+                  panel.grid.minor = element_blank(), # turns off minor grids
+                  panel.background = element_rect(fill = 'white', color = 'dimgrey'), # make panel white w/ grey border
+                  plot.margin = margin(2, 3, 2, 3), # increase white margin around plot 
+                  title = element_text(size = 10) # reduce title size 
+                  )
+
+p4b
+```
+<br>
+Note the order of margins in ggplot is Top, Right, Bottom, Left, which sounds like trouble. 
+
+<p class = 'code'>Putting it all together</p>
+```{r combg, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
+ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
+  geom_line() + 
+  geom_point(color = "black", fill = "#82C2a3", size = 2.5, shape = 24) +
+  labs(x = "Year", title = "Annual visitation/1000 people in Acadia NP 1994 - 2024") +
+  scale_y_continuous(name = "Annual visitors in 1000's",
+                              limits = c(2000, 4500),
+                              breaks = seq(2000, 4500, by = 500)) + 
+  scale_x_continuous(limits = c(1994, 2024),
+                     breaks = c(seq(1994, 2024, by = 5))) + 
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1), # make x axis text bigger and angle
+                  panel.grid.major = element_blank(), # turns of major grids
+                  panel.grid.minor = element_blank(), # turns off minor grids
+                  panel.background = element_rect(fill = 'white', color = 'dimgrey'), # make panel white w/ grey border
+                  plot.margin = margin(2, 3, 2, 3), # increase white margin around plot 
+                  title = element_text(size = 10) # reduce title size 
+                  )
+  
+```
+
+<div class="alert alert-info">
+<strong>Question: Recreate the plot below (or customize your own plot). </strong>
+Note that the fill color is "#0080FF", and the shape is 21, and the theme is classic. The linewidth = 0.75, and linetype = 'dashed'. 
+
+```{r pq1, fold.plot = F, echo = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
+pq <- 
+  ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
+    geom_line(linewidth = 0.75, linetype = 'dashed') + 
+    geom_point(color = "black", fill = "#0080FF", size = 2.5, shape = 21) +
+    labs(x = "Year", y = "Annual visits in 1,000s") +
+    scale_y_continuous(limits = c(2000, 4500),
+                       breaks = seq(2000, 4500, by = 500)) + 
+    scale_x_continuous(limits = c(1994, 2024),
+                       breaks = c(seq(1994, 2024, by = 5))) + 
+    theme_classic()
+pq
+```
+
+<details><summary class='code2'>Answer</summary>
+```{r pq1a, eval = F, results = 'hide'}
+ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
+  geom_line(linewidth = 0.75, linetype = 'dashed') + 
+  geom_point(color = "black", fill = "#0080FF", size = 2.5, shape = 21) +
+  labs(x = "Year", y = "Annual visits in 1,000s") +
+  scale_y_continuous(limits = c(2000, 4500),
+                     breaks = seq(2000, 4500, by = 500)) + 
+  scale_x_continuous(limits = c(1994, 2024),
+                     breaks = c(seq(1994, 2024, by = 5))) + 
+  theme_classic()
+
+```
+</details>
+</div>
+<br>
+
+<p class = 'code'>Plot Bar Charts instead of points and lines</p>
+A couple of notes on the code below:
+<ul>
+<li>For bar charts, if you want the value (annual visit) to be the bar height, use `geom_col()`. If instead, you want the bar chart to be proportional to the number of cases in each group, use `geom_bar(stat = 'count')`. </li>
+<li>The `width = 0.75` makes the bar width narrower allowing some white space between the bars.</li>
+<li>Setting x to NULL in the `labs()` means the x axis won't include a label.</li>
+```{r barp, fold.plot = F}
+ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
+  geom_col(fill = "#8B96B5", color = "dimgrey", width = 0.75) +
+  theme_bw() +
+  labs(x = NULL, y = "Annual visitors in 1000's") +
+  scale_x_continuous(limits = c(1993, 2025),
+                     breaks = c(seq(1994, 2024, by = 5)))
+
+```
 
 </details>
+<br>
+
 

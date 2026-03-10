@@ -12,9 +12,9 @@ output:
 <li>Comfortable filtering and selecting data, and renaming and creating new columns in `dplyr`. </li>
 <li>How to use `ifelse()` and `case_when()` conditional statements.</li>
 <li>Comfortable grouping and summarizing data in `dplyr`. </li>
-<li>Difference between summarize and mutate. </li>
+<li>Difference between `summarize()` and `mutate()`. </li>
 <li>Data visualization best practices.</li>
-<li>Introduction to ggplot2.</li>
+<li>Understanding the building blocks of ggplot2 plotting package.</li>
 </ol>
 
 <br>

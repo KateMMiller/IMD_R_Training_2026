@@ -34,12 +34,13 @@ ACAD_wetland <- read.csv(
 <details open><summary class = 'drop'>Data Wrangling with dplyr </summary>
 <div class="alert alert-info">
 <strong>How many trees are on Plot MIMA-12 (using trees_final)?</strong>
+
 <details><summary class='drop2'>Answer</summary>
 ```{r chal4_d22c}
 trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
 ```
-</div>
 </details>
+</div>
 
 <div class="alert alert-info">
 <strong>How many trees with a TreeStatusCode of "AS" (alive standing) are on Plot MIMA-12 (using trees_final)?</strong>
@@ -48,7 +49,6 @@ trees_final |> filter(Plot_Name == "MIMA-12") |> nrow()
 ```{r chal5d22c, fold.output = F}
 trees_final |> filter(Plot_Name == "MIMA-12" & TreeStatusCode == "AS") |> nrow()
 ```
-
 </details>
 </div>
 
@@ -95,7 +95,8 @@ range(trees_fix$DBHcm)
 ```
 </details>
 </div>
-</details><br>
+</details>
+<br>
 
 <details open><summary class = 'drop'>Conditionals</summary>
 <div class="alert alert-info">
@@ -164,7 +165,6 @@ head(ACAD_inv2) # should be the same as ACAD_inv
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Question: Using the ACAD_wetland data, count the number of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
@@ -187,7 +187,6 @@ head(ACAD_spp2) # should be the same as ACAD_inv
 ```
 </details>
 </div>
-<br>
 
 <div class="alert alert-info">
 <strong>Using ACAD_wetland data, calculate relative % cover of species within each site. This one is challenging! </strong>
@@ -228,5 +227,42 @@ table(relcov_check$tot_relcov) # they should all be 100
 ```
 </details>
 </div>
+</details>
+<br>
+<details open><summary class = 'drop'>Plotting with ggplot2</summary>
+<div class="alert alert-info">
+<strong>Recreate the plot below (or customize your own plot). </strong>
+Note that the fill color is "#0080FF", and the shape is 21, and the theme is classic. The linewidth = 0.75, and linetype = 'dashed' .
+
+```{r pq1c, fold.plot = F, echo = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
+pq <- 
+  ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
+    geom_line(linewidth = 0.75, linetype = 'dashed') + 
+    geom_point(color = "black", fill = "#0080FF", size = 2.5, shape = 21) +
+    labs(x = "Year", y = "Annual visits in 1,000s") +
+    scale_y_continuous(limits = c(2000, 4500),
+                       breaks = seq(2000, 4500, by = 500)) + 
+    scale_x_continuous(limits = c(1994, 2024),
+                       breaks = c(seq(1994, 2024, by = 5))) + 
+    theme_classic()
+pq
+```
+
+<details><summary class='code2'>Answer</summary>
+```{r pq1ac, eval = F, results = 'hide'}
+ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
+  geom_line(linewidth = 0.75, linetype = 'dashed') + 
+  geom_point(color = "black", fill = "#0080FF", size = 2.5, shape = 21) +
+  labs(x = "Year", y = "Annual visits in 1,000s") +
+  scale_y_continuous(limits = c(2000, 4500),
+                     breaks = seq(2000, 4500, by = 500)) + 
+  scale_x_continuous(limits = c(1994, 2024),
+                     breaks = c(seq(1994, 2024, by = 5))) + 
+  theme_classic()
+
+```
+</details>
+</div>
 <br>
 </details>
+<br>

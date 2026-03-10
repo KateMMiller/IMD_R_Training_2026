@@ -16,12 +16,12 @@ install.packages(setdiff(packages, rownames(installed.packages())))
 
 # Check that installation worked
 library(tidyverse) # turns on all tidyverse packages
-library(ggthemes)
-library(GGally)
-library(RColorBrewer)
-library(viridis)
-library(scales)
-library(plotly)
+# library(ggthemes)
+# library(GGally)
+# library(RColorBrewer)
+# library(viridis)
+# library(scales)
+# library(plotly)
 library(patchwork)
 ```
 
@@ -46,12 +46,12 @@ This is completely optional, but if you have any time before training starts, I 
 
 <li><u>Structure:</u> For most of the training, I will share my screen as I go through the website and then demo with live coding. Having 2 screens, one for my screen share and one for your R session, will make following along a lot easier. </li>
 
-<li><u>Getting Help:</u> I intentionally included people in this training I know to be kind, capable, and that will benefit from having better R skills. My hope is that this group is small enough and supportive enough that everyone feels comfortable openly asking questions and providing feedback to the group. However, if you aren't comfortable asking questions openly, you can ask questions in the anonymous <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. Additionally, if someone runs into an issue I can't immediately troubleshoot (it happens), we may have to table it until office hours, then will discuss it with the group the next day (if relevant). </li>
+<li><u>Getting Help:</u> I intentionally included people in this training I know to be kind, capable, and that will benefit from having better R skills. My hope is that this group is small and supportive enough that everyone feels comfortable openly asking questions and providing feedback to the group. However, if you aren't comfortable asking questions openly, you can ask questions in the anonymous <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. Additionally, if someone runs into an issue I can't immediately troubleshoot (it happens), we may have to table it until office hours. We will then discuss it with the group the next day (if relevant). </li>
 
 <li><u>Objectives:</u> Three days is barely enough to scratch the surface on what you can do in R. My goals with this training are to:
 <ol>
 <li>Help you get beyond the initial learning curve that can be really challenging to climb on your own.</li>
-<li>Expose you to some of the really useful things R can do. </li>
+<li>Expose you to what I consider are the useful things R can do for us. </li>
 <li>Provide you the tools needed to continue advancing your R skills on your own.</li>
 </ol>
 </li>

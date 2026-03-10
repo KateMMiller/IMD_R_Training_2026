@@ -1,0 +1,70 @@
+---
+output: 
+  html_document:
+    css: custom_styles.css
+---
+#### Coding best practices
+Below are general best practices that I follow to make my code easier to run, understand, and be more stable and have less maintenance cost. Many of these suggestions come from experience working with my and other peoples' code. The <a href="https://r4ds.hadley.nz/">R for Data Science</a> has a lot more information on coding best practices in 
+
+<ul>
+<li><a href="https://r4ds.hadley.nz/workflow-basics.html">Chapter 2 Workflow: basics</a></li>
+<li><a href="https://r4ds.hadley.nz/workflow-style.html">Chapter 4 Workflow: code style</a></li>
+<li><a href="https://r4ds.hadley.nz/workflow-scripts.html">Chapter 6 Workflow: scripts and projects</a></li>
+</ul>
+
+<br>
+<p class = "note">Main goal: Strive to write code with the user in mind, even if that's you in a month, year, etc.</p>
+<br>
+
+Tips for good coding:
+</ul>
+<li>Comment your code</li>
+<li>Dependencies, like packages, datasets, and parameters, are at the top of script</li>
+
+<p class = 'code'>Example commenting, dependencies on top, and consistent coding</p>
+```{r commenting, warning = F, message = F}
+# libraries
+library(dplyr) # for mutate and filter
+
+# parameters
+analysis_year = 2017
+
+# data sets
+df <- read.csv("./data/ACAD_wetland_data_clean.csv")
+
+# Filtering on RAM sites, create new site as a number column, and only include data from specified year
+df2 <- df |> filter(Site_Type == "RAM") |> 
+             filter(Year == analysis_year) |> 
+             mutate(site_num = as.numeric(substr(Site_Name, 5, 6)))
+```
+
+<li>Logical object naming</li>
+<ul>
+<li>Object names must start with a letter and can only contain letters, numbers, underscore, and period. Spaces aren't allowed in object names, and are best avoided in column names of data frames too. Descriptive object names will help you digest code, and often you'll want more than one word in the name. There are multiple cases that people tend to use, the most common of which tends to be snake_case. Other examples include: 
+
+```{r cases, eval = F}
+snake_case # most common in R
+camelCase # capitalize new words after the first
+period.separation # separate words by periods
+whyWOULDyouDOthisTOsomeone # excess capitalization is a pain
+```
+</li>
+
+<li>It's helpful to balance descriptive with length. The longer the object name, the more typing you have to do to refer to that object. Compare the two objects below:
+
+```{r long_names, eval = F}
+years_wetland_plots_were_sampled <- c(2020:2025)
+years_samp <- c(2020:2025)
+```
+</li>
+
+<li>Use projects instead of stand alone scripts, and logical naming of scripts</li>
+<p class = 'code'>Example of good file naming</p><br>
+<img src = "./images/file_naming_good.png" alt = 'Logical file naming' style = "width:400px;">
+
+<p class = 'code'>Example of hard to follow file naming</p><br>
+<img src = "./images/file_naming_bad.png" alt = 'Logical file naming' style = "width:400px;">
+
+
+<li>Caution choosing packages for core work</li>
+</ul>

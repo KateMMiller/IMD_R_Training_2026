@@ -1,0 +1,43 @@
+---
+output: 
+  html_document:
+    css: custom_styles.css
+---
+#### Day 3 Goals
+<b>Goals for Day 3: </b><br>
+<img src = "./images/ggplot.png" alt = 'ggplot2 illustration' style = "float:right; width:375px;">
+<span class = "capright"><a href="https://allisonhorst.com">Artwork by @allison_horst</a></span>
+
+<ol>
+<li>More advanced data wrangling</li>
+<ul>
+<li>Learn how to pivot data from long to wide and wide to long</li>
+<li>Learn how to join tables</li>
+<li>More advanced handling of NAs</li>
+<li>Working with dates and times</li>
+</ul>
+<li>More advanced ggplot2:</li> 
+<ul>
+<li>Custom color palettes</li>
+<li>Combining plots with facets and patchwork</li>
+<li>Working with legends</li>
+</ul>
+<li>Coding best practices: design with the user in mind, even if that's you!</li>
+<ul>
+<li>Comment your code</li>
+<li>Parameters, packages, datasets on top of script</li>
+<li>Use consistent coding style</li>
+<li>Logical object naming</li>
+<li>Use projects instead of stand alone scripts where possible</li>
+<li>Caution choosing packages for core work</li>
+</ul>
+</ol>
+
+<br>
+<b>Feedback: </b>Please leave feedback in the <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. You can submit feedback multiple times and don't need to answer every question. Responses are anonymous.
+<br>
+<br>
+
+</details>
+<br>
+

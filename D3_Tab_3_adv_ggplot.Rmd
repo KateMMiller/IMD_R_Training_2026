@@ -1,0 +1,14 @@
+---
+output: 
+  html_document:
+    css: custom_styles.css
+---
+
+#### ggplot palettes
+WIP
+
+#### ggplot facets and grids
+WIP
+
+#### ggplot legends
+WIP
