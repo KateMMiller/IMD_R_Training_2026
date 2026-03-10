@@ -139,17 +139,17 @@ ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
   geom_point(color = "black", fill = "#82C2a3", size = 2.5, shape = 24) +
   labs(x = "Year", title = "Annual visitation/1000 people in Acadia NP 1994 - 2024") +
   scale_y_continuous(name = "Annual visitors in 1000's",
-                              limits = c(2000, 4500),
-                              breaks = seq(2000, 4500, by = 500)) + 
+                     limits = c(2000, 4500),
+                     breaks = seq(2000, 4500, by = 500)) + 
   scale_x_continuous(limits = c(1994, 2024),
                      breaks = c(seq(1994, 2024, by = 5))) + 
   theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1), # make x axis text bigger and angle
-                  panel.grid.major = element_blank(), # turns of major grids
-                  panel.grid.minor = element_blank(), # turns off minor grids
-                  panel.background = element_rect(fill = 'white', color = 'dimgrey'), # make panel white w/ grey border
-                  plot.margin = margin(2, 3, 2, 3), # increase white margin around plot 
-                  title = element_text(size = 10) # reduce title size 
-                  )
+        panel.grid.major = element_blank(), # turns of major grids
+        panel.grid.minor = element_blank(), # turns off minor grids
+        panel.background = element_rect(fill = 'white', color = 'dimgrey'), # make panel white w/ grey border
+        plot.margin = margin(2, 3, 2, 3), # increase white margin around plot 
+        title = element_text(size = 10) # reduce title size 
+        )
   
 ```
 

@@ -4,7 +4,7 @@ output:
     css: custom_styles.css
 ---
 #### Coding best practices
-Below are general best practices that I follow to make my code easier to run, understand, and be more stable and have less maintenance cost. Many of these suggestions come from experience working with my and other peoples' code. The <a href="https://r4ds.hadley.nz/">R for Data Science</a> has a lot more information on coding best practices in 
+Below are general best practices to make code easier to run, understand, and be more stable with a relatively low maintenance cost. Many of these suggestions come from lessons working with my and other peoples' code. The <a href="https://r4ds.hadley.nz/">R for Data Science</a> also has a lot of great information on coding best practices in 
 
 <ul>
 <li><a href="https://r4ds.hadley.nz/workflow-basics.html">Chapter 2 Workflow: basics</a></li>
@@ -12,22 +12,17 @@ Below are general best practices that I follow to make my code easier to run, un
 <li><a href="https://r4ds.hadley.nz/workflow-scripts.html">Chapter 6 Workflow: scripts and projects</a></li>
 </ul>
 
-<br>
-<p class = "note">Main goal: Strive to write code with the user in mind, even if that's you in a month, year, etc.</p>
-<br>
+<details open><summary class = 'drop'>Tips for good code</summary>
+<ul>
+<li><b>Dependencies, like packages, datasets, and parameters, are at the top, and thorough commenting</b></li>
 
-Tips for good coding:
-</ul>
-<li>Comment your code</li>
-<li>Dependencies, like packages, datasets, and parameters, are at the top of script</li>
-
-<p class = 'code'>Example commenting, dependencies on top, and consistent coding</p>
+<p class = 'code'>Dependencies on top and thorough commenting</p>
 ```{r commenting, warning = F, message = F}
 # libraries
 library(dplyr) # for mutate and filter
 
 # parameters
-analysis_year = 2017
+analysis_year <- 2017
 
 # data sets
 df <- read.csv("./data/ACAD_wetland_data_clean.csv")
@@ -38,33 +33,116 @@ df2 <- df |> filter(Site_Type == "RAM") |>
              mutate(site_num = as.numeric(substr(Site_Name, 5, 6)))
 ```
 
-<li>Logical object naming</li>
-<ul>
-<li>Object names must start with a letter and can only contain letters, numbers, underscore, and period. Spaces aren't allowed in object names, and are best avoided in column names of data frames too. Descriptive object names will help you digest code, and often you'll want more than one word in the name. There are multiple cases that people tend to use, the most common of which tends to be snake_case. Other examples include: 
+<li><b>Descriptive names and consistent case</b></li>
+Object names must start with a letter and can only contain letters, numbers, underscore, and period. Spaces aren't allowed in object names, and are best avoided in column names of data frames too. Descriptive object names will help you digest code, and often you'll want more than one word in the name. There are multiple cases that people tend to use, the most common of which tends to be snake_case. Other examples are below.
 
+<p class = 'code'>Descriptive names with consistent case</p>
 ```{r cases, eval = F}
 snake_case # most common in R
 camelCase # capitalize new words after the first
 period.separation # separate words by periods
 whyWOULDyouDOthisTOsomeone # excess capitalization is a pain
 ```
-</li>
 
-<li>It's helpful to balance descriptive with length. The longer the object name, the more typing you have to do to refer to that object. Compare the two objects below:
+<li><b>Thoughtful word ordering</b></li>
+Ordering words in names, so that objects that are similar or derived from each other sort together. This also makes coding easier, as like objects will sort together in the popups that you see as you code.
 
-```{r long_names, eval = F}
-years_wetland_plots_were_sampled <- c(2020:2025)
-years_samp <- c(2020:2025)
+<p class = 'code'>Consider word order</p>
+```{r pops}
+# good word order
+ACAD_wet <- data.frame(year = 2020:2025, plot = 1:6)
+ACAD_wet2 <- ACAD_wet |> filter(year > 2020)
+ACAD_wet3 <- ACAD_wet2 |> mutate(plot_type = "RAM")
+
+# bad word order
+wet_ACAD <- data.frame(year = 2020:2025, plot = 1:6)
+ACAD_after_2020 <- wet_ACAD |> filter(year > 2020)
+RAM_ACAD_2020 <- ACAD_after_2020 |> mutate(plot_type = "RAM")
+
 ```
-</li>
 
-<li>Use projects instead of stand alone scripts, and logical naming of scripts</li>
+<li><b>Avoid long names</b></li>
+It's helpful to balance descriptive names with length. The longer the object name, the more typing you have to do to refer to that object. Coding long names, such as long column names in data frames, is cumbersome and inefficient. Compare the two objects below. While I doubt many would make super long object names like this, I commonly see excessively long column names in data packages. Limiting column names to 12 characters or less is super helpful for coders using those data.
+
+<p class = 'code'>Minimize name length</p>
+```{r long_names, eval = F}
+ACAD_wetland_sampling_data <- data.frame(years_plots_were_sampled = c(2020:2025), wetland_plots_sampled = c(1:6))
+ACAD_wetland_sampling_data2 <- ACAD_wetland_sampling_data |> filter(years_plots_were_sampled > 2020)
+
+ACAD_wet <- data.frame(year = 2020:2025, plot = 1:6)
+ACAD_wet2 <- ACAD_wet |> filter(year > 2020)
+```
+
+<li><b>Use a consistent code style</b></li>
+Code style refers to consistent use of case, indenting, spacing, line width, etc. There are several style conventions out there. I tend to use the <a href = "https://style.tidyverse.org/">tidyverse style guide</a>, which is based on <a href = "https://google.github.io/styleguide/Rguide.html">Google's R style guide</a>. 
+
+Style conventions I follow:
+<ul>
+<li>Space before and after operators, like `<-`, `=`, `==`, `|>`, `+`, etc.</li>
+<li>Space after commas</li>
+<li>Keep line width narrow enough to prevent scrolling to the right to view code</li>
+<li>Indent code in the same function or list together</li>
+<li>One pipe per line</li>
+</ul>
+
+<p class = 'code'>Examples of good vs. hard to read code</p>
+```{r styleex_dplyr, eval = F}
+# Good code
+trees_final <- trees |> 
+  mutate(DecayClassCode_num = as.numeric(DecayClassCode),
+         Plot_Name = paste(ParkUnit, PlotCode, sep = "-"),
+         Date = as.Date(SampleDate, format = "%m/%d/%Y")) |> 
+  rename("Species" = "ScientificName") |> 
+  filter(IsQAQC == FALSE) |> 
+  select(-DecayClassCode) |> 
+  arrange(Plot_Name, TagCode)
+
+# Same code, but much harder to follow
+trees_final <- trees|>mutate(DecayClassCode_num=as.numeric(DecayClassCode), Plot_Name=paste(ParkUnit,PlotCode,sep = "-"),  Date=as.Date(SampleDate,format="%m/%d/%Y"))|> rename("Species"="ScientificName")|>filter(IsQAQC==FALSE)|>select(-DecayClassCode)|>arrange(Plot_Name,TagCode)
+```
+
+<p class = 'code'>Style for ggplot object</p>
+```{r styleex_ggplot, eval = F}
+# Good code
+ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
+  geom_line() + 
+  geom_point(color = "black", fill = "#82C2a3", size = 2.5, shape = 24) +
+  labs(x = "Year", 
+       y = "Annual visitors in 1000's") +
+  scale_y_continuous(limits = c(2000, 4500),
+                     breaks = seq(2000, 4500, by = 500)) + 
+  scale_x_continuous(limits = c(1994, 2024),
+                     breaks = c(seq(1994, 2024, by = 5))) + 
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_rect(fill = 'white', color = 'dimgrey'),
+        title = element_text(size = 10) 
+        )
+
+# Same code but hard to follow
+ggplot(data=visits,aes(x=Year,y=Annual_Visits/1000))+geom_line()+geom_point(color="black",fill="#82C2a3",size=2.5,shape=24) +
+labs(x = "Year", y = "Annual visitors in 1000's")+
+scale_y_continuous(limits=c(2000,4500),breaks=seq(2000,4500,by=500))+ 
+scale_x_continuous(limits=c(1994,2024),breaks=c(seq(1994,2024,by=5)))+ 
+theme(axis.text.x=element_text(size=10,angle=45,hjust=1), panel.grid.major=element_blank(), 
+panel.grid.minor=element_blank(),panel.background=element_rect(fill='white',color='dimgrey'),
+title = element_text(size = 10))
+```
+</ul>
+</details>
+<br>
+
+<details open><summary class = 'drop'>Higher level organization</summary>
+Using projects instead of stand alone scripts helps keep the various pieces of an analysis project in one place and more easily transferable across computers. Logical naming of scripts, so they sort easily, is also helpful. 
+
 <p class = 'code'>Example of good file naming</p><br>
 <img src = "./images/file_naming_good.png" alt = 'Logical file naming' style = "width:400px;">
 
 <p class = 'code'>Example of hard to follow file naming</p><br>
 <img src = "./images/file_naming_bad.png" alt = 'Logical file naming' style = "width:400px;">
 
+Caution choosing packages for core work
 
-<li>Caution choosing packages for core work</li>
-</ul>
+</details>
+<br>
