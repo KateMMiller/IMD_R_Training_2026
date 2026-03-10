@@ -5,7 +5,71 @@ output:
 ---
 
 #### Pivoting Tables
-WIP
+<details open><summary class='drop'>Reshaping 101</summary>
+Reshaping data from long to wide and wide to long is a common task with our data.  Datasets are usually described as long, or wide. The long form, which is the structure database tables often take, consists of each row being an observation (ie if there are 3 visits to a site, there are 3 rows in the data), and each column being a variable (eg. plot, cycle, number of critters, % plant cover, etc). This is also the 'tidy data' format. However, in summary tables, we often want to reshape the data to be wide, so that there’s only one row per plot, a column for each visit, or species, and the abundance of that species as the value in the cell. 
+
+We’ll work with a fake bat capture dataset to see how this works. To get started, load the dataset and packages, as shown below.
+```{r impbat, eval = F}
+library(dplyr)
+library(tidyr) # for word 
+bat_cap <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/example_bat_capture_data.csv")
+head(bat_cap)
+```
+
+```{r impbat2, echo = F, results = 'hide'}
+bat_cap <- read.csv("./data/example_bat_capture_data.csv")
+```
+
+The example dataset contains simplified capture data. Every row represents an individual bat that was captured at a given site and date. We want to turn this into a wide data frame that has a column for every species, and the number of individuals of that species that were caught for each year and site combination. 
+
+Before we start, we’ll make a species code that will be easier to work with (R doesn’t like spaces). We’ll also summarize the data, so we have a count of the number of individuals of each species found per year.
+
+<p class='code'>Create sppcode</p>
+```{r batwran}
+bat_cap <- bat_cap |> 
+  mutate(genus = toupper(word(Latin, 1)), # capitalize and extract first word in Latin
+         species = toupper(word(Latin, 2)), # capitalize and extract second word in Latin
+         sppcode = paste0(substr(genus, 1, 3), # combine first 3 characters of genus and species
+                            substr(species, 1, 3))) |> 
+  select(-genus, -species) # drop temporary columns         
+
+head(bat_cap)
+```
+
+<p class='code'>Summarize # individuals per species, site and year</p>
+```{r batrang2}
+bat_sum <- bat_cap |> 
+  summarize(num_indiv = sum(!is.na(sppcode)), # I prefer this over n()
+            .by = c("Site", "Year", "sppcode")) |> 
+  arrange(Site, Year, sppcode) # helpful for ordering the future wide columns
+```
+
+Now that we have `bat_sum`, we're going to pivot the data wide, so that each species is a separate column.
+<p class = 'code'>Pivot bat summary data to wide</p>
+```{r batwide}
+bat_wide <- bat_sum |> pivot_wider(names_from = sppcode, values_from = num_indiv)
+head(bat_wide)
+```
+
+That was pretty simple. But there are a lot of blanks where a species wasn't caught in a give year and site. We can use the `values_fill` argument to save us time filling blanks as 0s.
+
+<p class = 'code'>Pivot bat summary data to wide filling blanks as 0</p>
+```{r batwide2}
+bat_wide <- bat_sum |> pivot_wider(names_from = sppcode, values_from = num_indiv, values_fill = 0)
+head(bat_wide)
+```
+
+We can reshape the capture data back to wide, which will give us a similar data as before with 0s are added into the data. For the `pivot_long()` function, you have to tell it which columns to pivot on. If you don't specify, it will make the entire dataset into 2 long columns, which you typically don't want. Here I tell R not to pivot on Site and Year columns, because I know they're in the data frame an unlikely to change. If I instead specified the sppcodes to pivot on, if a new species were found in the next year of sampling, I'd have to update this code to include that new species.
+```{r batlong}
+bat_long <- bat_wide |> pivot_longer(cols = -c(Site, Year), names_to = "sppcode", values_to = "num_indiv")
+head(bat_long)
+```
+
+</details>
+<br>
+#+++++ Add a challenge here with the tree dataset? +++++
+
+
 
 #### Joining Tables
 WIP
