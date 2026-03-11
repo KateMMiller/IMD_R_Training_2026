@@ -237,6 +237,51 @@ The right join is taking every row in the right data, `bat_wide`, and only the r
 <br>
 
 <details open><summary class='drop'>Advanced Joins</summary>
-Rolling joins: match tide and water temp data from rocky intertidal
-Anti joins: identify rows in one dataset that aren't in another
+There are a number of other more advanced joins out there. For more information on all possible joins, refer to <a href="https://r4ds.hadley.nz/joins.html">Chapter 19 in R for Data Science</a>.
+<ul>
+<li><b>Anti Join</b>: Returns records in the left dataset that are not found in the right dataset. This is one direction, so to find all records not in common, you'd do an anti join with both combinations of data being left or right. I use anti joins when I'm trying to check that two datasets have the same sites or years represented.</li> 
+
+<img src = "./images/anti_join_R4DS.png" alt = 'anti join' style = "display:block;margin-left:auto;margin-right:auto;width:300px;">
+<center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://r4ds.hadley.nz/joins.html">Figure from R for Data Science</a></center>
+<br>
+
+<p class = 'code'>Anti join to find sites not in bat_wide</p>
+```{r aj, fold.output = F}
+anti_join(bat_sites, bat_wide, by = "Site")
+```
+
+<p class = 'code'>Anti join to find sites not in bat_sites</p>
+```{r aj2, fold.output = F}
+anti_join(bat_wide, bat_sites, by = "Site")
+```
+
+<li><b>Rolling Join</b>: Rolling joins can come in handy if your two datasets don't perfectly match, and you want to match to the closest match. An example of where I've used rolling joins is where I wanted to relate timing of high tide to the nearest water temperature measurement from a HOBO logger. You can allow for the nearest match in both directions or specify the direction (e.g., => or <=). </li> 
+
+<img src = "./images/rolling_join_R4DS.png" alt = 'rolling join' style = "display:block;margin-left:auto;margin-right:auto;width:300px;">
+<center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://r4ds.hadley.nz/joins.html">Figure from R for Data Science</a></center>
+<br>
+
+I'm going to run through a simplified example using logger and tidal data, as working with sensor data like this is pretty common in our work. I need to download tide data and prepare the hobo data before I can do the join.
+
+- download BH tide data
+- make timestamp a posix in both
+- test rolling join 
+- filter closest water temp
+
+<p class = 'code'>Rolling join to find tides that were closest regardless of before or after the temperature measurement</p>
+```{r rj1}
+```
+
+
+<p class = 'code'>Rolling join to find tides that were equal to or after the temperature measurement</p>
+```{r rj1}
+```
+
+<p class = 'code'>Rolling join to find tides that were equal to or before the temperature measurement</p>
+```{r rj2}
+```
+
+
+</ul>
+
 </summary>
