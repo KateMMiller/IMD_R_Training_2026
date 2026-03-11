@@ -11,8 +11,8 @@ output:
 <ol>
 <li>More advanced data wrangling</li>
 <ul>
-<li>Pivoting data from long to wide and wide to long</li>
-<li>Joining tables together</li>
+<li>Learn how to pivot data from long to wide and wide to long</li>
+<li>Learn how to join tables and different join types</li>
 <li>More advanced handling of NAs</li>
 <li>Working with dates and times</li>
 </ul>
@@ -29,7 +29,7 @@ output:
 <li>Using consistent coding style</li>
 <li>Logical object naming</li>
 <li>Using projects instead of stand alone scripts where possible</li>
-<li>Caution choosing R packages</li>
+<li>How to choose R packages</li>
 </ul>
 </ol>
 

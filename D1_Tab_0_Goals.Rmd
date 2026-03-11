@@ -1,6 +1,6 @@
 
 #### Day 1 Goals {.tabset}
-<b>Overall goals for the first day are: </b>
+<b>Goals for Day 1: </b>
 
 <ol>
 <li>Get comfortable navigating RStudio IDE, such as opening a new project or script, running code and viewing the output, etc.</li>
@@ -8,7 +8,7 @@
 <li>Basic understanding of variables, functions, and data frames.</li>
 <li>Ability to explore data frame, such as dimensions (rows and columns), min/max of different columns, data type of column, basic plotting, etc.</li> 
 <li>Basic understanding of square brackets to view and filter data[ , ]. </li>
-<li>Exposure to NAs</li>
+<li>Exposure to NAs (blanks).</li>
 <li>Able to access help within and outside of R.</li>
 </ol>
 <br>

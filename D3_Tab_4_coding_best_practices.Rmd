@@ -84,7 +84,7 @@ Style conventions I follow:
 <li>Indent code in the same function or list together</li>
 <li>One pipe per line</li>
 </ul>
-<br>
+
 <p class = 'code'>Example 1. Style for pipes</p>
 ```{r styleex_dplyr, eval = F}
 # Good code
@@ -131,7 +131,6 @@ title = element_text(size = 10))
 ```
 </details>
 </details>
-<br>
 
 <details open><summary class = 'drop'>Higher level organization</summary>
 

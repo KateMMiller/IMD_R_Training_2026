@@ -1,0 +1,47 @@
+#### Day 3 Questions
+<details open><summary class='drop'>Load Data and Packages</summary>
+```{r}
+library(dplyr)
+library(stringr) # for word 
+bat_cap <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/example_bat_capture_data.csv")
+```
+</details><br>
+
+<details open><summary class='drop'>Pivoting tables</summary>
+<div class="alert alert-info">
+<strong>Pivot the `bat_sum` data frame on year instead of species, so that you have a column for every year of captures. Remember to avoid column names starting with a number. </strong>
+
+<details><summary class='code2'>Answer</summary>
+```{r pivwide2c1, fold.output = F}
+bat_wide_yr <- pivot_wider(bat_sum, names_from = Year, 
+                           values_from = num_indiv, 
+                           values_fill = 0, 
+                           names_prefix = "yr")
+head(bat_wide_yr)
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>Pivot the resulting data frame from the previous question to long on the years columns, and remove the "yr" from the year names using `names_prefix = 'yr'`. </strong>
+
+<details><summary class='code2'>Answer</summary>
+```{r pivwide2c2, fold.output = F}
+bat_long_yr <- pivot_longer(bat_wide_yr, 
+                            cols = -c(Site, sppcode),
+                            names_to = "Year", 
+                            values_to = "num_indiv", 
+                            names_prefix = "yr") # drops this string from values
+```
+</details>
+</div>
+</details><br> 
+
+<details open><summary class='drop'>Joining Tables</summary>
+
+
+
+
+
+</details>
+</br>

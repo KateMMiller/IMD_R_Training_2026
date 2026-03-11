@@ -138,6 +138,9 @@ library(tidyverse)
 ```{r chall_d2, child = "D2_Tab_C1_Challenges.Rmd", eval = T}
 ```
 
+```{r chall_d3, child = "D3_Tab_C1_Challenges.Rmd", eval = T}
+```
+
 
 ### Getting Help {.tabset}
 ```{r help, child = "R_Tab_1_Getting_Help.Rmd", eval = T}
