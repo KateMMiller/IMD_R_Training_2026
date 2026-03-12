@@ -6,19 +6,58 @@ output:
 
 #### Customizing ggplot
 <details open><summary class = 'drop'>Load and prep data</summary>
-For this section, we're going to use NETN water chemistry data to customize ggplots objects.
+For this section, we're going to use NETN water chemistry data to customize ggplot objects. This is an abbreviated dataset from the NETN water package. The chemistry data contains lake and stream chemistry data collected in Acadia NP. We'll filter the data to look at different combinations of parameters and sites. 
+
+```{r chem, eval = F}
+library(dplyr)
+library(ggplot2)
+chem <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_water_chemistry_data.csv")
+str(chem)
+```
+```{r chem2, echo = F}
+chem <- read.csv("./data/NETN_water_chemistry_data.csv")
+str(chem)
+```
+
+To start with, we're going to plot pH of water chemistry for 8 lakes monitored in Acadia NP, and we're only going to take surface water, which we'll assume is <= 1 m depth. We're also going to use the EventDate column to extract a Year, month, and day of year column for easier plotting. The Value column is also a character because there's censored data with symbols like "<" for below detection limits. There's actually no censored data in the pH measurements, so we'll just use as.numeric to convert the Value to a number.
+
+<p class ='code'>Filter chem data on sites and pH </p>
+```{r chem3}
+ACAD_lakes <- c("ACANTB", "ACBUBL", "ACEAGL", "ACECHO", 
+                "ACJORD", "ACLONG", "ACSEAL", "ACWHOL")
+
+lakes_pH <- chem |> filter(SiteCode %in% ACAD_lakes) |> 
+  filter(Parameter == "pH_Lab") |> 
+  filter(SampleDepth_m <= 1) |> 
+  mutate(value_num = as.numeric(Value),
+         date = as.Date(EventDate, "%m/%d/%Y"),
+         year = as.numeric(format(date, "%Y")),
+         mon = as.numeric(format(date, "%m")),
+         doy = as.numeric(format(date, "%j")))
+head(lakes_pH)
+```
+</details>
+<br>
+
+<details open><summary class = 'drop'>Custom palettes</summary>
+Now that we have the data set up, we're going to make a line and point time series plot of pH for the different sites.
+
+```{r}
+ggplot(lakes_pH, aes(x = doy, y = value_num)) +
+  geom_point()
+
+```
 
 
 
 </details>
 <br>
-<details open><summary class = 'drop'>Palettes</summary>
+
+<details open><summary class = 'drop'>Axes for dates</summary>
+
 
 </details>
 <br>
-
-
-
 <details open><summary class = 'drop'>Facets and grids</summary>
 
 </details>
