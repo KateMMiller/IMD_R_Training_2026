@@ -13,7 +13,7 @@ Knowing how to code is only part of being a good coder. Below are general best p
 <li><a href="https://r4ds.hadley.nz/workflow-scripts.html">Chapter 6 Workflow: scripts and projects</a></li>
 </ul>
 </details>
-
+<br>
 <details open><summary class = 'drop'>Tips for good code</summary>
 <details open><summary class = 'drop2'>Thorough commenting. Dependencies, like packages, datasets, and parameters are at the top.</summary>
 
@@ -131,9 +131,8 @@ title = element_text(size = 10))
 ```
 </details>
 </details>
-
-<details open><summary class = 'drop'>Higher level organization</summary>
-
+<br>
+<details open><summary class = 'drop'>Higher level practices</summary>
 
 <details open><summary class = 'drop2'>Logical file naming</summary>
 Using projects instead of stand alone scripts helps keep the various pieces of an analysis project in one place and more easily transferable across computers. Logical naming of scripts, so they sort easily, is also helpful. 

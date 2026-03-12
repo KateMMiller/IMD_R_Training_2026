@@ -1,0 +1,32 @@
+---
+output: 
+  html_document:
+    css: custom_styles.css
+---
+
+#### Customizing ggplot
+<details open><summary class = 'drop'>Load and prep data</summary>
+For this section, we're going to use NETN water chemistry data to customize ggplots objects.
+
+
+
+</details>
+<br>
+<details open><summary class = 'drop'>Palettes</summary>
+
+</details>
+<br>
+
+
+
+<details open><summary class = 'drop'>Facets and grids</summary>
+
+</details>
+<br>
+
+
+
+<details open><summary class = 'drop'>Legends</summary>
+
+</details>
+<br>

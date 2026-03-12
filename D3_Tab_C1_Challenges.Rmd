@@ -3,9 +3,21 @@
 ```{r}
 library(dplyr)
 library(stringr) # for word 
+
+# bat capture data
 bat_cap <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/example_bat_capture_data.csv")
-spp_tbl <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_species_table.csv")
+
+# tree data
 trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
+# tree species table
+spp_tbl <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_species_table.csv")
+
+# Hobo Temp data
+temp_data <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/HOBO_temp_example.csv", skip = 1)[,1:3]
+colnames(temp_data) <- c("index", "temp_time", "tempF")
+temp_data$timestamp_temp <- as.POSIXct(temp_data$temp_time, 
+                                       format = "%m/%d/%Y %H:%M", 
+                                       tz = "America/New_York")
 ```
 </details><br>
 

@@ -12,8 +12,7 @@ output:
 <li>More advanced data wrangling</li>
 <ul>
 <li>Learn how to pivot data from long to wide and wide to long</li>
-<li>Learn how to join tables and different join types</li>
-<li>More advanced handling of NAs</li>
+<li>Learn how to join tables and apply the different join types</li>
 <li>Working with dates and times</li>
 </ul>
 <li>More advanced ggplot2:</li> 
