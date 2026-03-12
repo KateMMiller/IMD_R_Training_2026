@@ -83,7 +83,7 @@ head(bat_wide2)
 ```
 
 <div class="alert alert-info">
-<strong>Question: Pivot the `bat_sum` data frame on year instead of species, so that you have a column for every year of captures. Remember to avoid column names starting with a number. </strong>
+<strong>CHALLENGE: Pivot the `bat_sum` data frame on year instead of species, so that you have a column for every year of captures. Remember to avoid column names starting with a number. </strong>
 
 <details><summary class='code2'>Answer</summary>
 
@@ -111,7 +111,7 @@ head(bat_long)
 ```
 
 <div class="alert alert-info">
-<strong>Question: Pivot the resulting data frame from the previous question to long on the years columns, and remove the "yr" from the year names using `names_prefix = 'yr'`. </strong>
+<strong>CHALLENGE: Pivot the resulting data frame from the previous question to long on the years columns, and remove the "yr" from the year names using `names_prefix = 'yr'`. </strong>
 
 <details><summary class='code2'>Answer</summary>
 ```{r pivwide2a, fold.output = F}
@@ -155,6 +155,10 @@ Joining tables requires that the two datasets to join have at least one column i
 <img src = "./images/right_join_R4DS.png" alt = 'right join' style = "display:block;margin-left:auto;margin-right:auto;width:300px;">
 <center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://r4ds.hadley.nz/joins.html">Figure from R for Data Science</a></center>
 
+<li><b>Anti Join</b>: Returns records in the left dataset that are not found in the right dataset. This is one direction, so to find all records not in common, you have to do an anti join with both combinations of data being on left or right side. I use anti joins when I'm trying to check that two datasets have the same sites or years represented.</li> 
+
+<img src = "./images/anti_join_R4DS.png" alt = 'anti join' style = "display:block;margin-left:auto;margin-right:auto;width:300px;">
+<center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://r4ds.hadley.nz/joins.html">Figure from R for Data Science</a></center>
 </ul>
 </details><br>
 
@@ -232,19 +236,7 @@ knitr::kable(bat_right) |>
 
 The right join is taking every row in the right data, `bat_wide`, and only the rows in the left data, `bat_sites`, that have a matching site. Note how Site_006, which is only in the `bat_wide`, is included with NAs for the columns that came from the `bat_sites` data that didn't have a match. Site_004, which was only in the `bat_sites` data was dropped. 
 
-
-</details>
-<br>
-
-<details open><summary class='drop'>Advanced Joins</summary>
-There are a number of other more advanced joins out there. For more information on all possible joins, refer to <a href="https://r4ds.hadley.nz/joins.html">Chapter 19 in R for Data Science</a>.
-<ul>
-<li><b>Anti Join</b>: Returns records in the left dataset that are not found in the right dataset. This is one direction, so to find all records not in common, you'd do an anti join with both combinations of data being left or right. I use anti joins when I'm trying to check that two datasets have the same sites or years represented.</li> 
-
-<img src = "./images/anti_join_R4DS.png" alt = 'anti join' style = "display:block;margin-left:auto;margin-right:auto;width:300px;">
-<center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://r4ds.hadley.nz/joins.html">Figure from R for Data Science</a></center>
-<br>
-
+<p class='code'>Anti join</p>
 <p class = 'code'>Anti join to find sites not in bat_wide</p>
 ```{r aj, fold.output = F}
 anti_join(bat_sites, bat_wide, by = "Site")
@@ -254,34 +246,57 @@ anti_join(bat_sites, bat_wide, by = "Site")
 ```{r aj2, fold.output = F}
 anti_join(bat_wide, bat_sites, by = "Site")
 ```
+</details>
+<br>
 
-<li><b>Rolling Join</b>: Rolling joins can come in handy if your two datasets don't perfectly match, and you want to match to the closest match. An example of where I've used rolling joins is where I wanted to relate timing of high tide to the nearest water temperature measurement from a HOBO logger. You can allow for the nearest match in both directions or specify the direction (e.g., => or <=). </li> 
+<details open><summary class = 'drop'>Test your skills!</summary>
+<div class="alert alert-info">
+<strong>CHALLENGE: Join the NETN_tree_data.csv and NETN_tree_species_table.csv to connect the common name to the tree data.</strong>
+<p class = 'code'>Import tree and species tables</p>
+```{r challtr1}
+spp_tbl <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_species_table.csv")
+trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
+```
+
+<details><summary class='drop2'>Answer</summary>
+```{r challtr2a}
+# find the columns in common
+intersect(names(spp_tbl), names(trees)) # TSN and ScientificName
+# left join species to trees, because don't want to include species not found in tree data
+trees_spp <- left_join(trees, 
+                       spp_tbl |> select(TSN, ScientificName, CommonName), 
+                       by = c("TSN", "ScientificName"))
+
+head(trees_spp)
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: Find a species in the NETN tree data that doesn't have a match in the species table.</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r challtr2b}
+# find the columns in common
+intersect(names(spp_tbl), names(trees)) # TSN and ScientificName
+# anti join of trees against species table, selecting only columns of interest
+anti_join(trees, spp_tbl, by = c("TSN", "ScientificName")) |> 
+  select(ParkUnit, PlotCode, SampleYear, ScientificName)
+```
+</details>
+</div>
+
+</details>
+<br>
+<details open><summary class='drop'>Rolling joins</summary>
+There are a number of other more advanced joins out there, the rolling join being one of them. For more information on all possible joins, refer to <a href="https://r4ds.hadley.nz/joins.html">Chapter 19 in R for Data Science</a>.
+
+Rolling joins can come in handy if the key values in your two datasets don't perfectly match, and you want to join on the closest match. An example of where I've used rolling joins is to relate timing of high tide to the nearest water temperature measurement from a HOBO logger. You can allow for the nearest match in both directions or specify the direction (e.g., => or <=). </li> 
 
 <img src = "./images/rolling_join_R4DS.png" alt = 'rolling join' style = "display:block;margin-left:auto;margin-right:auto;width:300px;">
 <center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://r4ds.hadley.nz/joins.html">Figure from R for Data Science</a></center>
 <br>
 
-I'm going to run through a simplified example using logger and tidal data, as working with sensor data like this is pretty common in our work. I need to download tide data and prepare the hobo data before I can do the join.
+Unfortunately, my testing of dplyr's rolling join didn't perform the way I've needed it. It only matches in one direction, like the closest temperature measurement after high tide, or the closest temperature measurement before high tide. If you need to do a rolling join, the `data.table` package is your best bet. It requires learning a new syntax and coding approach, so I'm not covering it here. But it's helpful to know that if you're working with huge datasets, `data.table` tends to perform much faster than dplyr and may have more features for joining and summarizing your data than dplyr.
 
-- download BH tide data
-- make timestamp a posix in both
-- test rolling join 
-- filter closest water temp
-
-<p class = 'code'>Rolling join to find tides that were closest regardless of before or after the temperature measurement</p>
-```{r rj1}
-```
-
-
-<p class = 'code'>Rolling join to find tides that were equal to or after the temperature measurement</p>
-```{r rj1}
-```
-
-<p class = 'code'>Rolling join to find tides that were equal to or before the temperature measurement</p>
-```{r rj2}
-```
-
-
-</ul>
-
-</summary>
+</details>
+<br>

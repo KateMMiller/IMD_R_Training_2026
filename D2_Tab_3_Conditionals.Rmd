@@ -91,7 +91,7 @@ if(nrow(inv2) > 0){print("Invasive species were detected in the data.")
 <details open><summary class = "drop">Test your skills with conditionals</summary>
 
 <div class="alert alert-info">
-<strong>Question: Using the ACAD_wetlands data, create a new column called Status that has "protected" for Protected = TRUE and "public" values for Protected = FALSE. </strong>
+<strong>CHALLENGE: Using the ACAD_wetlands data, create a new column called Status that has "protected" for Protected = TRUE and "public" values for Protected = FALSE. </strong>
 <details><summary class='code2'>Answer</summary>
 ```{r wetcond, eval = F}
 # read in wetland data if you don't already have it loaded.
@@ -111,7 +111,7 @@ table(ACAD_wetland$Status, ACAD_wetland$Protected) # check your work
 </div>
 
 <div class="alert alert-info">
-<strong>Question: Using the ACAD_wetlands data, create a new column called abundance_cat that has levels High, Medium, Low, based on Ave_Cov, where "High" is >50%, "Medium" is 10-50%, and "Low" is < 10%. </strong>
+<strong>CHALLENGE: Using the ACAD_wetlands data, create a new column called abundance_cat that has levels High, Medium, Low, based on Ave_Cov, where "High" is >50%, "Medium" is 10-50%, and "Low" is < 10%. </strong>
 <details><summary class='code2'>Answer</summary>
 ```{r wetab, eval = F}
 # Base R using the with() function and nested ifelse()

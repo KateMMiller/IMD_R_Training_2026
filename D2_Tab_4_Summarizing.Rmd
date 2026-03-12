@@ -80,7 +80,7 @@ tree_dbh == tree_dbh2 # tests that all the values in 1 data frame match the 2nd.
 <details open><summary class = "drop">Test your summarizing skills</summary>
 
 <div class="alert alert-info">
-<strong>Question: Using the ACAD_wetland data, calculate the average percent cover of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
+<strong>CHALLENGE: Using the ACAD_wetland data, calculate the average percent cover of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
 <details><summary class='code2'>Answer</summary>
 ```{r wetinvcov}
 # Using group_by()
@@ -102,7 +102,7 @@ head(ACAD_inv2) # should be the same as ACAD_inv
 </div>
 
 <div class="alert alert-info">
-<strong>Question: Using the ACAD_wetland data, count the number of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
+<strong>CHALLENGE: Using the ACAD_wetland data, count the number of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
 <details><summary class='code2'>Answer</summary>
 ```{r wetinvr}
 # Using group_by()
@@ -124,7 +124,7 @@ head(ACAD_spp2) # should be the same as ACAD_inv
 </div>
 
 <div class="alert alert-info">
-<strong>Question: Using ACAD_wetland data, calculate relative % cover of species within each site. This one is challenging!</strong>
+<strong>CHALLENGE: Using ACAD_wetland data, calculate relative % cover of species within each site. This one is challenging!</strong>
 <details><summary class='code2'>Answer</summary>
 
 <p class = 'code'>First sum site-level cover using mutate to return a value for every original row.</p>

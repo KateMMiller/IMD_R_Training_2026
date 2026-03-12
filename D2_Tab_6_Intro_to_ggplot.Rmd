@@ -154,7 +154,7 @@ ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
 ```
 
 <div class="alert alert-info">
-<strong>Question: Recreate the plot below (or customize your own plot). </strong>
+<strong>CHALLENGE: Recreate the plot below (or customize your own plot). </strong>
 Note that the fill color is "#0080FF", and the shape is 21, and the theme is classic. The linewidth = 0.75, and linetype = 'dashed'. 
 
 ```{r pq1, fold.plot = F, echo = F, fig.height = 3, fig.width = 5, fig.align = 'center'}

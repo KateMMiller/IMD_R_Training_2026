@@ -39,7 +39,7 @@ plot(DBHcm ~ CrownClassCode, data = trees) # equivalent but cleaner axis titles
 Again, you can see there's one value that's greater than all of the others, and it's crown class code 3 (codominant). 
 
 <div class="alert alert-info">
-<strong>Question: Plot a histogram of percent cover (`Ave_Cov`) in the `ACAD_wetland` </strong>
+<strong>CHALLENGE: Plot a histogram of percent cover (`Ave_Cov`) in the `ACAD_wetland` </strong>
 
 <details><summary class='code2'>Answer</summary>
 ```{r wethist, fig.height = 4, fig.width = 6}

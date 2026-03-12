@@ -167,7 +167,7 @@ head(ACAD_inv2) # should be the same as ACAD_inv
 </div>
 
 <div class="alert alert-info">
-<strong>Question: Using the ACAD_wetland data, count the number of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
+<strong>CHALLENGE: Using the ACAD_wetland data, count the number of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
 <details><summary class='code2'>Answer</summary>
 ```{r wetinvrc1}
 # Using group_by()

@@ -52,7 +52,7 @@ body {
 library(tidyverse)
 ```
 
-<center><h2>NPS IMD Intro to R Training: March 24 - 26, 2026</h2></center> {.tabset .tabset-pills}
+<h2>NPS IMD Intro to R Training: March 24 - 26, 2026</h2> {.tabset .tabset-pills}
 --------------------------------------------------
 
 ### Prep for Training{.tabset}
@@ -120,13 +120,16 @@ library(tidyverse)
 ```{r D3_wrang, child = "D3_Tab_1_pivot_join.Rmd", eval = T}
 ```
 
-```{r D3_wrang2, child = "D3_Tab_2_dates_NAs.Rmd", eval = T}
+```{r D3_wrang2, child = "D3_Tab_2_dates.Rmd", eval = T}
 ```
 
-```{r D3_ggplot, child = "D3_Tab_3_adv_ggplot.Rmd", eval = T}
+```{r D3_wrang3, child = "D3_Tab_3_NAs.Rmd", eval = T}
 ```
 
-```{r D3_bp, child = "D3_Tab_4_coding_best_practices.Rmd", eval = T}
+```{r D3_ggplot, child = "D3_Tab_4_adv_ggplot.Rmd", eval = T}
+```
+
+```{r D3_bestpr, child = "D3_Tab_5_coding_best_practices.Rmd", eval = T}
 ```
 
 
@@ -153,7 +156,7 @@ There's a lot of great online material for learning new applications of R. The o
 
 <h5>Online Books</h5>
 <ul>
-<li><a href="https://r4ds.had.co.nz/">R for Data Science</a> First author is Hadley Wickham, the programmer behind the tidyverse. There's a lot of good stuff in here, including a chapter on using R Markdown, which is what we used to generate this training website.</li>
+<li><a href="https://r4ds.had.co.nz/">R for Data Science</a> First author is Hadley Wickham, one of the main programmers behind the tidyverse. There's a lot of good stuff in here. This book is the first place to look for anything you want to follow up on from this training.</li>
 <li><a href="https://ggplot2-book.org//">ggplot2: Elegant Graphics for Data Analysis</a> A great reference on ggplot2 also by Hadley Wickham.</li> 
 <li><a href="https://bookdown.org/rdpeng/RProgDA/">Mastering Software Development in R</a> First author is Roger Peng, a Biostatistics professor at John Hopkins, who has taught a lot of undergrad/grad students how to use R. He's also one of the hosts of Not So Standard Deviations podcast. His intro to ggplot is great. He's also got a lot of more advanced topics in this book, like making functions and packages.</li>
 <li><a href="https://r-pkgs.org/">R Packages</a> Another book by Hadley Wickham that teaches you how to build, debug, and test R packages.</li>
