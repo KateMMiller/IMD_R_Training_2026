@@ -4,8 +4,5 @@ output:
     css: custom_styles.css
 ---
 
-#### Dates and Times
-WIP
-
-#### Dealing with NAs
+#### Handling NAs
 WIP
