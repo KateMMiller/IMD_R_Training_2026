@@ -140,7 +140,6 @@ font-size: 16px;
   display:none;
 }
 
-
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -180,6 +179,11 @@ font-size: 16px;
    font-family: "Arial",Arial,sans-serif;
  }
  
+ .cap {
+  font-family: "Arial",Arial,sans-serif;
+  font-size: 11px;
+}
+
 .toggle {
   height: 1.55em;
   overflow-y: hidden;

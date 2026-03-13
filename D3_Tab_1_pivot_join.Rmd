@@ -236,7 +236,6 @@ knitr::kable(bat_right) |>
 
 The right join is taking every row in the right data, `bat_wide`, and only the rows in the left data, `bat_sites`, that have a matching site. Note how Site_006, which is only in the `bat_wide`, is included with NAs for the columns that came from the `bat_sites` data that didn't have a match. Site_004, which was only in the `bat_sites` data was dropped. 
 
-<p class='code'>Anti join</p>
 <p class = 'code'>Anti join to find sites not in bat_wide</p>
 ```{r aj, fold.output = F}
 anti_join(bat_sites, bat_wide, by = "Site")
@@ -296,7 +295,7 @@ Rolling joins can come in handy if the key values in your two datasets don't per
 <center style = "font-size:11px;font-family:'Arial',sans-serif;"><a href="https://r4ds.hadley.nz/joins.html">Figure from R for Data Science</a></center>
 <br>
 
-Unfortunately, my testing of dplyr's rolling join didn't perform the way I've needed it. It only matches in one direction, like the closest temperature measurement after high tide, or the closest temperature measurement before high tide. If you need to do a rolling join, the `data.table` package is your best bet. It requires learning a new syntax and coding approach, so I'm not covering it here. But it's helpful to know that if you're working with huge datasets, `data.table` tends to perform much faster than dplyr and may have more features for joining and summarizing your data than dplyr.
+Unfortunately, dplyr's rolling join doesn't perform the way I've needed it. It only matches in one direction, like the closest temperature measurement after high tide, or the closest temperature measurement before high tide. If you need to do a rolling join, the `data.table` package is your best bet. It requires learning a new syntax and coding approach, so I'm not covering it here. But it's helpful to know that if you're working with huge datasets, `data.table` tends to perform much faster than dplyr and may have more features for joining and summarizing your data than dplyr.
 
 </details>
 <br>

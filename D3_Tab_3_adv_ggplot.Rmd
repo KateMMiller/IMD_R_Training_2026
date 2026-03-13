@@ -19,62 +19,297 @@ chem <- read.csv("./data/NETN_water_chemistry_data.csv")
 str(chem)
 ```
 
-To start with, we're going to plot pH for 8 lakes monitored in Acadia NP. Before we start plotting, we need to convert the EventDate column to a date type, and extract a year, month, and day of year column for easier plotting. 
+To start with, we're going to plot temperature data for 8 lakes monitored in Acadia NP. Before we start plotting, we need to convert the EventDate column to a date type, and will extract a year, month, and day of year column for easier plotting later on. 
 
-<p class ='code'>Filter chem data on sites and pH </p>
+<p class ='code'>Filter chem data on sites and Temp_F, and add some date columns. </p>
 ```{r chem3}
-ACAD_lakes <- c("ACANTB", "ACBUBL", "ACEAGL", "ACECHO", 
-                "ACJORD", "ACLONG", "ACSEAL", "ACWHOL")
+ACAD_lakes <- c("ACBUBL", "ACEAGL", "ACECHO", "ACJORD", 
+                "ACLONG", "ACSEAL", "ACUHAD", "ACWHOL")
 
-lakes_pH <- chem |> filter(SiteCode %in% ACAD_lakes) |> 
-  filter(Parameter == "pH") |> 
+lakes_temp <- chem |> filter(SiteCode %in% ACAD_lakes) |> 
+  filter(Parameter %in% "Temp_F") |> 
   mutate(date = as.Date(EventDate, "%m/%d/%Y"),
          year = as.numeric(format(date, "%Y")),
          mon = as.numeric(format(date, "%m")),
-         doy = as.numeric(format(date, "%j")))
-head(lakes_pH)
+         doy = as.numeric(format(date, "%j"))) 
+
+head(lakes_temp)
 ```
 </details>
 <br>
+<details open><summary class = 'drop'>Customizing shapes and colors manually</summary>
+Now that we have the data set up, we're going to make a line and point time series plot of temperature for the different sites.
 
-<details open><summary class = 'drop'>Custom palettes</summary>
-Now that we have the data set up, we're going to make a line and point time series plot of pH for the different sites.
-
-<p class = 'code'>Make a generic plot</p>
-```{r polt1}
-ggplot(lakes_pH, aes(x = doy, y = Value)) + theme_bw() +
+<p class = 'code'>Make a generic plot with the black and white built in theme</p>
+```{r plot1, fold.plot = F}
+ggplot(lakes_temp, aes(x = date, y = Value)) + 
+  theme_bw() +
   geom_point() 
 ```
 
-#+++++ ENDED HERE ++++++
-
-<p class = 'code'>Set color by SiteCode using default colors</p>
-```{r polt2, eval = F}
-ggplot(lakes_pH, aes(x = doy, y = Value, color = SiteCode)) + theme_bw() +
-  geom_point() + 
-  scale_color_manual()
+<p class = 'code'>Set color and symbol by SiteCode using default colors and shapes</p>
+```{r plot2, warning = T, fold.plot = F}
+ggplot(lakes_temp, 
+       aes(x = date, y = Value, color = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_point() 
 
 ```
-The default colors in ggplot aren't great. Whenever you see these colors used in publications, you kind of know the author either barely knows ggplot or is lazy. Let's specify our own colors manually. 
+Note the warning that we have 8 groups, but ggplot by default only provides 6 different shapes. The 220 rows removed corresponds to the points that were dropped that belonged to the 7th and 8th sites (ACUHAD and ACWHOL). To use 8 symbols, you have to specify them manually, which we'll do next.
 
+In addition, the default colors in ggplot aren't great. Whenever you see these colors used in publications, you kind of know the author either barely knows ggplot or is lazy. We're going to start by specifying our own colors and shapes manually. Then we'll use color palettes from different packages. 
 
+Before you start plotting, it's helpful to know what point symbol codes are. To view that, run `?points`, or search "pch in R plot" and you'll get the info below. Note that 0-14 are just lines with no fill. To change their color, use the color aesthetic. Symbols 15-20 are solid, but also use color to change their aesthetic. Symbols 21-25 have both a color (outline) and fill (inside) aesthetic.
 
+<center><img src = "./images/r_pch_symbols.png" alt = 'R pch symbols' style = "width:250px;background:white;">
+<pclass = "cap">Figure of symbol codes in R.</p></center>
+<br>
+
+<p class='code'>Specify manual color and shape connected to SiteCode</p>
+```{r plot3, fold.plot = F}
+
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, 
+                       shape = SiteCode)) + 
+  theme_bw() +
+  geom_point() +
+  scale_color_manual(values = c("ACBUBL" = "#7FC7E1", "ACEAGL" = "#ED5C5C", 
+                                "ACECHO" = "#F59617", "ACJORD" = "#A26CF5", 
+                                "ACLONG" = "#1952CF", "ACSEAL" = "#F3F56C", 
+                                "ACUHAD" = "#FFA6C8", "ACWHOL" = "#8FD184")) +
+  scale_fill_manual(values = c("ACBUBL" = "#7FC7E1", "ACEAGL" = "#ED5C5C", 
+                               "ACECHO" = "#F59617", "ACJORD" = "#A26CF5", 
+                               "ACLONG" = "#1952CF", "ACSEAL" = "#F3F56C", 
+                               "ACUHAD" = "#FFA6C8", "ACWHOL" = "#8FD184")) +
+  scale_shape_manual(values = c("ACBUBL" = 21, "ACEAGL" = 23, 
+                                "ACECHO" = 24, "ACJORD" = 25, 
+                                "ACLONG" = 23, "ACSEAL" = 21, 
+                                "ACUHAD" = 25, "ACWHOL" = 24))
+
+```
+
+The code above gave us a different color/fill and shape for each point, but coding it was cumbersome. Specifying the colors like above gets tedious fast. Imagine needing to make a plot for a dozen different parameters. A more efficient approach is defining them outside of ggplot, and then referencing them in the plot, like the example below.
+
+<p class='code'>Specify manual color and shape more efficiently</p>
+```{r plot4, fold.plot = F}
+site_cols <- c("ACBUBL" = "#7FC7E1", "ACEAGL" = "#ED5C5C", 
+               "ACECHO" = "#F59617", "ACJORD" = "#A26CF5", 
+               "ACLONG" = "#1952CF", "ACSEAL" = "#F3F56C", 
+               "ACUHAD" = "#FFA6C8", "ACWHOL" = "#8FD184")
+site_shps <- c("ACBUBL" = 21, "ACEAGL" = 23, 
+               "ACECHO" = 24, "ACJORD" = 25, 
+               "ACLONG" = 23, "ACSEAL" = 21, 
+               "ACUHAD" = 25, "ACWHOL" = 24)
+
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_point() +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") 
+
+```
+
+<p class='code'>Similar plot, but make the outline the same color for each point</p>
+```{r, plot5, warning = T, fold.plot = F}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_point(color = "dimgrey") +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") 
+```
+
+The warning is there because you have color in the `aes()` and in the `geom_point()`, but it's not a problem. The ggplot2 package is pretty chatty in the console. It's good to read the warnings to make sure you didn't drop values you wanted to plot (e.g. ACWHOL dropped in previous example), but often they're not issues.
+</details><br>
+
+<details open><summary class = 'drop'>Add lines and smoothers</summary>
+Now we're going to play with adding lines to the graphs. First we'll add the `geom_line()` to see how it looks. Notice the order has the line plotting before the point, so it doesn't cross over the points. 
+```{r plot6l, fold.plot = F}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_line() +
+  geom_point(color = "dimgrey") +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") 
+```
+
+It's not easy to follow the line and not really what we're looking for at this scale of the data (2006-2025). This is where we have to think about what we're actually interested in, and in this case, it's whether temperature is changing over time. This is where the `geom_smooth()` is really helpful. The `geom_smooth()` plots a line assuming the y ~ x formula (unless you specify a different formula). By default the method is a LOESS smoother, but you can specify a range of methods, including linear regression by adding `method = 'lm'` to `geom_smooth()`. 
+
+Note that I turned off the standard error ribbon that plots by default using `se = FALSE`. It's too busy for this plot. I also don't use the SE unless I've fit an actual model and checked the diagnostics. The status under the hood of `geom_smooth()` are also pretty black boxy, and I don't always know if I can trust its calculation of SE. 
+
+I added a transparency via `alpha = 0.5` to the `geom_point()`, so the lines show up better, and a more meaningful y-axis label. 
+
+<p class='code'>Add a LOESS smoother and make points more transparent</p>
+```{r plot6, fold.plot = F}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(se = FALSE, span = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.5) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") 
+```
+
+</details><br>
+
+<details open><summary class = 'drop'>Facets and grids</summary>
+The plot looks okay so far, but there are so many points, it's hard to see what's going on. This is where facets are useful. If your data have grouping variables, in this case SiteCode, then you can plot separate panels for each of the grouping levels. The code below plots each site separately. I used `ncol = 2` to set the number of columns that result from the facet wrap. 
+
+<p class='code'>Facet on SiteCode</p>
+```{r plot7, fold.plot = F, fig.height = 7}
+p_site <- 
+  ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                         fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.5) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(y = "Temperature (F)", x = "Year") +
+  facet_wrap(~SiteCode, ncol = 2)
+p_site
+```
+
+Faceting on year can also be a handy way to see how consistent seasonal patterns are across years. Note that we changed the x variable from date to doy (day of year). I also filtered on the dataset within the ggplot line to only include years after 2015, increased the point size, and switched to `geom_line()` instead of the smoother to just connect the points. We'll revisit this plot to use more meaningful x-axis labels in the next section. 
+
+<p class = 'code'>Facet on year instead of site</p>
+```{r plotyr, fold.output = F, fig.height = 7, fold.output = F}
+p_year <- 
+  ggplot(lakes_temp |> filter(year > 2015), 
+         aes(x = doy, y = Value, color = SiteCode, 
+             fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_line(linewidth = 0.7) +
+  geom_point(color = "dimgrey", size = 2.5) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(y = "Temperature (F)", x = "Year") +
+  facet_wrap(~year, ncol = 3) 
+p_year
+```
 </details>
 <br>
 
 <details open><summary class = 'drop'>Axes for dates</summary>
+Starting with the plot faceted on SiteCode, I don't like that the first year in the data (2006) is missing from the axis. The x-axis is a Date type, which gives us some useful options to set breaks and labels. Below, I set the breaks to be every 2 years and to label only years (`%Y`). I added the `theme()` for the `axis.text.x` to make the years plot vertically, and the `vjust = 0.5` centers the labels on the tick marks. Note that I'm assigning the code below to the object `p`, so I don't have to keep typing the original ggplot code over and over.
 
+<p class = 'code'>Improve x-axis labels</p>
+```{r plot8, fold.plot = F, fig.height = 7}
+p_site2 <- p_site + 
+  scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
+
+p_site2
+```
+
+Returning to the `p_year` plot faceted by year. Instead of the day of year on the x-axis, we want to manually set up date axis labels that include the month and day at the beginning of each month. This is a bit trickier, because `doy` isn't a Date type. It's still doable, there may be easier ways to do this. 
+
+<p class = 'code'>Manually set up date labels for doy axis</p>
+```{r plotyr2, fold.output = F, fig.height = 7}
+# Find range of months in the data
+range_mon <- range(lakes_temp$mon)
+range_mon # 5:10
+
+# Set up the date range as a Date type
+range_date <- as.Date(c("5/1/2025", "11/01/2025"), format = "%m/%d/%Y")
+axis_dates <- seq.Date(range_date[1], range_date[2], by = "1 month")
+axis_dates
+axis_dates_label <- format(axis_dates, "%b-%d")
+
+# Find the doy value that matches each of the axis dates
+axis_doy <- as.numeric(format(axis_dates, "%j"))
+axis_doy
+axis_doy_limits <- c(min(axis_doy)-1, max(axis_doy) + 1)
+# Set the limits of the x axis as before and after the last sample, 
+# otherwise cuts off May 1 in axis
+
+p_year + 
+  scale_x_continuous(limits = axis_doy_limits,
+                     breaks = axis_doy, 
+                     labels = axis_dates_label) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
+
+```
 
 </details>
 <br>
-<details open><summary class = 'drop'>Facets and grids</summary>
-
-</details>
-<br>
-
-
 
 <details open><summary class = 'drop'>Legends</summary>
+One of the easier tasks to do with legends is to change the location of it. In the next plot we'll put the legend on the bottom. If you don't want to plot a legend (don't really need it when lakes are faceted, for example, you can turn the legend off using `legend.position = 'none'`). 
+
+<p class = 'code'>Move legend to bottom</p>
+```{r plot8b, fold.output = F, fig.height = 7}
+p_site3 <- p_site2 + theme(legend.position = 'bottom')
+p_site3
+```
+
+The plots above made legends seem easy, but legends in ggplot can be really tedious. For example, the legend only shows up if you're setting grouping variables in the `aes()`. There was no legend in the very first plot we made because everything was the same color and symbol. If, for example, you want to plot thresholds on a plot, their color needs to be added to the `scale_color_manual()` to show in the legend. Let's pretend, for example, that 50F and 75F are lower and upper water quality thresholds that we want to plot.
+
+<p class = 'code'>Add horizontal threshold lines to the plot</p>
+```{r plot9la, fold.plot = F, fig.height = 7}
+p_site3 + geom_hline(yintercept = 75, linetype = 'dashed', linewidth = 1) +
+          geom_hline(yintercept = 50, linetype = 'dotted', linewidth = 1)
+```
+
+These lines are not showing in the legend. To make them show, you need to wrap them in `aes()`, as below. Note the difference in how linetype is specified between the above example, where we are specifying whether the line is dashed or dotted. Inside the `aes()`, `linetype` is being used to label the line in the legend. We then have to use `scale_linetype_manual()` to indicate the type of line to plot. Admittedly, it took me a couple of Stackoverflow posts to figure out how to make this work properly. This stuff can be tedious.
+
+<p class = 'code'>Add horizontal threshold lines to the plot and legend</p>
+```{r plot9l, fold.plot = F, fig.height = 7}
+p_site4 <- p_site3 + 
+  geom_hline(aes(yintercept = 75, linetype = "Upper"), linewidth = 1) +
+  geom_hline(aes(yintercept = 50, linetype = "Lower"), linewidth = 1) +
+  scale_linetype_manual(values = c("dashed", "dotted"), name = "WQ Threshold")
+p_site4
+```
+
+Another option is turning certain geometries off in the legend via `show.legend = F`. Let's say we don't like the lines in the legend. I have to go back to the full code to change the geom legend settings. 
+
+<p class = 'code'>Remove smoothed lines from legend </p>
+```{r plot11b, fold.output = F, fig.height = 7}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5, show.legend = FALSE) + 
+  geom_point(color = "dimgrey", alpha = 0.5) + 
+  
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(y = "Temperature (F)", x = "Year") +
+  facet_wrap(~SiteCode, ncol = 2) + 
+  scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), 
+        legend.position = 'bottom') + 
+  
+  geom_hline(aes(yintercept = 75, linetype = "Upper"), linewidth = 1) +
+  geom_hline(aes(yintercept = 50, linetype = "Lower"), linewidth = 1) +
+  scale_linetype_manual(values = c("dashed", "dotted"), name = "WQ Threshold")
+
+```
+
+Another option is to remove the SiteCode fill, color, and shape from the legend via `guides()`. You can also do this by turning a geom off using `show.legend = F` like we did with the smoother. In the code below we are telling ggplot that any shape, color, or fill used in an `aes()` should not be included in the legend. The WQ thresholds still show up because their aes was linetype. 
+
+Finally, the width of the lines in the WQ thresholds makes it appear that the Lower threshold is solid instead of dashed. I'll use an option in theme to make the key wider.
+
+<p class = 'code'>Remove SiteCode keys from legend and increase key width of lines.</p>
+```{r plot9ld, fold.plot = F, fig.height = 7}
+p_site4 + guides(shape = 'none', color = 'none', fill = 'none') +
+          theme(legend.key.width = unit(0.8, "cm"))
+
+```
+</details>
+<br>
+
+<details open><summary class = 'drop'>ggplot Palettes</summary>
 
 </details>
 <br>
+

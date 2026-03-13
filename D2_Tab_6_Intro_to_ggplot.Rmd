@@ -29,12 +29,13 @@ Important concepts with `ggplot2`:
 </details>
 <br>
 
-<details open><summary class='drop'>Plotting Park Visitation in Acadia NP</summary>
+<details open><summary class='drop'>Plot Park Visitation in Acadia NP</summary>
 We will build our first ggplot object step-by-step to demonstrate how each component contributes to the final plot. Our first ggplot object will create a line graph of trends in visits to Acadia National Park from 1994 to 2024.
 
 <p class = 'code'>Step 1. Import the visitation data and load ggplot2</p>
 ```{r import_gvdata, echo = TRUE, eval = F, message = FALSE, warning = FALSE}
 library(ggplot2)
+library(dplyr) # for filter 
 visits <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/ACAD_annual_visits.csv")
 ```
 ```{r import_gvdata2, echo = F, results = 'hide', eval = T, message = FALSE, warning = FALSE}
@@ -186,24 +187,93 @@ ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
 ```
 </details>
 </div>
-<br>
+</details>
+</br>
 
-<p class = 'code'>Plot Bar Charts instead of points and lines</p>
-A couple of notes on the code below:
-<ul>
-<li>For bar charts, if you want the value (annual visit) to be the bar height, use `geom_col()`. If instead, you want the bar chart to be proportional to the number of cases in each group, use `geom_bar(stat = 'count')`. </li>
-<li>The `width = 0.75` makes the bar width narrower allowing some white space between the bars.</li>
-<li>Setting x to NULL in the `labs()` means the x axis won't include a label.</li>
-```{r barp, fold.plot = F}
-ggplot(data = visits, aes(x = Year, y = Annual_Visits/1000)) +
-  geom_col(fill = "#8B96B5", color = "dimgrey", width = 0.75) +
-  theme_bw() +
-  labs(x = NULL, y = "Annual visitors in 1000's") +
-  scale_x_continuous(limits = c(1993, 2025),
-                     breaks = c(seq(1994, 2024, by = 5)))
+<details open><summary class='drop'>Other geometries</summary>
+So far, the data we've plotted doesn't include any kind of variance. In many cases, we do want to show the distribution of data among years, parks or other categories. That's where plots like bar plots with error bars and boxplots can be handy. 
 
+First we'll look at how to make barplots with error bars. The visitation data doesn't have error bars, so we'll use a water chemistry dataset, and filter it to only include Jordan Pond and Dissolved Oxygen. 
+
+<details open><summary class = 'drop2'>Prep the data</summary>
+<p class = 'code'>Load the data and packages</p>
+```{r chemd2, eval = F}
+library(dplyr)
+library(ggplot2)
+chem <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_water_chemistry_data.csv")
+```
+```{r chemd22, echo = F}
+library(dplyr)
+chem <- read.csv("./data/NETN_water_chemistry_data.csv")
 ```
 
+<p class = 'code'>Filter on Jordan Pond and Dissolved Oxygen and extract the month from the date in a VERY hacky way.</p>
+We'll learn about working with dates in a more formal way on Day 3.
+```{r chemd2_jord}
+jordDO <- chem |> 
+  filter(SiteCode == "ACJORD") |> 
+  filter(Parameter == "DO_mgL") |> 
+  mutate(month = as.numeric(gsub("/", "", substr(EventDate, 1, 2))))
+```
+```{r chemd2_check, eval = F}
+head(jordDO)
+unique(jordDO$SiteCode) # check filter worked
+unique(jordDO$Parameter) # check filter worked
+```
+
+Let's assume that calculating mean and standard error assuming the data were normally distributed is appropriate. The code below calculates mean and standard error by month, so we can plot error bars later.
+
+<p class = 'code'>Calculate standard error of DO by month </p>
+```{r chemd2_se}
+jordDO_sum <- jordDO |> group_by(month) |> 
+  summarize(mean_DO = mean(Value),
+            num_meas = n(),
+            se_DO = sd(Value)/sqrt(num_meas))
+jordDO_sum
+```
+</details>
+
+<details open><summary class='drop2'>Bar Plots</summary>
+Bar charts with error bars are a common way to show mean and variance. Bar charts y-axes should always start at 0, which doesn't necessarily allow you to see the patterns in the data all that well. Boxplots are often a better approach in that case, which we'll show next.
+
+A couple of notes on the code below:
+<ul>
+<li>For bar charts, if you want the value (mean_DO) to be the bar height, use `geom_col()`. If instead, you want the bar chart to be proportional to the number of cases in each group, use `geom_bar(stat = 'count')`. </li>
+<li>The `width = 0.75` makes the bar width narrower allowing some white space between the bars.</li>
+<li>Setting x to NULL in the `labs()` means the x axis won't include a label.</li>
+<li>This isn't the best use of bar plots, but you get the idea on how to use them.</li>
+</ul>
+<p class = 'code'>Bar plot of Jordan Pond average DO with 95% CI error bars</p>
+```{r barp, fold.plot = F}
+ggplot(data = jordDO_sum, aes(x = month, y = mean_DO)) +
+  geom_col(fill = "#8B96B5", color = "dimgrey", width = 0.75) +
+  geom_errorbar(aes(ymin = mean_DO - 1.96*se_DO, ymax = mean_DO + 1.96*se_DO)) +
+  theme_bw() +
+  labs(x = NULL, y = "Dissolved Oxygen mg/L") +
+  scale_x_continuous(limits = c(4, 11),
+                     breaks = c(seq(5, 10, by = 1)),
+                     labels = c("May", "Jun", "Jul", 
+                                "Aug", "Sep", "Oct"))
+
+```
+</details>
+<details open><summary class='drop2'>Boxplots</summary>
+Boxplots are another way to show variance in responses. In most cases, the middle line of a boxplot is the median. The lower and upper limits of the box represent the 25th and 75th percentiles. The lower and upper whiskers are 1.5 times the interquartile range (the 25th to 75th percentiles), or the min/max of the data, whichever is smaller. Points beyond the whiskers are considered outlying points. In this case, I turned off the outlying points, because I plotted the actual data behind the boxplots as slightly transparent. This is good practice to see how points are distributed.  
+
+<p class = 'code'>Boxplots of Jordan Pond DO</p>
+```{r boxp, fold.plot = F}
+ggplot(data = jordDO, aes(x = month, y = Value, group = month)) +
+  geom_boxplot(outliers = F) + 
+  geom_point(alpha = 0.2) +
+  theme_bw() +
+  labs(x = NULL, y = "Dissolved Oxygen mg/L") +
+  scale_x_continuous(limits = c(4, 11),
+                     breaks = c(seq(5, 10, by = 1)),
+                     labels = c("May", "Jun", "Jul", 
+                                "Aug", "Sep", "Oct"))
+
+```
+</details>
 </details>
 <br>
 
