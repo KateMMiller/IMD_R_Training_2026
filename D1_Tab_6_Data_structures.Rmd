@@ -7,17 +7,21 @@ The data frame we just examined is a type of data structure. A data structure is
 Vectors are the simplest data structure in R. Vectors are like a single column of data in an Excel spreadsheet. Vectors only have one dimension, and can be accessed by their row number. Here are some examples of vectors:
 
 ```{r, Vectors, fold.output=FALSE}
-digits <- 0:9  # Use x:y to create a sequence of integers starting at x and ending at y
+digits <- c(1:10)  # Use x:y to create a sequence of integers starting at x and ending at y
 digits
+digits + 1 # note how 1 was added to every element of digits. 
+
 is_odd <- rep(c(FALSE, TRUE), 5)  # Use rep(x, n) to create a vector by repeating x n times 
 is_odd
+
 tree_dbh <- c(12.5, 20.4, 18.1, 38.5, 19.3)
 tree_dbh
+
 bird_ids <- c("black-capped chickadee", "dark-eyed junco", "golden-crowned kinglet", "dark-eyed junco")
 bird_ids
 ```
 
-Note the use of `c()`. The `c()` function stands for *combine*, and it combines elements into a single vector, with each element separated by a comma in code. The c() function is a fairly universal way to combine multiple elements in R, and you’re going to see it over and over. 
+Note the use of `c()`. The `c()` function stands for *combine*, and it combines elements into a single vector, with each element separated by a comma in code. The c() function is a fairly universal way to combine multiple elements in R, and you’re going to see it over and over. Note how in digits, when we added a 1, every value in digits increased by 1. This highlights the concept of <b>vectorization</b> in R. The general idea being that you can apply a single operation to a vector (or row in a data frame), and it will apply to all elements of that vector. 
 
 If you need to access a single element of a vector, you can use the syntax `my_vector[x]` where `x` is the element's *index* (the number corresponding to its position in the vector). You can also use a vector of indices to extract multiple elements from the vector. Note that in R, indexing starts at 1 (i.e. `my_vector[1]` is the first element of `my_vector`). If you've coded in other languages, you may be used to indexing starting at 0.
 

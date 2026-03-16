@@ -51,7 +51,7 @@ While most often you'll run code from a script in the source pane, you can also 
 <li><b>Tutorial:</b> This has some interactive tutorials that you can check out if you are interested.</li>  
 </ul></details>
 <br>
-<details open><summary class='drop2'>Files/Plots/Packages/Help/Viewer</summary>
+<details open><summary class='drop2'>Workspace</summary>
 <ul>
 <li><b>Files:</b> This tab shows the files within your working directory (typically the folder where your current code project lives). More on this later. </li>
 <li><b>Plots:</b> This tab will show plots that you create.</li>

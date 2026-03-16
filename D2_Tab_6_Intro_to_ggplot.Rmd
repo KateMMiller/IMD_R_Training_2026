@@ -3,7 +3,7 @@ output:
   html_document:
     css: custom_styles.css
 ---
-```{r}
+```{r optchunk, echo = F}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align = 'center', fig.height = 3, fig.width = 5)
 ```
 
@@ -78,13 +78,13 @@ p
 <p class = 'code'>Step 5. Add line and point geometry, starting with default, and ending with customized symbols</p>
 The plot below has custom the shape, color (outline), fill, and size of the points, but all points are the same. Note the hexcode used for the fill color. This is a 6 digit code that gives maximum flexibility on selecting colors. I often use <a href="https://htmlcolorcodes/com">HTML color codes</a> to find colors and their associated hexcode.
 
-Note that I usually specify the `geom_line()` before the `geom_point()`, because the geoms are drawn in the order they're specified. Specifying the opposite order will make the lines cross over the points and doesn't look as nice.
+Note that I usually specify the `geom_line()` before the `geom_point()`, because the geoms are drawn in the order they're specified. Specifying the opposite order will make the lines cross over the points and doesn't look as nice. I also made the linewidth a bit thicker than default.
 ```{r p2, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
 p1a <- p + geom_line() + geom_point() # default color and shape to points
 p1a
 
 p1 <- p + 
-  geom_line() + 
+  geom_line(linewidth = 0.6) + 
   geom_point(color = "black", fill = "#82C2a3", size = 2.5, shape = 24)
 p1
 ```
@@ -246,8 +246,9 @@ A couple of notes on the code below:
 <p class = 'code'>Bar plot of Jordan Pond average DO with 95% CI error bars</p>
 ```{r barp, fold.plot = F}
 ggplot(data = jordDO_sum, aes(x = month, y = mean_DO)) +
-  geom_col(fill = "#8B96B5", color = "dimgrey", width = 0.75) +
-  geom_errorbar(aes(ymin = mean_DO - 1.96*se_DO, ymax = mean_DO + 1.96*se_DO)) +
+  geom_col(fill = "#74AAE3", color = "dimgrey", width = 0.75) +
+  geom_errorbar(aes(ymin = mean_DO - 1.96*se_DO, ymax = mean_DO + 1.96*se_DO), 
+                width = 0.75) +
   theme_bw() +
   labs(x = NULL, y = "Dissolved Oxygen mg/L") +
   scale_x_continuous(limits = c(4, 11),

@@ -391,8 +391,10 @@ display.brewer.all(colorblindFriendly = TRUE)
 ```
 <center><img src = "./images/RColorBrewer_palettes.png" alt = 'RColorBrewer palettes' style = "width:350px;"></center>
 <br>
+
 Going back to the temperature plots we made before, we'll use RColorBrewer to color code each site instead of doing this manually. We'll build the plot in the next chunk, that we then change the color palettes with in later plots.
 
+<br>
 <p class = 'code'>Create basic plot</p>
 ```{r tempp2}
 p_pal <- ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
@@ -413,6 +415,7 @@ p_pal <- ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
          geom_hline(aes(yintercept = 50, linetype = "Lower"), linewidth = 1) +
          scale_linetype_manual(values = c("dashed", "dotted"), name = "WQ Threshold")
 ```
+
 <br>
 
 <p class = 'code'>Use Set2 palette on temperature plot</p>
@@ -423,83 +426,44 @@ p_pal +  scale_color_brewer(name = "Lake", palette = "Set2", aesthetics = c("fil
 ```
 
 Note how I used the aesthetics in the `scale_color_brewer()` to set fill and color as the same time. We could have done this in the code above too. I also changed the symbols in the legend to not be transparent, so they're easier to see using the `override.aes` in the guide.
+
 <br>
+
 <p class = 'code'>Use Dark2 palette on temperature plot</p>
 ```{r colbred2, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_pal +  scale_color_brewer(name = "Lake", palette = "Set2", aesthetics = c("fill", "color"))  +
+p_pal +  scale_color_brewer(name = "Lake", palette = "Dark2", aesthetics = c("fill", "color"))  +
          guides(fill = guide_legend(override.aes = list(alpha = 1))) # makes symbols not transparent in legend
 
 
 ```
 </details>
 <br>
+
 <details open><summary class = 'drop2'>viridis palettes</summary>
 The viridis package comes with 8 palettes. The benefit of viridis is the number of levels is not limited to 8 like RColorBrewer. The palette options are below for 12 levels. 
 
+<center><img src = "./images/viridis/viridis-scales.png" alt = 'viridis palettes' style = "width:450px;"></center>
+
+<br>
+
 <p class = 'code'>View viridis palettes with hexcodes</p>
+You can view the hexcodes of the different palettes by running the code below. Just change `viridis()` to one of the other palette names to get the hexcodes for those levels. 
 ```{r vir, eval = F}
 # viridis 
 scales::show_col(viridis(12), cex_label = 0.45, ncol = 6)
 ```
 <center><img src = "./images/viridis/viridis.png" alt = 'viridis palette' style = "width:350px;"></center>
 <br>
-```{r virmag, eval = F}
-# magma
-scales::show_col(magma(12), cex_label = 0.45, ncol = 6)
-```
-<center><img src = "./images/viridis/magma.png" alt = 'magma palette' style = "width:350px;"></center>
-<br>
-```{r virinf, eval = F}
-# inferno
-scales::show_col(inferno(12), cex_label = 0.45, ncol = 6)
-```
-<center><img src = "./images/viridis/inferno.png" alt = 'inferno palette' style = "width:350px;"></center>
-<br>
-```{r virpla, eval = F}
-# plasma
-scales::show_col(plasma(12), cex_label = 0.45, ncol = 6)
-```
-<center><img src = "./images/viridis/plasma.png" alt = 'plasma palette' style = "width:350px;"></center>
-<br>
-```{r virciv, eval = F}
-# cividis
-scales::show_col(cividis(12), cex_label = 0.45, ncol = 6)
-```
-<center><img src = "./images/viridis/cvidis.png" alt = 'cividis palette' style = "width:350px;"></center>
-<br>
-```{r virroc, eval = F}
-# rocket
-scales::show_col(rocket(12), cex_label = 0.45, ncol = 6)
-```
-<center><img src = "./images/viridis/rocket.png" alt = 'rocket palette' style = "width:350px;"></center>
-<br>
-```{r virmak, eval = F}
-# mako
-scales::show_col(mako(12), cex_label = 0.45, ncol = 6)
-```
-<center><img src = "./images/viridis/mako.png" alt = 'mako palette' style = "width:350px;"></center>
-<br>
-```{r virtur, eval = F}
-# turbo
-scales::show_col(turbo(12), cex_label = 0.45, ncol = 6)
-```
-<center><img src = "./images/viridis/turbo.png" alt = 'turbo palette' style = "width:350px;"></center>
-<br>
-
 <p class = 'code'>Use viridis default palette on temperature plot</p>
 The `scale_color_viridis_d()` selects the viridis palette option (purple, green, yellow) for discrete values (i.e. categories). For a continuous scale (e.g. temperature), you would specify `scale_color_viridis_c()`. 
 ```{r vir2, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_pal + scale_color_viridis_d(name = "Lake", aesthetics = c("fill", "color")) + #default viridis 
-        guides(fill = guide_legend(override.aes = list(alpha = 1))) 
-
+p_pal + scale_color_viridis_d(name = "Lake", aesthetics = c("fill", "color"))  #default viridis 
 ```
 
 <p class = 'code'>Use turbo palette on temperature plot</p>
 The `scale_color_viridis_d()` selects the viridis palette option (purple, green, yellow) for discrete values (i.e. categories). For a continuous scale (e.g. temperature), you would specify `scale_color_viridis_c()`. 
 ```{r vir2b, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_pal + scale_color_viridis_d(name = "Lake", aesthetics = c("fill", "color"), 
-                              option = 'turbo') + 
-        guides(fill = guide_legend(override.aes = list(alpha = 1))) 
+p_pal + scale_color_viridis_d(name = "Lake", aesthetics = c("fill", "color"), option = 'turbo') 
 ```
 </details>
 <br>
@@ -524,15 +488,13 @@ ggplot(lakes_temp, aes(x = mon, y = year, color = Value, fill = Value)) +
 
 <p class = 'code'>Plot heatmap with viridis continuous palette </p>
 ```{r virheat1, fold.output = F, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_heat + 
-  scale_color_viridis_c(name = "Temp. (F)", aesthetics = c("fill", "color")) 
+p_heat + scale_color_viridis_c(name = "Temp. (F)", aesthetics = c("fill", "color")) 
 ```
 
 <p class = 'code'>Plot heatmap with plasma continuous palette, reverse scale </p>
 ```{r virheatp, fold.output = F, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_heat + 
-  scale_color_viridis_c(name = "Temp. (F)", aesthetics = c("fill", "color"), 
-                        option = "plasma", direction = -1) 
+p_heat + scale_color_viridis_c(name = "Temp. (F)", aesthetics = c("fill", "color"), 
+                               option = "plasma", direction = -1) 
 ```
 
 </details>
@@ -543,30 +505,30 @@ You can also create your own color ramp via `scale_color_gradient()`, which crea
 
 <p class = 'code'>Create 2-color gradient</p>
 ```{r colram, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_heat +  scale_color_gradient(low = "#FBFFAD", high = "#AB1F1F", 
-                               aesthetics = c("fill", 'color'), 
-                               name = "Temp. (F)") 
+p_heat + scale_color_gradient(low = "#FBFFAD", high = "#AB1F1F", 
+                              aesthetics = c("fill", 'color'), 
+                              name = "Temp. (F)") 
 
 ```
 <br>
 <p class = 'code'>Create diverging gradient</p>
 For the divergent palette to be meaningful, you usually need to set the midpoint if it's not 0.
 ```{r colram2, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_heat +  scale_color_gradient2(low = "navy", mid = "#FBFFAD", high = "#F54927", 
-                                aesthetics = c("fill", 'color'),
-                                midpoint = mean(lakes_temp$Value), 
-                                name = "Temp. (F)") 
+p_heat + scale_color_gradient2(low = "navy", mid = "#FBFFAD", high = "#F54927", 
+                               aesthetics = c("fill", 'color'),
+                               midpoint = mean(lakes_temp$Value), 
+                               name = "Temp. (F)") 
 
 ```
 <br>
 <p class = 'code'>Create diverging gradient with multiple colors</p>
 Note the change in the legend by using `guide = 'legend'`. Default is `guide = 'colorbar'`. I also customized the breaks into 5-degree bins using `breaks()` and `seq()`.
 ```{r colram2b, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_heat +  scale_color_gradientn(colors = c("#805A91", "#406AC2", "#FBFFAD", "#FFA34A", "#AB1F1F"), 
-                                aesthetics = c("fill", 'color'),
-                                guide = "legend",
-                                breaks = c(seq(40, 85, 5)), 
-                                name = "Temp. (F)") 
+p_heat + scale_color_gradientn(colors = c("#805A91", "#406AC2", "#FBFFAD", "#FFA34A", "#AB1F1F"), 
+                               aesthetics = c("fill", 'color'),
+                               guide = "legend",
+                               breaks = c(seq(40, 85, 5)), 
+                               name = "Temp. (F)") 
 
 ```
 
