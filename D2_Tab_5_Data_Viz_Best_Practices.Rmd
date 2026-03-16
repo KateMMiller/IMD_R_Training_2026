@@ -19,7 +19,7 @@ Consider three example data visualizations that demonstrate how some approaches 
 <details open><summary class = "drop2">Example 1. Plots convey messages faster than tables</summary>
 Most people can understand this figure of daily Covid cases faster than they can understand the table of daily Covid cases.
 
-<center>![](images/covid_by_region.png)</center>
+<center>![](images/covid_by_region.png){width=800px}</center>
 <h6><b>Figure 1.</b> Average daily Covid cases per 100k people, by region (Sources: State and local health agencies [cases]; Census Bureau [population data]</h6>
 <br>
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fold.output = F}
@@ -53,7 +53,7 @@ Use the table above to answer these questions:
 
 Now let's display the same table as a <b>heat map</b>, with larger numbers represented by darker color cells. How quickly can we answer those same two questions? What patterns can we see in the heat map that were not obvious in the table above?
 
-```{r acme_heatmap, echo = FALSE, fig.width = 9, fig.align="center", message = FALSE, warning = FALSE, fold.plot = F, fold.output = F}
+```{r acme_heatmap, echo = FALSE, fig.width = 8, fig.align="center", message = FALSE, warning = FALSE, fold.plot = F, fold.output = F}
 
 acme <- acme_in |> 
   pivot_longer(-c(category, product), names_to = "month", values_to = "revenue")
@@ -67,7 +67,7 @@ ggplot(acme, aes(x=month, y=product, fill=revenue)) +
   scale_y_discrete(limits=rev) + # reverses order of y-axis bc ggplot reverses it from the data
   labs(#title = "Average monthly revenue (in $1000's) from Acme product sales, 1950 - 2020", 
        x = "Month", y = "Product") + 
-  theme_bw(base_size = 12) +
+  theme_bw(base_size = 11) +
   facet_grid(rows = vars(category), scales = "free") # set scales to free so each facet only shows its own levels
 ```
 <h6><b>Figure 2.</b> Heat map of average monthly revenue (in $1000's) from Acme product sales, 1950 - 2020</h6>

@@ -9,22 +9,19 @@ Your R version should be at least 4.4.3 or above to make sure everyone's code be
 <details open><summary class='drop'><b style="color:red">Required Packages</b></summary>
 A number of packages are required to follow along with data wrangling and visualization sessions. Please try to install these in RStudio ahead of time by running the code below. If you don't know how to run the code, open view the <b>Running Code Screencast</b> below for how to do this. 
 ```{r reqpkg, echo = T, eval = F}
-packages <- c("tidyverse",
-              #"ggthemes", "GGally", "RColorBrewer", 
-              #"viridis", "scales", "plotly", "patchwork", 
-              "readxl", "writexl")
+packages <- c("tidyverse", # for Day 2 and 3 data wrangling
+              "RColorBrewer", "viridis", "patchwork", # for Day 3 ggplot
+              "readxl", "writexl") # for day 1 importing from excel
 
 install.packages(setdiff(packages, rownames(installed.packages())))  
 
 # Check that installation worked
-library(tidyverse) # turns on all tidyverse packages
-# library(ggthemes)
-# library(GGally)
-# library(RColorBrewer)
-# library(viridis)
-# library(scales)
-# library(plotly)
-library(patchwork)
+library(tidyverse) # turns on core tidyverse packages
+library(RColorBrewer) # palette generator
+library(viridis) # more palettes
+library(patchwork) # multipanel plots
+library(readxl) # reading xlsx
+library(writexl) # writing xlsx
 ```
 
 <details><summary class='drop2'>Running Code Screencast</summary>

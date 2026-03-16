@@ -11,27 +11,35 @@ For this section, we're going to use NETN water quality data to customize ggplot
 ```{r chem, eval = F}
 library(dplyr)
 library(ggplot2)
+library(patchwork) # for arranging ggplot objects
+library(RColorBrewer) # for palettes
+library(viridis) # for palettes
 chem <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_water_chemistry_data.csv")
 str(chem)
 ```
 ```{r chem2, echo = F}
+library(viridis)
+library(RColorBrewer)
+library(scales)
+library(viridis)
 chem <- read.csv("./data/NETN_water_chemistry_data.csv")
 str(chem)
 ```
 
 To start with, we're going to plot temperature data for 8 lakes monitored in Acadia NP. Before we start plotting, we need to convert the EventDate column to a date type, and will extract a year, month, and day of year column for easier plotting later on. 
 
-<p class ='code'>Filter chem data on sites and Temp_F, and add some date columns. </p>
+<p class ='code'>Add date columns to chem, then filter on sites and Temp_F. </p>
 ```{r chem3}
+chem <- chem |> mutate(date = as.Date(EventDate, "%m/%d/%Y"),
+                       year = as.numeric(format(date, "%Y")),
+                       mon = as.numeric(format(date, "%m")),
+                       doy = as.numeric(format(date, "%j"))) 
+
 ACAD_lakes <- c("ACBUBL", "ACEAGL", "ACECHO", "ACJORD", 
                 "ACLONG", "ACSEAL", "ACUHAD", "ACWHOL")
 
 lakes_temp <- chem |> filter(SiteCode %in% ACAD_lakes) |> 
-  filter(Parameter %in% "Temp_F") |> 
-  mutate(date = as.Date(EventDate, "%m/%d/%Y"),
-         year = as.numeric(format(date, "%Y")),
-         mon = as.numeric(format(date, "%m")),
-         doy = as.numeric(format(date, "%j"))) 
+  filter(Parameter %in% "Temp_F") 
 
 head(lakes_temp)
 ```
@@ -62,12 +70,11 @@ In addition, the default colors in ggplot aren't great. Whenever you see these c
 Before you start plotting, it's helpful to know what point symbol codes are. To view that, run `?points`, or search "pch in R plot" and you'll get the info below. Note that 0-14 are just lines with no fill. To change their color, use the color aesthetic. Symbols 15-20 are solid, but also use color to change their aesthetic. Symbols 21-25 have both a color (outline) and fill (inside) aesthetic.
 
 <center><img src = "./images/r_pch_symbols.png" alt = 'R pch symbols' style = "width:250px;background:white;">
-<pclass = "cap">Figure of symbol codes in R.</p></center>
+<p class = "cap">Figure of symbol codes in R.</p></center>
 <br>
 
 <p class='code'>Specify manual color and shape connected to SiteCode</p>
 ```{r plot3, fold.plot = F}
-
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, 
                        shape = SiteCode)) + 
@@ -149,7 +156,7 @@ I added a transparency via `alpha = 0.5` to the `geom_point()`, so the lines sho
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
-  geom_smooth(se = FALSE, span = 0.5) +
+  geom_smooth(se = FALSE, span = 0.5, size = 2) +
   geom_point(color = "dimgrey", alpha = 0.5) +
   scale_color_manual(values = site_cols, name = "Lake") +
   scale_fill_manual(values = site_cols, name = "Lake") +
@@ -159,28 +166,28 @@ ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
 </details><br>
 
 <details open><summary class = 'drop'>Facets and grids</summary>
-The plot looks okay so far, but there are so many points, it's hard to see what's going on. This is where facets are useful. If your data have grouping variables, in this case SiteCode, then you can plot separate panels for each of the grouping levels. The code below plots each site separately. I used `ncol = 2` to set the number of columns that result from the facet wrap. 
+The plot looks okay so far, but there are so many points, it's hard to see what's going on. This is where facets are useful. If your data have grouping variables, in this case SiteCode, then you can plot separate panels for each of the grouping levels. The code below plots each site separately. I used `ncol = 4` to set the number of columns that result from the facet wrap. 
 
 <p class='code'>Facet on SiteCode</p>
-```{r plot7, fold.plot = F, fig.height = 7}
+```{r plot7, fold.plot = F, fig.height = 3.5, fig.width = 7}
 p_site <- 
   ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                          fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
   geom_smooth(se = F, span = 0.5) +
-  geom_point(color = "dimgrey", alpha = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.5, size = 2) +
   scale_color_manual(values = site_cols, name = "Lake") +
   scale_fill_manual(values = site_cols, name = "Lake") +
   scale_shape_manual(values = site_shps, name = "Lake") +
   labs(y = "Temperature (F)", x = "Year") +
-  facet_wrap(~SiteCode, ncol = 2)
+  facet_wrap(~SiteCode, ncol = 4)
 p_site
 ```
 
 Faceting on year can also be a handy way to see how consistent seasonal patterns are across years. Note that we changed the x variable from date to doy (day of year). I also filtered on the dataset within the ggplot line to only include years after 2015, increased the point size, and switched to `geom_line()` instead of the smoother to just connect the points. We'll revisit this plot to use more meaningful x-axis labels in the next section. 
 
 <p class = 'code'>Facet on year instead of site</p>
-```{r plotyr, fold.output = F, fig.height = 7, fold.output = F}
+```{r plotyr, fold.output = F, fig.height = 3.5, fig.width = 7, fold.plot = F}
 p_year <- 
   ggplot(lakes_temp |> filter(year > 2015), 
          aes(x = doy, y = Value, color = SiteCode, 
@@ -195,6 +202,60 @@ p_year <-
   facet_wrap(~year, ncol = 3) 
 p_year
 ```
+
+Faceting is helpful when your observations are all within the same column. But say you have data in multiple columns (e.g., each water quality parameter is a column) and want to arrange those plots into a grid. Faceting won't help because the data to plot are in different columns. There are multiple packages that make it easy to arrange multiple plots into a grid to look similar to faceted plots. Packages include `grid` (and `gridExtra`), `cowplot`, `ggpubr`, and `patchwork`. We're going to use `patchwork`, a relative newcomer, and one of the easiest I've found to code and customize. Here we're going to plot pH, temperature, DO, and conductance for Jordan Pond and arrange them using patchwork.
+
+<p class = 'code'>Prepare the data to plot</p>
+```{r}
+pH <- chem |> filter(SiteCode == "ACJORD") |> filter(Parameter == "pH")
+temp <- chem |> filter(SiteCode == "ACJORD") |> filter(Parameter == "Temp_F")
+dosat <- chem |> filter(SiteCode == "ACJORD") |> filter(Parameter == "DOsat_pct")
+cond <- chem |> filter(SiteCode == "ACJORD") |> filter(Parameter == "SpCond_uScm")
+
+p_pH <-
+  ggplot(pH, aes(x = date, y = Value)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.5, size = 2) +
+  labs(y = "pH", x = "Year")  
+
+p_temp <-
+  ggplot(temp, aes(x = date, y = Value)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.5, size = 2) +
+  labs(y = "Temp (F)", x = "Year")  
+
+p_do <-
+  ggplot(dosat, aes(x = date, y = Value)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.5, size = 2) +
+  labs(y = "DO (%sat.)", x = "Year")  
+
+p_cond <-
+  ggplot(cond, aes(x = date, y = Value)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.5, size = 2) +
+  labs(y = "Spec. Cond. (uScm)", x = "Year")  
+
+```
+
+<p class='code'>Arrange plots using patchwork</p>
+This is almost too easy to be true, but it really is this easy with patchwork. The patchwork package includes a bunch of options to customize sizes, add annotation, sharing axes across plots. 
+```{r patch1, fold.plot = F, fig.height = 4, fig.width = 5}
+library(patchwork)
+p_pH + p_temp + p_do + p_cond
+```
+
+<p class='code'>Arrange plots using patchwork in column of 4 and share x axis. </p>
+You can also collect the legend using a similar approach to collecting the axes.
+```{r patch2, fold.plot = F, fig.height = 6, fig.width = 3}
+library(patchwork)
+p_pH / p_temp / p_do / p_cond + plot_layout(axes = "collect_x")
+```
+
 </details>
 <br>
 
@@ -202,7 +263,7 @@ p_year
 Starting with the plot faceted on SiteCode, I don't like that the first year in the data (2006) is missing from the axis. The x-axis is a Date type, which gives us some useful options to set breaks and labels. Below, I set the breaks to be every 2 years and to label only years (`%Y`). I added the `theme()` for the `axis.text.x` to make the years plot vertically, and the `vjust = 0.5` centers the labels on the tick marks. Note that I'm assigning the code below to the object `p`, so I don't have to keep typing the original ggplot code over and over.
 
 <p class = 'code'>Improve x-axis labels</p>
-```{r plot8, fold.plot = F, fig.height = 7}
+```{r plot8, fold.plot = F, fig.height = 3.5, fig.width = 7}
 p_site2 <- p_site + 
   scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
@@ -213,7 +274,7 @@ p_site2
 Returning to the `p_year` plot faceted by year. Instead of the day of year on the x-axis, we want to manually set up date axis labels that include the month and day at the beginning of each month. This is a bit trickier, because `doy` isn't a Date type. It's still doable, there may be easier ways to do this. 
 
 <p class = 'code'>Manually set up date labels for doy axis</p>
-```{r plotyr2, fold.output = F, fig.height = 7}
+```{r plotyr2, fold.output = F}
 # Find range of months in the data
 range_mon <- range(lakes_temp$mon)
 range_mon # 5:10
@@ -230,7 +291,9 @@ axis_doy
 axis_doy_limits <- c(min(axis_doy)-1, max(axis_doy) + 1)
 # Set the limits of the x axis as before and after the last sample, 
 # otherwise cuts off May 1 in axis
+```
 
+```{r yearplot, fig.height = 3.5, fig.width = 7, fold.plot = F}
 p_year + 
   scale_x_continuous(limits = axis_doy_limits,
                      breaks = axis_doy, 
@@ -246,7 +309,7 @@ p_year +
 One of the easier tasks to do with legends is to change the location of it. In the next plot we'll put the legend on the bottom. If you don't want to plot a legend (don't really need it when lakes are faceted, for example, you can turn the legend off using `legend.position = 'none'`). 
 
 <p class = 'code'>Move legend to bottom</p>
-```{r plot8b, fold.output = F, fig.height = 7}
+```{r plot8b, fig.height = 4, fig.width = 7, fold.plot = F}
 p_site3 <- p_site2 + theme(legend.position = 'bottom')
 p_site3
 ```
@@ -254,7 +317,7 @@ p_site3
 The plots above made legends seem easy, but legends in ggplot can be really tedious. For example, the legend only shows up if you're setting grouping variables in the `aes()`. There was no legend in the very first plot we made because everything was the same color and symbol. If, for example, you want to plot thresholds on a plot, their color needs to be added to the `scale_color_manual()` to show in the legend. Let's pretend, for example, that 50F and 75F are lower and upper water quality thresholds that we want to plot.
 
 <p class = 'code'>Add horizontal threshold lines to the plot</p>
-```{r plot9la, fold.plot = F, fig.height = 7}
+```{r plot9la, fig.height = 4, fig.width = 7, fold.plot = F}
 p_site3 + geom_hline(yintercept = 75, linetype = 'dashed', linewidth = 1) +
           geom_hline(yintercept = 50, linetype = 'dotted', linewidth = 1)
 ```
@@ -262,29 +325,30 @@ p_site3 + geom_hline(yintercept = 75, linetype = 'dashed', linewidth = 1) +
 These lines are not showing in the legend. To make them show, you need to wrap them in `aes()`, as below. Note the difference in how linetype is specified between the above example, where we are specifying whether the line is dashed or dotted. Inside the `aes()`, `linetype` is being used to label the line in the legend. We then have to use `scale_linetype_manual()` to indicate the type of line to plot. Admittedly, it took me a couple of Stackoverflow posts to figure out how to make this work properly. This stuff can be tedious.
 
 <p class = 'code'>Add horizontal threshold lines to the plot and legend</p>
-```{r plot9l, fold.plot = F, fig.height = 7}
+```{r plot9l, fig.height = 4, fig.width = 7, fold.plot = F}
 p_site4 <- p_site3 + 
   geom_hline(aes(yintercept = 75, linetype = "Upper"), linewidth = 1) +
   geom_hline(aes(yintercept = 50, linetype = "Lower"), linewidth = 1) +
   scale_linetype_manual(values = c("dashed", "dotted"), name = "WQ Threshold")
+
 p_site4
 ```
 
 Another option is turning certain geometries off in the legend via `show.legend = F`. Let's say we don't like the lines in the legend. I have to go back to the full code to change the geom legend settings. 
 
 <p class = 'code'>Remove smoothed lines from legend </p>
-```{r plot11b, fold.output = F, fig.height = 7}
+```{r plot11b, fig.height = 4, fig.width = 7, fold.plot = F}
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
   geom_smooth(se = F, span = 0.5, show.legend = FALSE) + 
-  geom_point(color = "dimgrey", alpha = 0.5) + 
+  geom_point(color = "dimgrey", alpha = 0.5, size = 2) + 
   
   scale_color_manual(values = site_cols, name = "Lake") +
   scale_fill_manual(values = site_cols, name = "Lake") +
   scale_shape_manual(values = site_shps, name = "Lake") +
   labs(y = "Temperature (F)", x = "Year") +
-  facet_wrap(~SiteCode, ncol = 2) + 
+  facet_wrap(~SiteCode, ncol = 4) + 
   scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5), 
         legend.position = 'bottom') + 
@@ -300,7 +364,7 @@ Another option is to remove the SiteCode fill, color, and shape from the legend 
 Finally, the width of the lines in the WQ thresholds makes it appear that the Lower threshold is solid instead of dashed. I'll use an option in theme to make the key wider.
 
 <p class = 'code'>Remove SiteCode keys from legend and increase key width of lines.</p>
-```{r plot9ld, fold.plot = F, fig.height = 7}
+```{r plot9ld, fig.height = 4, fig.width = 7, fold.plot = F}
 p_site4 + guides(shape = 'none', color = 'none', fill = 'none') +
           theme(legend.key.width = unit(0.8, "cm"))
 
@@ -308,7 +372,204 @@ p_site4 + guides(shape = 'none', color = 'none', fill = 'none') +
 </details>
 <br>
 
-<details open><summary class = 'drop'>ggplot Palettes</summary>
+#### ggplot Palettes
+
+<details open><summary class = 'drop'>External ggplot Palettes</summary>
+A number of R packages have color palettes available that are colorblind friendly. The two most commonly used are RColorBrewer and viridis. Both packages include palettes that are for three main types of data: 
+ <ul>
+ <li><b>Sequential</b>: for continuous variables that grade from low to high or vice versa. These tend to be one hue that increases in saturation as values increase.</li>
+ <li><b>Diverging</b>: for data where low values have different colors than high values (e.g. starts red, then grades to blue).</li>
+ <li><b>Qualitative</b>: data for categorical variables where all colors are a similar saturation but different hues.</li>
+ </ul>
+
+<details open><summary class='drop2'>RColorBrewer palette</summary>
+The palettes in RColorBrewer can be viewed by running the code below. The first group shows the sequential palettes (e.g. YlOrRd - Yellow Orange Red). The second group shows the qualitative colors. The last group shows the diverging palettes. The main drawback of these palettes is they are limited by the number of levels in your data. So, if you specify `Set2` to color code different levels of a factor, there are only 8 colors available to you. If your factor has more than 8 levels (e.g., 9 sites, 10 parks, etc.), then the levels beyond 8 won't get plotted and you'll get a warning in the console similar to what we saw for ggplot's default number of symbols.
+
+<p class = 'code'>View RColorBrewer palettes</p>
+```{r rbcolpal_code, eval = F}
+display.brewer.all(colorblindFriendly = TRUE)
+```
+<center><img src = "./images/RColorBrewer_palettes.png" alt = 'RColorBrewer palettes' style = "width:350px;"></center>
+<br>
+Going back to the temperature plots we made before, we'll use RColorBrewer to color code each site instead of doing this manually. We'll build the plot in the next chunk, that we then change the color palettes with in later plots.
+
+<p class = 'code'>Create basic plot</p>
+```{r tempp2}
+p_pal <- ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                                fill = SiteCode, shape = SiteCode)) + 
+         theme_bw() +
+         geom_smooth(se = F, span = 0.5) + 
+         geom_point(color = "dimgrey", alpha = 0.5, size = 2) + 
+  
+         scale_shape_manual(values = site_shps, name = "Lake") +
+         labs(y = "Temperature (F)", x = "Year") +
+  
+         facet_wrap(~SiteCode, ncol = 4) + 
+  
+         scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
+         theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) + 
+  
+         geom_hline(aes(yintercept = 75, linetype = "Upper"), linewidth = 1) +
+         geom_hline(aes(yintercept = 50, linetype = "Lower"), linewidth = 1) +
+         scale_linetype_manual(values = c("dashed", "dotted"), name = "WQ Threshold")
+```
+<br>
+
+<p class = 'code'>Use Set2 palette on temperature plot</p>
+```{r set2, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_pal +  scale_color_brewer(name = "Lake", palette = "Set2", aesthetics = c("fill", "color"))  +
+         guides(fill = guide_legend(override.aes = list(alpha = 1))) # makes symbols not transparent in legend
+
+```
+
+Note how I used the aesthetics in the `scale_color_brewer()` to set fill and color as the same time. We could have done this in the code above too. I also changed the symbols in the legend to not be transparent, so they're easier to see using the `override.aes` in the guide.
+<br>
+<p class = 'code'>Use Dark2 palette on temperature plot</p>
+```{r colbred2, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_pal +  scale_color_brewer(name = "Lake", palette = "Set2", aesthetics = c("fill", "color"))  +
+         guides(fill = guide_legend(override.aes = list(alpha = 1))) # makes symbols not transparent in legend
+
+
+```
+</details>
+<br>
+<details open><summary class = 'drop2'>viridis palettes</summary>
+The viridis package comes with 8 palettes. The benefit of viridis is the number of levels is not limited to 8 like RColorBrewer. The palette options are below for 12 levels. 
+
+<p class = 'code'>View viridis palettes with hexcodes</p>
+```{r vir, eval = F}
+# viridis 
+scales::show_col(viridis(12), cex_label = 0.45, ncol = 6)
+```
+<center><img src = "./images/viridis/viridis.png" alt = 'viridis palette' style = "width:350px;"></center>
+<br>
+```{r virmag, eval = F}
+# magma
+scales::show_col(magma(12), cex_label = 0.45, ncol = 6)
+```
+<center><img src = "./images/viridis/magma.png" alt = 'magma palette' style = "width:350px;"></center>
+<br>
+```{r virinf, eval = F}
+# inferno
+scales::show_col(inferno(12), cex_label = 0.45, ncol = 6)
+```
+<center><img src = "./images/viridis/inferno.png" alt = 'inferno palette' style = "width:350px;"></center>
+<br>
+```{r virpla, eval = F}
+# plasma
+scales::show_col(plasma(12), cex_label = 0.45, ncol = 6)
+```
+<center><img src = "./images/viridis/plasma.png" alt = 'plasma palette' style = "width:350px;"></center>
+<br>
+```{r virciv, eval = F}
+# cividis
+scales::show_col(cividis(12), cex_label = 0.45, ncol = 6)
+```
+<center><img src = "./images/viridis/cvidis.png" alt = 'cividis palette' style = "width:350px;"></center>
+<br>
+```{r virroc, eval = F}
+# rocket
+scales::show_col(rocket(12), cex_label = 0.45, ncol = 6)
+```
+<center><img src = "./images/viridis/rocket.png" alt = 'rocket palette' style = "width:350px;"></center>
+<br>
+```{r virmak, eval = F}
+# mako
+scales::show_col(mako(12), cex_label = 0.45, ncol = 6)
+```
+<center><img src = "./images/viridis/mako.png" alt = 'mako palette' style = "width:350px;"></center>
+<br>
+```{r virtur, eval = F}
+# turbo
+scales::show_col(turbo(12), cex_label = 0.45, ncol = 6)
+```
+<center><img src = "./images/viridis/turbo.png" alt = 'turbo palette' style = "width:350px;"></center>
+<br>
+
+<p class = 'code'>Use viridis default palette on temperature plot</p>
+The `scale_color_viridis_d()` selects the viridis palette option (purple, green, yellow) for discrete values (i.e. categories). For a continuous scale (e.g. temperature), you would specify `scale_color_viridis_c()`. 
+```{r vir2, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_pal + scale_color_viridis_d(name = "Lake", aesthetics = c("fill", "color")) + #default viridis 
+        guides(fill = guide_legend(override.aes = list(alpha = 1))) 
+
+```
+
+<p class = 'code'>Use turbo palette on temperature plot</p>
+The `scale_color_viridis_d()` selects the viridis palette option (purple, green, yellow) for discrete values (i.e. categories). For a continuous scale (e.g. temperature), you would specify `scale_color_viridis_c()`. 
+```{r vir2b, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_pal + scale_color_viridis_d(name = "Lake", aesthetics = c("fill", "color"), 
+                              option = 'turbo') + 
+        guides(fill = guide_legend(override.aes = list(alpha = 1))) 
+```
+</details>
+<br>
+<details open><summary class = 'drop2'>Continuous palette with heatmaps</summary>
+Heatmaps via `geom_tile()` are a place where viridis palettes are especially helpful producing useful sequential or diverging color palettes. We'll use the temperature data to plot heatmaps by month for each site. Heatmaps are a bit different than other plots we've seen, as the x and y values create a discrete grid, and the color in the cell represents the value for that level of x and y. That means we have to change how the x, y and color aesthetics are specified. Here we will plot temperature by month and year faceted on site.
+
+<p class = 'code'>Basic heatmap code </p>
+Note the use of base R's `month.abb` to set the labels on the x-axis. The `month.abb` is a vector of the 12 months abbreviated as 3 letters. By setting 5:10, I'm taking the months May - Oct.
+```{r virheat}
+p_heat <- 
+ggplot(lakes_temp, aes(x = mon, y = year, color = Value, fill = Value)) + 
+  theme_bw() +
+  geom_tile() + 
+  labs(y = "Year", x = "Month") +
+  facet_wrap(~SiteCode, ncol = 4) + 
+  scale_x_continuous(breaks = c(5, 6, 7, 8, 9, 10),
+                     limits = c(4, 11), 
+                     labels = month.abb[5:10]) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
+
+```
+
+<p class = 'code'>Plot heatmap with viridis continuous palette </p>
+```{r virheat1, fold.output = F, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_heat + 
+  scale_color_viridis_c(name = "Temp. (F)", aesthetics = c("fill", "color")) 
+```
+
+<p class = 'code'>Plot heatmap with plasma continuous palette, reverse scale </p>
+```{r virheatp, fold.output = F, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_heat + 
+  scale_color_viridis_c(name = "Temp. (F)", aesthetics = c("fill", "color"), 
+                        option = "plasma", direction = -1) 
+```
+
+</details>
+</details>
+<br>
+<details open><summary class = 'drop'>Create your own color ramp</summary>
+You can also create your own color ramp via `scale_color_gradient()`, which creates a 2-color gradient,  `scale_color_gradient2()`, which creates a diverging color gradient (low-mid-high), and a `scale_color_gradientn()`, which creates an n-color gradient.
+
+<p class = 'code'>Create 2-color gradient</p>
+```{r colram, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_heat +  scale_color_gradient(low = "#FBFFAD", high = "#AB1F1F", 
+                               aesthetics = c("fill", 'color'), 
+                               name = "Temp. (F)") 
+
+```
+<br>
+<p class = 'code'>Create diverging gradient</p>
+For the divergent palette to be meaningful, you usually need to set the midpoint if it's not 0.
+```{r colram2, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_heat +  scale_color_gradient2(low = "navy", mid = "#FBFFAD", high = "#F54927", 
+                                aesthetics = c("fill", 'color'),
+                                midpoint = mean(lakes_temp$Value), 
+                                name = "Temp. (F)") 
+
+```
+<br>
+<p class = 'code'>Create diverging gradient with multiple colors</p>
+Note the change in the legend by using `guide = 'legend'`. Default is `guide = 'colorbar'`. I also customized the breaks into 5-degree bins using `breaks()` and `seq()`.
+```{r colram2b, fold.plot = F, fig.height = 3.5, fig.width = 7}
+p_heat +  scale_color_gradientn(colors = c("#805A91", "#406AC2", "#FBFFAD", "#FFA34A", "#AB1F1F"), 
+                                aesthetics = c("fill", 'color'),
+                                guide = "legend",
+                                breaks = c(seq(40, 85, 5)), 
+                                name = "Temp. (F)") 
+
+```
+
 
 </details>
 <br>
