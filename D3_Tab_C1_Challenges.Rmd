@@ -1,17 +1,31 @@
 #### Day 3 Questions
 <details open><summary class='drop'>Load Data and Packages</summary>
-```{r}
+<br>
+<details open><summary class = 'drop2'>Pivoting tables</summary>
+<p class = 'code'>Load data and dplyr</p>
+```{r loaddat3}
 library(dplyr)
-library(stringr) # for word 
 
 # bat capture data
 bat_cap <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/example_bat_capture_data.csv")
-
+```
+</details>
+<br>
+<details open><summary class = 'drop2'>Joining tables</summary>
+<p class = 'code'>Load data and dplyr</p>
+```{r loaddat3j}
+library(dplyr)
 # tree data
 trees <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_data.csv")
 # tree species table
 spp_tbl <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_tree_species_table.csv")
+```
+</details>
+<br>
+<details open><summary class = 'drop2'>Dates and times</summary>
 
+<p class = 'code'>Load and prep data.</p>
+```{r loadhobodat}
 # Hobo Temp data
 temp_data <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/HOBO_temp_example.csv", skip = 1)[,1:3]
 colnames(temp_data) <- c("index", "temp_time", "tempF")
@@ -19,6 +33,31 @@ temp_data$timestamp_temp <- as.POSIXct(temp_data$temp_time,
                                        format = "%m/%d/%Y %H:%M", 
                                        tz = "America/New_York")
 ```
+</details>
+<br>
+<details open><summary class = 'drop2'>ggplot sections</summary>
+<p class = 'code'>Load packages and prep data for ggplot sections</p>
+```{r loadwdat}
+# Water chemistry data for ggplot section
+library(dplyr)
+library(ggplot2)
+library(patchwork) # for arranging ggplot objects
+library(RColorBrewer) # for palettes
+library(viridis) # for palettes
+chem <- read.csv("https://raw.githubusercontent.com/KateMMiller/IMD_R_Training_2026/refs/heads/main/data/NETN_water_chemistry_data.csv")
+
+chem <- chem |> mutate(date = as.Date(EventDate, "%m/%d/%Y"),
+                       year = as.numeric(format(date, "%Y")),
+                       mon = as.numeric(format(date, "%m")),
+                       doy = as.numeric(format(date, "%j"))) 
+
+ACAD_lakes <- c("ACBUBL", "ACEAGL", "ACECHO", "ACJORD", 
+                "ACLONG", "ACSEAL", "ACUHAD", "ACWHOL")
+
+lakes_temp <- chem |> filter(SiteCode %in% ACAD_lakes) |> 
+  filter(Parameter %in% "Temp_F") 
+```
+</details>
 </details><br>
 
 <details open><summary class='drop'>Pivoting tables</summary>
