@@ -30,7 +30,7 @@ head(ACAD_wetland)
 tail(ACAD_wetland)
 ```
 </details>
-
+<br>
 <details open><summary class = 'drop'>Save CSV</summary>
 <p class = "code">Now write the csv to disk and show how to import from your computer. </p>
 ```{r write_csv}
@@ -52,7 +52,7 @@ ACAD_wetland <- read.csv("C:/Users/KMMiller/OneDrive - DOI/NETN/R_Dev/IMD_R_Trai
 ```
 
 </details>
-
+<br>
 <details open><summary class = 'drop'>Import from XLSX</summary>
 Base R does not have a way to import MS Excel files. The first step for working with Excel files (i.e., files with .xls or .xlsx extensions), therefore, is to install the `readxl` package to import .xlsx files and `writexl` to write files to .xlsx. The `readxl` package has a couple of options for loading Excel spreadsheets, depending on whether the extension is .xls, .xlsx, or unknown, along with options to import different worksheets within a spreadsheet. 
 

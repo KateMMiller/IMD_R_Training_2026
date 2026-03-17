@@ -17,9 +17,11 @@ output:
 </ul>
 <li>More advanced ggplot2:</li> 
 <ul>
-<li>Custom color palettes</li>
+<li>Custom colors and shapes by grouping variables</li>
+<li>Customizing axes</li>
 <li>Combining plots with facets and patchwork</li>
 <li>Working with legends</li>
+<li>Color palettes</li>
 </ul>
 <li>Coding best practices</li>
 <ul>

@@ -243,8 +243,7 @@ sites_unique
 length(sites_unique) # 8
 ```
 
-</details>
-</br>
+
 
 <div class="alert alert-info">
 <strong>CHALLENGE: How many unique species are there in the `ACAD_wetland` data frame?</strong>

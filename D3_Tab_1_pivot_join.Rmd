@@ -101,7 +101,7 @@ head(bat_wide_yr)
 </details><br>
 
 <details open><summary class = 'drop'>Pivot wide to long</summary>
-We can reshape the capture data back to wide, which will give us a similar data as before with 0s are added into the data. For the `pivot_long()` function, you have to tell it which columns to pivot on. If you don't specify, it will make the entire dataset into 2 long columns, which you typically don't want. Here I tell R not to pivot on Site and Year columns, because I know they're in the data frame an unlikely to change. If I instead specified the sppcodes to pivot on, if a new species were found in the next year of sampling, I'd have to update this code to include that new species.
+We can reshape the capture data back to wide, which will give us a similar data as before with 0s are added into the data. For the `pivot_long()` function, you have to tell it which columns to pivot on. If you don't specify, it will make the entire dataset into 2 long columns, which you typically don't want. Here I tell R not to pivot on Site and Year columns, because I know they're in the data frame and unlikely to change. If I instead specified the sppcodes to pivot on, if a new species were found in the next year of sampling, I'd have to update this code to include that new species.
 
 ```{r batlong}
 bat_long <- bat_wide |> pivot_longer(cols = -c(Site, Year), 

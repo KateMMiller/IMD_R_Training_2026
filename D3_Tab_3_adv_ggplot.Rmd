@@ -69,7 +69,7 @@ In addition, the default colors in ggplot aren't great. Whenever you see these c
 
 Before you start plotting, it's helpful to know what point symbol codes are. To view that, run `?points`, or search "pch in R plot" and you'll get the info below. Note that 0-14 are just lines with no fill. To change their color, use the color aesthetic. Symbols 15-20 are solid, but also use color to change their aesthetic. Symbols 21-25 have both a color (outline) and fill (inside) aesthetic.
 
-<center><img src = "./images/r_pch_symbols.png" alt = 'R pch symbols' style = "width:250px;background:white;">
+<center><img src = "./images/r_pch_symbols.png" alt = 'R pch symbols' style = "width:250px;background:white;"><br>
 <p class = "cap">Figure of symbol codes in R.</p></center>
 <br>
 
@@ -130,7 +130,6 @@ ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
 ```
 
 The warning is there because you have color in the `aes()` and in the `geom_point()`, but it's not a problem. The ggplot2 package is pretty chatty in the console. It's good to read the warnings to make sure you didn't drop values you wanted to plot (e.g. ACWHOL dropped in previous example), but often they're not issues.
-</details><br>
 
 <div class="alert alert-info">
 <strong>CHALLENGE: Review labels from Day 2. How would you change the x-axis label to "Year", and the y-axis label to "Temp. (F)"?</strong>
@@ -147,6 +146,8 @@ ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
 ```
 </details>
 </div>
+
+</details><br>
 
 <details open><summary class = 'drop'>Add lines and smoothers</summary>
 Now we're going to play with adding lines to the graphs. First we'll add the `geom_line()` to see how it looks. Notice the order has the line plotting before the point, so it doesn't cross over the points. 
