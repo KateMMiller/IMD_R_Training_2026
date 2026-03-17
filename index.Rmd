@@ -167,6 +167,8 @@ There's a lot of great online material for learning new applications of R. The o
 <li><a href="https://stat545.com/index.html">STAT545</a> Jenny Bryan's site that accompanies the graduate level stats class of the same name. She includes topics on best practices for coding, and not just how to make scripts work. It's really well done.</li> 
 <li><a href="https://rstudio.com/">RStudio home page</a> There's a ton of info in the Resources tab on this site, including cheatsheets for each package developed by RStudio (ie tidyverse packages), webinars, presentations from past RStudio Conferences, etc.</li>
 <li><a href="https://support.rstudio.com/hc/en-us/articles/201057987-Quick-list-of-useful-R-packages">RStudio list of useful R packages by topic</a></li>
+<li><a href = "https://patchwork.data-imaginist.com/>patchwork R package </a> tutorial for arranging multiple ggplot figures.</li>
+<li><a href = "https://yihui.org/rmarkdown/">R Markdown: The Definitive Guide</a> provides nearly everything you need to know about building R Markdown documents, a really useful way to document your code, output, and notes all in one place. This website was developed in R Markdown, for example.</li>
 <li><a href="https://happygitwithr.com/">Happy Git with R</a> If you find yourself wanting to go down the path of hosting your code on github, this site will walk you through the process of linking github to RStudio.</li>
 </ul>
 

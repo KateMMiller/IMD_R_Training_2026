@@ -187,7 +187,7 @@ head(temp_data)
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: How would you extract the julian date in temp_data?.</strong>
+<strong>CHALLENGE: How would you extract the Julian date in temp_data?.</strong>
 <details><summary class='drop2'>Answer</summary>
 ```{r challdatej}
 temp_data$julian <- as.numeric(format(temp_data$timestamp, "%j"))

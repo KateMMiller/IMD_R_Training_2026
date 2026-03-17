@@ -137,3 +137,114 @@ head(temp_data)
 
 </details>
 <br>
+
+<details open><summary class='drop'>Customizing ggplot</summary>
+<div class="alert alert-info">
+<strong>CHALLENGE: Review labels from Day 2. How would you change the X-axis label to "Year", and the Y-axis label to "Temp. (F)"?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r challd3labd3}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_point(color = "dimgrey", size = 2) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(x = "Year", y = "Temp. (F)") # answer
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you change the smooth from LOESS to linear?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r challd3lmc1}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1) +
+  geom_point(color = "dimgrey", alpha = 0.5) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake")  +
+  labs(x = "Year", y = "Temp. (F)") 
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: Recreate the plot below</strong>
+Note that the symbol outline is black. The alpha level is 0.6.
+```{r challd3copyc1, echo = F, fold.plot = F, fig.height = 7, fig.width = 5, fig.align = 'center'}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "black", alpha = 0.6, size = 2) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(y = "Temp. (F)", x = "Year") +
+  facet_wrap(~SiteCode, ncol = 2) +
+  theme(legend.position = 'bottom')
+```
+
+<details><summary class='drop2'>Answer</summary>
+```{r challd3copyac1, fig.height = 7, fig.width = 5, fig.align = 'center'}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "black", alpha = 0.6, size = 2) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(y = "Temp. (F)", x = "Year") +
+  facet_wrap(~SiteCode, ncol = 2) +
+  theme(legend.position = 'bottom')
+
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you change the plot called p_site2 so that x-axis labels were every 4 years, and angle is 45 degrees instead of 90?</strong><br>
+Hint: start with p_site, so you don't have to write that much code. You'll also need to tweak vjust and hjust to make the labels line up properly.
+<details><summary class='drop2'>Answer</summary>
+```{r challyearsc1, fig.height = 4.5, fig.width = 7}
+p_site + 
+  scale_x_date(date_labels = "%Y", date_breaks = "4 years") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+```
+</details>
+</div>
+</details>
+<br>
+
+<details open><summary class = 'drop'>ggplot Palettes</summary>
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you specify the 'RdYlBu' palette instead of the ones used above?</strong><br>
+Hint: Start with p_pal to save time coding.
+<details><summary class='drop2'>Answer</summary>
+```{r challpalc1, fig.height = 4.5, fig.width = 7}
+p_pal +  scale_color_brewer(name = "Lake", palette = "RdYlBu", aesthetics = c("fill", "color"))  +
+         guides(fill = guide_legend(override.aes = list(alpha = 1))) # makes symbols not transparent in legend
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: Create your own palette with at least three colors.</strong><br>
+Hint: Start with p_heat to save time coding.
+<details><summary class='drop2'>Answer</summary>
+```{r challpal2c, fig.height = 4.5, fig.width = 7}
+p_heat + scale_color_gradient2(low = "#3E693D", mid = "#FDFFC7", high = "#7A6646", 
+                               aesthetics = c("fill", 'color'),
+                               midpoint = mean(lakes_temp$Value), 
+                               name = "Temp. (F)") 
+```
+</details>
+</div>
+
+</details>
+<br>

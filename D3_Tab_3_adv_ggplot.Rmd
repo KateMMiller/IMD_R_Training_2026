@@ -118,12 +118,12 @@ ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
 
 ```
 
-<p class='code'>Similar plot, but make the outline the same color for each point</p>
+<p class='code'>Similar plot, but make the outline the same color for each point and increase point size</p>
 ```{r, plot5, warning = T, fold.plot = F}
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
-  geom_point(color = "dimgrey") +
+  geom_point(color = "dimgrey", size = 2) +
   scale_color_manual(values = site_cols, name = "Lake") +
   scale_fill_manual(values = site_cols, name = "Lake") +
   scale_shape_manual(values = site_shps, name = "Lake") 
@@ -131,6 +131,22 @@ ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
 
 The warning is there because you have color in the `aes()` and in the `geom_point()`, but it's not a problem. The ggplot2 package is pretty chatty in the console. It's good to read the warnings to make sure you didn't drop values you wanted to plot (e.g. ACWHOL dropped in previous example), but often they're not issues.
 </details><br>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: Review labels from Day 2. How would you change the x-axis label to "Year", and the y-axis label to "Temp. (F)"?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r challd3lab}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_point(color = "dimgrey", size = 2) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(x = "Year", y = "Temp. (F)") # answer
+```
+</details>
+</div>
 
 <details open><summary class = 'drop'>Add lines and smoothers</summary>
 Now we're going to play with adding lines to the graphs. First we'll add the `geom_line()` to see how it looks. Notice the order has the line plotting before the point, so it doesn't cross over the points. 
@@ -142,30 +158,50 @@ ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
   geom_point(color = "dimgrey") +
   scale_color_manual(values = site_cols, name = "Lake") +
   scale_fill_manual(values = site_cols, name = "Lake") +
-  scale_shape_manual(values = site_shps, name = "Lake") 
+  scale_shape_manual(values = site_shps, name = "Lake")  +
+  labs(x = "Year", y = "Temp. (F)") 
 ```
 
 It's not easy to follow the line and not really what we're looking for at this scale of the data (2006-2025). This is where we have to think about what we're actually interested in, and in this case, it's whether temperature is changing over time. This is where the `geom_smooth()` is really helpful. The `geom_smooth()` plots a line assuming the y ~ x formula (unless you specify a different formula). By default the method is a LOESS smoother, but you can specify a range of methods, including linear regression by adding `method = 'lm'` to `geom_smooth()`. 
 
 Note that I turned off the standard error ribbon that plots by default using `se = FALSE`. It's too busy for this plot. I also don't use the SE unless I've fit an actual model and checked the diagnostics. The status under the hood of `geom_smooth()` are also pretty black boxy, and I don't always know if I can trust its calculation of SE. 
 
-I added a transparency via `alpha = 0.5` to the `geom_point()`, so the lines show up better, and a more meaningful y-axis label. 
+I added a transparency via `alpha = 0.5` to the `geom_point()`, so the lines show up better. 
 
 <p class='code'>Add a LOESS smoother and make points more transparent</p>
 ```{r plot6, fold.plot = F}
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
-  geom_smooth(se = FALSE, span = 0.5, size = 2) +
+  geom_smooth(se = FALSE, span = 0.5, linewidth = 1) +
   geom_point(color = "dimgrey", alpha = 0.5) +
   scale_color_manual(values = site_cols, name = "Lake") +
   scale_fill_manual(values = site_cols, name = "Lake") +
-  scale_shape_manual(values = site_shps, name = "Lake") 
+  scale_shape_manual(values = site_shps, name = "Lake")  +
+  labs(x = "Year", y = "Temp. (F)") 
 ```
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you change the smooth from LOESS to linear?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r challd3lm}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1) +
+  geom_point(color = "dimgrey", alpha = 0.5) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake")  +
+  labs(x = "Year", y = "Temp. (F)") 
+```
+</details>
+</div>
 
 </details><br>
 
 <details open><summary class = 'drop'>Facets and grids</summary>
+<details open><summary class = 'drop2'>Facets</summary>
 The plot looks okay so far, but there are so many points, it's hard to see what's going on. This is where facets are useful. If your data have grouping variables, in this case SiteCode, then you can plot separate panels for each of the grouping levels. The code below plots each site separately. I used `ncol = 4` to set the number of columns that result from the facet wrap. 
 
 <p class='code'>Facet on SiteCode</p>
@@ -203,7 +239,48 @@ p_year <-
 p_year
 ```
 
+<div class="alert alert-info">
+<strong>CHALLENGE: Recreate the plot below</strong>
+Note that the symbol outline is black. The alpha level is 0.6.
+```{r challd3copy, echo = F, fold.plot = F, fig.height = 7, fig.width=5, fig.align = 'center'}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "black", alpha = 0.6, size = 2) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(y = "Temp. (F)", x = "Year") +
+  facet_wrap(~SiteCode, ncol = 2) +
+  theme(legend.position = 'bottom')
+```
+
+<details><summary class='drop2'>Answer</summary>
+```{r challd3copya, fig.height = 7, fig.width = 5, fig.align = 'center'}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(se = F, span = 0.5) +
+  geom_point(color = "black", alpha = 0.6, size = 2) +
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake") +
+  labs(y = "Temp. (F)", x = "Year") +
+  facet_wrap(~SiteCode, ncol = 2) +
+  theme(legend.position = 'bottom')
+
+```
+
+</details>
+</div>
+
+</details><br>
+
+<details open><summary class = 'drop2'>Grids in patchwork</summary>
 Faceting is helpful when your observations are all within the same column. But say you have data in multiple columns (e.g., each water quality parameter is a column) and want to arrange those plots into a grid. Faceting won't help because the data to plot are in different columns. There are multiple packages that make it easy to arrange multiple plots into a grid to look similar to faceted plots. Packages include `grid` (and `gridExtra`), `cowplot`, `ggpubr`, and `patchwork`. We're going to use `patchwork`, a relative newcomer, and one of the easiest I've found to code and customize. Here we're going to plot pH, temperature, DO, and conductance for Jordan Pond and arrange them using patchwork.
+
+The patchwork package has a lot of options to customize plot layouts. See the <a href="https://patchwork.data-imaginist.com/">patchwork</a> package website for more information.
 
 <p class = 'code'>Prepare the data to plot</p>
 ```{r}
@@ -302,6 +379,18 @@ p_year +
 
 ```
 
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you change the plot called p_site2 so that x-axis labels were every 4 years, and angle is 45 degrees instead of 90?</strong><br>
+Hint: start with p_site, so you don't have to write that much code. You'll also need to tweak vjust and hjust to make the labels line up properly.
+<details><summary class='drop2'>Answer</summary>
+```{r challyears, fig.height = 4.5, fig.width = 7}
+p_site + 
+  scale_x_date(date_labels = "%Y", date_breaks = "4 years") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+```
+</details>
+</div>
+
 </details>
 <br>
 
@@ -309,7 +398,7 @@ p_year +
 One of the easier tasks to do with legends is to change the location of it. In the next plot we'll put the legend on the bottom. If you don't want to plot a legend (don't really need it when lakes are faceted, for example, you can turn the legend off using `legend.position = 'none'`). 
 
 <p class = 'code'>Move legend to bottom</p>
-```{r plot8b, fig.height = 4, fig.width = 7, fold.plot = F}
+```{r plot8b, fig.height = 4.5, fig.width = 7, fold.plot = F}
 p_site3 <- p_site2 + theme(legend.position = 'bottom')
 p_site3
 ```
@@ -317,7 +406,7 @@ p_site3
 The plots above made legends seem easy, but legends in ggplot can be really tedious. For example, the legend only shows up if you're setting grouping variables in the `aes()`. There was no legend in the very first plot we made because everything was the same color and symbol. If, for example, you want to plot thresholds on a plot, their color needs to be added to the `scale_color_manual()` to show in the legend. Let's pretend, for example, that 50F and 75F are lower and upper water quality thresholds that we want to plot.
 
 <p class = 'code'>Add horizontal threshold lines to the plot</p>
-```{r plot9la, fig.height = 4, fig.width = 7, fold.plot = F}
+```{r plot9la, fig.height = 4.5, fig.width = 7, fold.plot = F}
 p_site3 + geom_hline(yintercept = 75, linetype = 'dashed', linewidth = 1) +
           geom_hline(yintercept = 50, linetype = 'dotted', linewidth = 1)
 ```
@@ -325,7 +414,7 @@ p_site3 + geom_hline(yintercept = 75, linetype = 'dashed', linewidth = 1) +
 These lines are not showing in the legend. To make them show, you need to wrap them in `aes()`, as below. Note the difference in how linetype is specified between the above example, where we are specifying whether the line is dashed or dotted. Inside the `aes()`, `linetype` is being used to label the line in the legend. We then have to use `scale_linetype_manual()` to indicate the type of line to plot. Admittedly, it took me a couple of Stackoverflow posts to figure out how to make this work properly. This stuff can be tedious.
 
 <p class = 'code'>Add horizontal threshold lines to the plot and legend</p>
-```{r plot9l, fig.height = 4, fig.width = 7, fold.plot = F}
+```{r plot9l, fig.height = 4.5, fig.width = 7, fold.plot = F}
 p_site4 <- p_site3 + 
   geom_hline(aes(yintercept = 75, linetype = "Upper"), linewidth = 1) +
   geom_hline(aes(yintercept = 50, linetype = "Lower"), linewidth = 1) +
@@ -334,10 +423,10 @@ p_site4 <- p_site3 +
 p_site4
 ```
 
-Another option is turning certain geometries off in the legend via `show.legend = F`. Let's say we don't like the lines in the legend. I have to go back to the full code to change the geom legend settings. 
+Another option is turning certain geometries off in the legend via `show.legend = F`. Let's say we don't like the lines in the legend. I have to go back to the full code to change the geom legend settings. I'm also overriding the alpha level of the symbols, so they show up better in the legend.
 
-<p class = 'code'>Remove smoothed lines from legend </p>
-```{r plot11b, fig.height = 4, fig.width = 7, fold.plot = F}
+<p class = 'code'>Remove smoothed lines from legend and increase alpha of symbols in legend</p>
+```{r plot11b, fig.height = 4.5, fig.width = 7, fold.plot = F}
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
@@ -355,7 +444,9 @@ ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
   
   geom_hline(aes(yintercept = 75, linetype = "Upper"), linewidth = 1) +
   geom_hline(aes(yintercept = 50, linetype = "Lower"), linewidth = 1) +
-  scale_linetype_manual(values = c("dashed", "dotted"), name = "WQ Threshold")
+  scale_linetype_manual(values = c("dashed", "dotted"), name = "WQ Threshold") +
+  
+  guides(fill = guide_legend(override.aes = list(alpha = 1)))
 
 ```
 
@@ -400,7 +491,7 @@ Going back to the temperature plots we made before, we'll use RColorBrewer to co
 p_pal <- ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                                 fill = SiteCode, shape = SiteCode)) + 
          theme_bw() +
-         geom_smooth(se = F, span = 0.5) + 
+         geom_smooth(se = F, span = 0.5, linewidth = 1) + 
          geom_point(color = "dimgrey", alpha = 0.5, size = 2) + 
   
          scale_shape_manual(values = site_shps, name = "Lake") +
@@ -418,10 +509,10 @@ p_pal <- ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
 
 <br>
 
-<p class = 'code'>Use Set2 palette on temperature plot</p>
+<p class = 'code'>Use Set2 palette on temperature plot and remove transparency of symbols in legend</p>
 ```{r set2, fold.plot = F, fig.height = 3.5, fig.width = 7}
 p_pal +  scale_color_brewer(name = "Lake", palette = "Set2", aesthetics = c("fill", "color"))  +
-         guides(fill = guide_legend(override.aes = list(alpha = 1))) # makes symbols not transparent in legend
+         guides(fill = guide_legend(override.aes = list(alpha = 1))) # solid symbols in legend
 
 ```
 
@@ -438,6 +529,17 @@ p_pal +  scale_color_brewer(name = "Lake", palette = "Dark2", aesthetics = c("fi
 ```
 </details>
 <br>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you specify the 'RdYlBu' palette instead of the ones used above?</strong><br>
+Hint: Start with p_pal to save time coding.
+<details><summary class='drop2'>Answer</summary>
+```{r challpal, fig.height = 4.5, fig.width = 7}
+p_pal +  scale_color_brewer(name = "Lake", palette = "RdYlBu", aesthetics = c("fill", "color"))  +
+         guides(fill = guide_legend(override.aes = list(alpha = 1))) # makes symbols not transparent in legend
+```
+</details>
+</div>
 
 <details open><summary class = 'drop2'>viridis palettes</summary>
 The viridis package comes with 8 palettes. The benefit of viridis is the number of levels is not limited to 8 like RColorBrewer. The palette options are below for 12 levels. 
@@ -505,7 +607,7 @@ You can also create your own color ramp via `scale_color_gradient()`, which crea
 
 <p class = 'code'>Create 2-color gradient</p>
 ```{r colram, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_heat + scale_color_gradient(low = "#FBFFAD", high = "#AB1F1F", 
+p_heat + scale_color_gradient(low = "#FCFC9A", high = "#F54927", 
                               aesthetics = c("fill", 'color'), 
                               name = "Temp. (F)") 
 
@@ -514,7 +616,7 @@ p_heat + scale_color_gradient(low = "#FBFFAD", high = "#AB1F1F",
 <p class = 'code'>Create diverging gradient</p>
 For the divergent palette to be meaningful, you usually need to set the midpoint if it's not 0.
 ```{r colram2, fold.plot = F, fig.height = 3.5, fig.width = 7}
-p_heat + scale_color_gradient2(low = "navy", mid = "#FBFFAD", high = "#F54927", 
+p_heat + scale_color_gradient2(low = "navy", mid = "#FCFC9A", high = "#F54927", 
                                aesthetics = c("fill", 'color'),
                                midpoint = mean(lakes_temp$Value), 
                                name = "Temp. (F)") 
@@ -532,6 +634,18 @@ p_heat + scale_color_gradientn(colors = c("#805A91", "#406AC2", "#FBFFAD", "#FFA
 
 ```
 
+<div class="alert alert-info">
+<strong>CHALLENGE: Create your own palette with at least three colors.</strong><br>
+Hint: Start with p_heat to save time coding.
+<details><summary class='drop2'>Answer</summary>
+```{r challpal2d, fig.height = 4.5, fig.width = 7}
+p_heat + scale_color_gradient2(low = "#3E693D", mid = "#FDFFC7", high = "#7A6646", 
+                               aesthetics = c("fill", 'color'),
+                               midpoint = mean(lakes_temp$Value), 
+                               name = "Temp. (F)") 
+```
+</details>
+</div>
 
 </details>
 <br>
