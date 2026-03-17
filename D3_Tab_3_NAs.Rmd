@@ -1,8 +1,0 @@
----
-output: 
-  html_document:
-    css: custom_styles.css
----
-
-#### Handling NAs
-WIP
