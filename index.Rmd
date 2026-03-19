@@ -3,14 +3,12 @@ output:
   html_document:
     css: custom_styles.css
     self_contained: true
+    highlight: tango
     
 title: "2026 IMD Intro to R"
 ---
 
 ```{r globaloptions, include = FALSE}
-knitr::opts_chunk$set(
-  class.source = "numberLines lineAnchors"
-  )
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 ```
 
@@ -190,10 +188,9 @@ There's a lot of great online material for learning new applications of R. The o
 - Writing your own functions and iteration
 
 ### Code printout {.tabset}
-```{r show-code, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```{r show-code, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE, attr.source='.numberLines'}
 ```
 
 ```{r, include = F}
 rm(list = ls())
 ```
-
