@@ -9,6 +9,13 @@ output:
 Reshaping data from long to wide and wide to long is a common task with our data.  Datasets are usually described as long, or wide. The long form, which is the structure database tables often take, consists of each row being an observation, and each column being a variable (i.e. tidy format). However, in summary tables, we often want to reshape the data to be wide for better digestion.  
 
 We’ll work with a fake bat capture dataset to see how this works. To get started, load the dataset and packages, as shown below.
+
+```{r day3_pv, echo = F, include = F}
+#------------------------------------
+#         Day 3: Pivot Code 
+#------------------------------------
+```
+
 ```{r impbat, eval = F}
 library(dplyr)
 library(stringr) # for word 
@@ -164,6 +171,12 @@ Joining tables requires that the two datasets to join have at least one column i
 
 <details open><summary class = 'drop'>Joins in practice</summary>
 To demonstrate the different joins, we'll join the `bat_wide` capture data frame we just created with a dataset that includes more information about the bat capture sites. 
+
+```{r day3_jn, echo = F, include = F}
+#------------------------------------
+#        Day 3: Join Code 
+#------------------------------------
+```
 
 <p class='code'>Read in bat site data </p>
 ```{r batsite, fold.output = F}

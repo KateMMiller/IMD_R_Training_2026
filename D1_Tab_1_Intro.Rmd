@@ -7,18 +7,18 @@ output:
 #### Intro to R {.tabset}
 
 <details open><summary class ='drop'>Why I love R: </summary>
-<img src = "./images/welcome_to_R.png" alt = 'R welcoming illustration' style = "float:right; width:375px;">
+<img src = "./images/welcome_to_R.png" alt = 'R welcoming illustration' style = "float:right; width:400px;">
 <span class = "capright"><a href="https://allisonhorst.com">Artwork by @allison_horst</a></span>
 
 There are many reasons to use R. Some of my top reasons are below:
 <ul>
 <li>It's free!</li>
-<li>Thorough, helpful, and welcoming user community, including a ton of freely available online help and learning resources.</li>
+<li>Thorough, helpful, and welcoming user community, including a ton of freely available online help and learning resources (see Resources tab).</li>
 <li>Large user community in NPS to collaborate and share code.</li>
 <li>Language was designed by statisticians to facilitate data analysis and visualization.</li>
 <ul>
 <li>Relatively shallow learning curve compared to other coding languages (e.g. python).</li> 
-<li>Developers' philosophy was to make is so you don't have to know how to program to learn R. Then as you become more advanced and do more complicated tasks, learning how to program will benefit your work.</li>
+<li>Developers' philosophy was to no have to know how to program to learn R. Then as you become more advanced and do more complicated tasks, learning how to program will benefit your work.</li>
 </ul>
 <li>Code documents your workflow.</li>
 <li>Code builds on code.</li>

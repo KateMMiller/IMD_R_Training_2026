@@ -6,6 +6,13 @@ output:
 
 #### Data Viz Best Practices
 
+```{r day2_dv, echo = F, include = F}
+#----------------------------------------------
+#     Day 2: Data Viz. Best Practices Code 
+#----------------------------------------------
+```
+
+
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 library(knitr)
 library(kableExtra)

@@ -3,6 +3,13 @@ output:
   html_document:
     css: custom_styles.css
 ---
+
+```{r day2_gg, echo = F, include = F}
+#------------------------------------
+#    Day 2: Intro to ggplot Code 
+#------------------------------------
+```
+
 ```{r optchunk, echo = F}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align = 'center', fig.height = 3, fig.width = 5)
 ```

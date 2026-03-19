@@ -6,6 +6,13 @@ The data frame we just examined is a type of data structure. A data structure is
 
 Vectors are the simplest data structure in R. Vectors are like a single column of data in an Excel spreadsheet. Vectors only have one dimension, and can be accessed by their row number. Here are some examples of vectors:
 
+```{r day1_v, echo = F, include = F}
+#------------------------------------
+#       Day 1: Vectors Code 
+#------------------------------------
+```
+
+
 ```{r, Vectors, fold.output=FALSE}
 digits <- c(1:10)  # Use x:y to create a sequence of integers starting at x and ending at y
 digits

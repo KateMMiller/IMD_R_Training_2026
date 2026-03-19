@@ -4,6 +4,11 @@ If you're starting a new session to answer these questions, you'll need to load 
 <br>
 <details open><summary class = 'drop2'>Data and packages for Wrangling, Conditionals, and Summarizing sections</summary>
 <p class = 'code'>Load dplyr</p>
+
+```{r day2_ch, echo = F, include = F}
+#---- Day 2: Challenges Code ----
+```
+
 ```{r ldpd2c}
 library(dplyr)
 ```

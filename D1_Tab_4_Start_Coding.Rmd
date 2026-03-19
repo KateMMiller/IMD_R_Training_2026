@@ -11,6 +11,12 @@ To run a single line of code in your script, place your cursor anywhere in that 
 
 To leave notes in your script, use the hashtag/pound sign (#). This will change the color of text that R reads as a comment and doesn't run. Commenting your code is one of the best habits you can form. Comments are a gift to your future self and anyone else who tries to use your code.
 
+```{r day1_sc, echo = F, include = F}
+#------------------------------------
+#     Day 1: Start Coding Code 
+#------------------------------------
+```
+
 <p class = 'code'>Type code below in your script and run each line. </p>
 ```{r, ExecutingCode, fold.output = FALSE}
 # Commented text: try this line to generate some basic text and become familiar with where results will appear:

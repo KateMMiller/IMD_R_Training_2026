@@ -71,10 +71,10 @@ Go to <b>Tools -> Global Options</b> and follow the steps below.
 <li>Under the <b>General</b> tab, you should see that your R Version is [64-bit] and the version is R-4.4.3 or greater. If it's not, you probably need to update R. Let me know if you need help with this.</li>
 <li>Also in the <b>General</b> tab, make sure you are not saving your environment. To do this, <b>uncheck</b> the <b>Restore .RData into your workspace at startup</b> option. When this option is checked, R Studio saves your current working environment (the stuff in the Environment tab) when you exit. The next time you open R Studio, it restores that same environment.
 <ul>
-<li>This may seem like a good thing, but a main point of using R is that your code should return the same results every time you run it. Clearing the environment every time you close RStudio forces you to run your code with a clean slate.</li>  
+<li>This may seem uesful, but part of the point of using R is that your code should return the same results every time you run it. Clearing the environment when you close RStudio forces you to run your code with a clean slate.</li>  
 <li>Set <b>Save workspace to .RData on exit:</b> to <b>Never</b>. The only reason not to set to "Never" is if you are working with a huge dataset that takes a long time to load and process. In that case, you may want to set <b>Save workspace to .RData on exit</b> to "Ask". When you close RStudio, it will ask you if you want to save your workspace image.</li>  
 </ul>
-<li>Change default pipe to base R pipe by gong to the <b>Code</b> tab, and <b>check</b> the box <b>Use native pipe operator, |> (requires R 4.1+)</b>. We will discuss what this pipe means tomorrow.</li>
+<li>Change default pipe to base R pipe by going to the <b>Code</b> tab, and <b>check</b> the box <b>Use native pipe operator, |> (requires R 4.1+)</b>. We will discuss what this pipe means tomorrow.</li>
 <li>Most other settings are whatever you prefer. For example, to change the color of your background and text, go to the <b>Appearance</b> tab. I prefer Cobalt.</li>
 </ol>
 </details>

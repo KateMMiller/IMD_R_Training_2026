@@ -1,6 +1,13 @@
 #### Day 3 Questions
 <details open><summary class='drop'>Load Data and Packages</summary>
 <br>
+
+```{r day3_ch, echo = F, include = F}
+#------------------------------------
+#       Day 3: Challenges Code 
+#------------------------------------
+```
+
 <details open><summary class = 'drop2'>Pivoting tables</summary>
 <p class = 'code'>Load data and dplyr</p>
 ```{r loaddat3}

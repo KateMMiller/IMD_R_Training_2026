@@ -8,6 +8,12 @@ output:
 <details open><summary class = 'drop'>Load and prep data</summary>
 For this section, we're going to use NETN water quality data to customize ggplot objects. This is an abbreviated dataset from the NETN water package. The data contains surface lake measurements recorded using a YSI in a subset of lakes in Acadia NP. We'll filter the data to plot at different combinations of parameters and sites. 
 
+```{r day3_gg, echo = F, include = F}
+#------------------------------------
+#       Day 2: Adv. ggplot Code 
+#------------------------------------
+```
+
 ```{r chem, eval = F}
 library(dplyr)
 library(ggplot2)
@@ -476,6 +482,12 @@ A number of R packages have color palettes available that are colorblind friendl
 
 <details open><summary class='drop2'>RColorBrewer palette</summary>
 The palettes in RColorBrewer can be viewed by running the code below. The first group shows the sequential palettes (e.g. YlOrRd - Yellow Orange Red). The second group shows the qualitative colors. The last group shows the diverging palettes. The main drawback of these palettes is they are limited by the number of levels in your data. So, if you specify `Set2` to color code different levels of a factor, there are only 8 colors available to you. If your factor has more than 8 levels (e.g., 9 sites, 10 parks, etc.), then the levels beyond 8 won't get plotted and you'll get a warning in the console similar to what we saw for ggplot's default number of symbols.
+
+```{r day3_gp, echo = F, include = F}
+#------------------------------------
+#     Day 3: ggplot Palettes Code 
+#------------------------------------
+```
 
 <p class = 'code'>View RColorBrewer palettes</p>
 ```{r rbcolpal_code, eval = F}

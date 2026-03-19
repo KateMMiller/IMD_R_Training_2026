@@ -7,6 +7,12 @@ output:
 <details open><summary class='drop'>Dates and times 101</summary>
 Dates, times and date-times are all species types of data in R. When you read in a dataset that has any of these, they typically will read in as a character. You then have to convert it into a date/time to do anything meaningful with it. The first place to start is knowing the code R uses to define year, month, day, hours, minutes, and seconds. The most common codes you'll come across are below. For the full list, check out the help for strptime by running: `?strptime`. The codes below are the ones you're most likely to come across, either to define a date/time format, or to return a specific format (like day of the week, month written in full, Julian day, etc.)
 
+```{r day3_dt, echo = F, include = F}
+#------------------------------------
+#     Day 3: Dates and Time Code 
+#------------------------------------
+```
+
 ```{r dtcodes, echo=F, fold.output = F}
 codes <- read.csv("./data/datetime_codes.csv", encoding = "Latin-1")
 knitr::kable(codes) |> 

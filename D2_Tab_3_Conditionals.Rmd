@@ -19,6 +19,12 @@ The `ifelse()` function takes 3 arguments organized like: `ifelse(condition == T
 
 Let's start by adding a column to the NETN tree data that uses the `TreeStatusCode` to create a new column called `status` that is either live or dead conditional on the abbreviated code in `TreeStatusCode` in `trees_final`.
 
+```{r day2_cd, echo = F, include = F}
+#------------------------------------
+#      Day 2: Conditionals Code 
+#------------------------------------
+```
+
 <p class = 'code'>Create status column conditioning on TreeStatusCode</p>
 ```{r statc, results = 'hide'}
 # Check the levels of TreeStatusCode

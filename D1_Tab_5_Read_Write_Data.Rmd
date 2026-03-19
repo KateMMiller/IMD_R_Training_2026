@@ -5,6 +5,13 @@ Most of the work we do in R relies on one or more existing datasets that we want
 <details open><summary class = "drop">Import CSV</summary>
 We use the `read.csv()` function to import CSVs in R. The `read.csv()` function takes the file path or url to the CSV as input and outputs a data frame containing the data from the CSV. Here we're going to read a CSV from a website, then save that in the data folder of our project. We'll talk more about what data frames are next.
 
+```{r day1_rw, echo = F, include = F}
+#------------------------------------
+#     Day 1: Read and Write Code 
+#------------------------------------
+```
+
+
 <p class = "code">Run the following line to import a teaching ACAD wetland data set from the github repository for this training</p>
 ```{r read_csv}
 # read in the data from ACAD_wetland_data_clean.csv and assign it as a dataframe to the variable "ACAD_wetland"

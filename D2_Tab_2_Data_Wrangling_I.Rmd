@@ -36,6 +36,12 @@ The steps we took with the NETN tree data were:
 </details>
 <br>
 
+```{r day2_wra, echo = F, include = F}
+#------------------------------------
+#     Day 2: Data Wrangling Code 
+#------------------------------------
+```
+
 <details open><summary class = 'drop'>Wrangle in dplyr</summary>
 <p class = 'code'>Read in example NETN tree data</p>
 ```{r readtree3b}

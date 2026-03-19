@@ -23,6 +23,12 @@ Why I like the tidyverse:
 
 You should have installed all of the tidyverse packages in preparation for this training. If you missed that step, install tidyverse packages using code below. It can take a few minutes for all the packages to install.
 
+```{r day2_td, echo = F, include = F}
+#------------------------------------
+#       Day 2: Tidyverse Code 
+#------------------------------------
+```
+
 <p class ='code'>Only run if you haven't installed these packages yet</p>
 ```{r intid, eval = F}
 install.packages('tidyverse')

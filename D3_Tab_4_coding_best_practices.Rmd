@@ -17,6 +17,13 @@ Knowing how to code is only part of being a good coder. Below are general best p
 <details open><summary class = 'drop'>Tips for good code</summary>
 <details open><summary class = 'drop2'>Thorough commenting. Dependencies, like packages, datasets, and parameters are at the top.</summary>
 
+```{r day3_bp, echo = F, include = F}
+#------------------------------------
+#     Day 3: Best Practices Code 
+#------------------------------------
+```
+
+
 ```{r commenting, warning = F, message = F}
 # libraries
 library(dplyr) # for mutate and filter

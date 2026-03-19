@@ -24,6 +24,12 @@ Common functions used to summarize:
 <li>`n()`: tally the number of rows within each group</li>
 </ul>
 
+```{r day2_gs, echo = F, include = F}
+#------------------------------------
+#      Day 2: Summarizing Code 
+#------------------------------------
+```
+
 <p class = 'code'>Sum the number of trees per plot, year, and species using mutate. </p>
 Note the use of `n()`, which counts the number of rows within a group. Be careful here. If there are NAs in a group, they are counted by `n()`. Whether that's okay or not depends on the data. 
 ```{r ttrsummut, message = F, warning = F}

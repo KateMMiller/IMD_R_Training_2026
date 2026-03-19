@@ -2,6 +2,12 @@
 <details open><summary class = 'drop'>Load Data </summary>
 If you're starting a new R session to answer these questions, you'll need to read in the wetland and tree data frames again.
 
+```{r day1_ch, echo = F, include = F}
+#------------------------------------
+#     Day 1: Challenges Code 
+#------------------------------------
+```
+
 <p class = 'code'>Read in example ACAD wetland data from url</p>
 ```{r c1rdatc1, eval = F}
 ACAD_wetland <- read.csv(
