@@ -12,7 +12,7 @@ For more information on the history of R, visit the [R Project website](https://
 <br>
 
 <details open><summary class = 'drop'>About RStudio</summary>
-RStudio is what's called an _integrated development environment_ (IDE), which is essentially a shell around the R program. RStudio makes programming in R easier by color coding different types of code, auto-completing code, flagging mistakes (like spellcheck for code), and providing many useful tools with the push of a button or key stroke (e.g. viewing help info).  
+RStudio is what's called an _integrated development environment_ (IDE), which is essentially a shell around the R program. RStudio makes programming in R easier by color coding different types of code, auto-completing code, flagging mistakes, and providing many useful tools with the push of a button or key stroke (e.g. viewing help info).  
 </details>
 <br>
 
@@ -25,7 +25,7 @@ When you open RStudio, you typically see 4 panes:
 <details open><summary class='drop2'>Source</summary>  
 This is primarily where you write code. When you create a new script or open an existing one, it displays here. In the screenshot above, there's a script called bat_data_wrangling.R open in the source pane. Note that if you haven't yet opened or created a new script, you won't see this pane until you do.  
   
-The source pane color-codes your code to make it easier to read, and detects syntax errors (the coding equivalent of a grammar checker) by flagging the line number with a red "x" and showing a squiggly line under the offending code.
+The source pane color-codes your code to make it easier to read, and detects syntax errors (the coding equivalent of a spell checker) by flagging the line number with a red "x" and showing a squiggly line under the offending code.
 
 When you're ready to run all or part of your script:
 <ul>

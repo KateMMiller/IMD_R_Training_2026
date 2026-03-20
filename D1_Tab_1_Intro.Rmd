@@ -18,7 +18,7 @@ There are many reasons to use R. Some of my top reasons are below:
 <li>Language was designed by statisticians to facilitate data analysis and visualization.</li>
 <ul>
 <li>Relatively shallow learning curve compared to other coding languages (e.g. python).</li> 
-<li>Developers' philosophy was to no have to know how to program to learn R. Then as you become more advanced and do more complicated tasks, learning how to program will benefit your work.</li>
+<li>Developers' philosophy was to not have to know how to program to learn R. Then as you become more advanced and do more complicated tasks, learning how to program will benefit your work.</li>
 </ul>
 <li>Code documents your workflow.</li>
 <li>Code builds on code.</li>

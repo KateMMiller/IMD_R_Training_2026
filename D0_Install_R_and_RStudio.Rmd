@@ -39,13 +39,13 @@ This is completely optional, but if you have any time before training starts, I 
 
 <details open><summary class='drop'>About the Training</summary>
 <ul>
-<li><b>Timing:</b> The training will take place over 3 half days. Each day will run from 9am - 1pm EST via MS Teams. </li>
+<li><b>Timing:</b> The training will take place over 3 half days. Each day will run from 9am - 1pm EST via MS Teams. We'll try to take short breaks every 30 minutes or so, along with a 15 minute break at noon EST for lunch. I know this is cutting eastern folks' lunch short, and I appreciate folks being flexible on this. </li>
 
 <li><b>Office Hours:</b> For the day prior to training and each afternoon following training, I will be available from 1 - 3pm EST for office hours in case there are questions that couldn't be handled before or during training. I will send a Teams link to participants for this office hours. Teams chats are also fine for posing questions. </li>
 
 <li><b>Structure:</b> For most of the training, I will share my screen as I go through the website and then demo with live coding. Having 2 screens, one for my screen share and one for your R session, will make following along a lot easier. </li>
 
-<li><b>Getting Help:</b> I intentionally included people in this training I know to be kind, capable, and that will benefit from having better R skills. My hope is that this group is small and supportive enough that everyone feels comfortable openly asking questions and providing feedback to the group. However, if you aren't comfortable asking questions openly, you can ask questions in the anonymous <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. Additionally, if someone runs into an issue I can't immediately troubleshoot (it happens), we may have to table it until office hours. We will then discuss it with the group the next day (if relevant). </li>
+<li><b>Getting Help:</b> I intentionally included people in this training I know to be kind, capable, and that will benefit from having better R skills. My hope is that this group is small and supportive enough that everyone feels comfortable openly asking questions and providing feedback to the group. However, if you aren't comfortable asking questions openly, you can ask questions in the anonymous <a href="https://forms.office.com/g/vY0KbqxAXr">training feedback form</a>. Additionally, if someone runs into an issue we can't immediately troubleshoot (it happens), we may have to table it until office hours. We will then discuss it with the group the next day (if relevant). </li>
 
 <li><b>Objectives:</b> Three days is barely enough to scratch the surface on what you can do in R. My goals with this training are to:
 <ol>
