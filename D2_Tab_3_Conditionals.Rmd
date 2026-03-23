@@ -39,7 +39,7 @@ trees_final <- trees_final |>
 trees_final <- trees_final |> 
   mutate(status2 = ifelse(TreeStatusCode %in% dead, "dead",
                           ifelse(TreeStatusCode == "RS", "recruit", 
-                                 "dead")))
+                                 "live")))
 
 ```
 

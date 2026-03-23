@@ -56,7 +56,8 @@ a <- 12.098
 # and the value 65.3475 is assigned to variable 'b'
 b <- 65.3475
 
-# we can now perform whatever mathematical operations we want using these two variables without having to repeatedly type out the actual numbers:
+# we can now perform whatever mathematical operations we want using these two 
+# variables without having to repeatedly type out the actual numbers:
 
 a*b
 
@@ -74,7 +75,7 @@ All of the examples you've seen so far are fairly contrived for the sake of simp
 <br>
 
 <details open><summary class = 'drop'>Functions</summary>
-It's hard to get very far in R without making use of <b>functions</b>. Think of a function as a programmed task that takes some kind of input (the <i>argument(s)</i>) from the user and outputs a result (the <i>return value</i>). 
+It's hard to get very far in R without making use of <b>functions</b>. Think of a function as a programmed task that takes some kind of input (the argument(s)) from the user and outputs a result (the return value). 
 
 <img src="./images/FunctionDiagram.PNG" alt = "anatomy of a function">
 
