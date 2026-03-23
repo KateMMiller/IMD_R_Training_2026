@@ -59,8 +59,8 @@ Why I don't use AI to write code:
 <ul>
 <li>Behind the scenes, AI is taking answers from websites and other sources without crediting them. </li>
 <li>There's a huge environmental footprint to run the generative AI servers.</li> 
-<li>Research has shown that people who use AI to write for them lose their ability to write and think critically over time. Writing code isn't that different. If you're not actively writing the code you are using, your ability to debug and verify code is doing what you expect may be weakened.</li>
-<li>To not have AI responses returned by google searchers, include -ai in google search box.</li>
+<li>Research has shown that people who use AI to write for them lose their ability to write and think critically over time. Writing code isn't that different. If you're not actively writing the code you are using, your ability to debug and verify code is doing what you expect may be weakened. A <a href="https://doi.org/10.1002/fee.70036">recent article</a> in Frontiers in Ecology and the Environment cautioning early career scientists against using AI for scientific writing captures this concern well.</li>
+<li>To prevent AI responses returned by google searches, include -ai in google search box.</li>
 </ul>
 </details>
 
