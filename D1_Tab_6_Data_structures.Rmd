@@ -144,7 +144,7 @@ ACAD_wetland[c(1, 2, 3, 4, 5),] #equivalent but more typing
 ```
 
 <p class = 'code'>Return all rows and a subset of columns of the data frame</p>
-Note how the left side of the "," is empty above. That means return all rows.
+Note how the left side of the comma is empty. That means return all rows.
 ```{r, rowscols, fold.output=TRUE}
 ACAD_wetland[, c("Site_Name", "Latin_Name", "Common", "Year", "PctFreq")]
 ```
