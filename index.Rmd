@@ -195,6 +195,7 @@ Additional skills that can greatly improve your workflow are:
 While we won't get to these topics this week, the <a href = "https://katemmiller.github.io/IMD_R_Training_Advanced/">2022 Advanced R training</a> has sessions covering all of these topics. The Resources tab includes other online resources that cover these topics as well. 
 
 <center><img src = "./images/R_Markdown.png" alt = 'R Markdown wizards' style = "width:600px;">
+<br>
 <a href="https://allisonhorst.com">Artwork by @allison_horst</a>
 </center>
 ### Code printout {.tabset}
