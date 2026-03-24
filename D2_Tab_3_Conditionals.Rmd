@@ -38,7 +38,7 @@ trees_final <- trees_final |>
 # nested ifelse to make alive, dead, and recruit 
 trees_final <- trees_final |> 
   mutate(status2 = ifelse(TreeStatusCode %in% dead, "dead",
-                          ifelse(TreeStatusCode == "RS", "recruit", 
+                          ifelse(TreeStatusCode %in% "RS", "recruit", 
                                  "live")))
 
 ```
@@ -58,7 +58,7 @@ dead <- c("DB", "DM", "DS")
 
 trees_final <- trees_final |> 
   mutate(status3 = case_when(TreeStatusCode %in% dead ~ 'dead',
-                             TreeStatusCode == 'RS' ~ 'recruit',
+                             TreeStatusCode %in% 'RS' ~ 'recruit',
                              TreeStatusCode %in% alive ~ 'live', 
                              TRUE ~ 'unknown'))
 
