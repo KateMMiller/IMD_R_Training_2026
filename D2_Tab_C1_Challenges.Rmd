@@ -122,7 +122,7 @@ range(trees_fix$DBHcm)
 
 <details open><summary class = 'drop'>Conditionals</summary>
 <div class="alert alert-info">
-<strong>Using the ACAD_wetlands data, create a new column called Status that has "protected" for Protected = TRUE and "public" values for Protected = FALSE. </strong>
+<strong>Using the ACAD_wetland data, create a new column called Status that has "protected" for Protected = TRUE and "public" values for Protected = FALSE. </strong>
 
 <details><summary class='drop2'>Answer</summary>
 ```{r wetcondc1, eval = F}
@@ -143,7 +143,7 @@ table(ACAD_wetland$Status, ACAD_wetland$Protected) # check your work
 </div>
 
 <div class="alert alert-info">
-<strong>Using the ACAD_wetlands data, create a new column called abundance_cat that has levels High, Medium, Low, based on Ave_Cov, where "High" is >50%, "Medium" is 10-50%, and "Low" is < 10%. </strong>
+<strong>Using the ACAD_wetland data, create a new column called abundance_cat that has levels High, Medium, Low, based on Ave_Cov, where "High" is >50%, "Medium" is 10-50%, and "Low" is < 10%. </strong>
 <details><summary class='drop2'>Answer</summary>
 ```{r wetabc12, eval = F}
 # Base R using the with() function and nested ifelse()
@@ -167,7 +167,7 @@ Note the use of the `between()` function that saves typing. This function matche
 
 <details open><summary class='drop'>Summarizing</summary>
 <div class="alert alert-info">
-<strong>Using the ACAD_wetland data, calculate the average percent cover of native vs. invasive species per plot. Note that Invasive = TRUE is invasive and FALSE is native. </strong>
+<strong>CHALLENGE: Using the ACAD_wetland data, sum the percent cover of native vs. invasive species per plot (use the Ave_Cov column). Note that Invasive = TRUE is invasive and FALSE is native. </strong>
 <details><summary class='code2'>Answer</summary>
 ```{r wetinvcovc1}
 # Using group_by()
@@ -213,8 +213,21 @@ head(ACAD_spp2) # should be the same as ACAD_inv
 <div class="alert alert-info">
 <strong>Using ACAD_wetland data, calculate relative % cover of species within each site. This one is challenging! </strong>
 <details><summary class='code2'>Answer</summary>
-<p class = 'code'>First sum site-level cover using mutate to return a value for every original row.</p>
+
+<p class = "code">Most efficient solution figured out during training </p>
+```{r relcovnewc1, eval = T}
+# using the .by within mutate (newer solution)
+ACAD_wetland <- ACAD_wetland |> 
+  mutate(Site_Cover = sum(Ave_Cov), 
+         .by = c(Site_Name, Year)) |> 
+  mutate(rel_cov = (Ave_Cov/Site_Cover)*100,
+         .by = c(Site_Name, Year, Latin_Name, Common))
+
+```
+
+<p class = 'code'>Original Solution: First sum site-level cover using mutate to return a value for every original row.</p>
 ```{r wetrelcovc1}
+# older solution
 ACAD_wetland <- ACAD_wetland |> group_by(Site_Name, Year) |> 
   mutate(Site_Cover = sum(Ave_Cov)) |> 
   ungroup() # good practice to ungroup after group.
