@@ -116,7 +116,7 @@ The pipe (`|>` or `%>%`) makes `dplyr` and other tidyverse packages even more po
 <p class='code'>Wrangle tree data with pipes</p>
 ```{r pipe, fold.output = T}
 trees_final <- trees |> 
-  mutate(DecayClassCode_num = as.numeric(DecayClassCode),
+  mutate(DecayClassCode_num = as.numeric(replace(DecayClassCode, DecayClassCode == "PM", NA)),
          Plot_Name = paste(ParkUnit, PlotCode, sep = "-"),
          Date = as.Date(SampleDate, format = "%m/%d/%Y")) |> 
   rename("Species" = "ScientificName") |> 
