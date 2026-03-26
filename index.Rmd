@@ -198,6 +198,18 @@ While we won't get to these topics this week, the <a href = "https://katemmiller
 <br>
 <a href="https://allisonhorst.com">Artwork by @allison_horst</a>
 </center>
+
+
+### Recordings (NPS only) {.tabset}
+Currently, only the folks who participated in the training can view the recordings. If you did not participate and would like access, send Kate Miller an email. 
+<ul>
+<li><a href= "https://doimspp-my.sharepoint.com/:v:/r/personal/kmmiller_nps_gov/Documents/Recordings/Intro%20to%20R%20Training-20260324_090624-Meeting%20Recording.mp4?csf=1&web=1&e=sqqh6Y">Day 1: Intro to R</a></li>
+<li><a href= "https://doimspp-my.sharepoint.com/:v:/r/personal/kmmiller_nps_gov/Documents/Recordings/Intro%20to%20R%20Training-20260325_090150-Meeting%20Recording.mp4?csf=1&web=1&e=bDlgNe">Day 2: Wrangling and Viz I</a></li>
+<li><a href= "https://doimspp-my.sharepoint.com/:v:/r/personal/kmmiller_nps_gov/Documents/Recordings/Intro%20to%20R%20Training-20260326_090436-Meeting%20Recording.mp4?csf=1&web=1&e=MdXNhc">Day 3: Wrangling and Viz II</a></li>
+<li><a href= "https://doimspp-my.sharepoint.com/:v:/r/personal/kmmiller_nps_gov/Documents/Recordings/Intro%20to%20R%20Training-20260326_090436-Meeting%20Recording%201.mp4?csf=1&web=1&e=5hMO9x">Day 3: ggplot (last 30 min)</a></li>
+</ul>
+<br>
+
 ### Code printout {.tabset}
 ```{r show-code, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE, attr.source='.numberLines'}
 ```
