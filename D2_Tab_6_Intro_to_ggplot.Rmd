@@ -18,7 +18,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align = 'center', fig.he
 <details open><summary class='drop'>Intro to `ggplot2`</summary>
 The `ggplot2` package is the most popular `R` package for plotting. It takes a little effort to learn how the pieces of a ggplot object fit together. However, once you get the hang of it, you can create and customize a large variety of attractive plots with just a few lines of `R` code. The package is called `ggplot2` because originally there was `ggplot`. The developer, Hadley Wickham, didn't want to break the original package to improve the package, so created ggplot2.  
 
-[The ggplot2 online book]("https://ggplot2-book.org/") and [cheatsheets](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf") can be very helpful while you are learning to use the `ggplot2` package.
+The <a href="https://ggplot2-book.org//">ggplot2 online book</a> and <a href = "https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf"> cheat sheets </a> can be very helpful while you are learning to use the `ggplot2` package.
 
 The `ggplot2` package was developed using the grammar of graphics as the underlying philosophy, which basically breaks a plot up into individual building blocks related to aesthetics (e.g., color, size, shape), geometries (e.g. points, lines, boxes), and themes (e.g. axis label font size, legend placement, etc.).
 
@@ -83,7 +83,7 @@ p
 ```
 
 <p class = 'code'>Step 5. Add line and point geometry, starting with default, and ending with customized symbols</p>
-The plot below has custom the shape, color (outline), fill, and size of the points, but all points are the same. Note the hexcode used for the fill color. This is a 6 digit code that gives maximum flexibility on selecting colors. I often use <a href="https://htmlcolorcodes/com">HTML color codes</a> to find colors and their associated hexcode.
+The plot below has custom the shape, color (outline), fill, and size of the points, but all points are the same. Note the hexcode used for the fill color. This is a 6 digit code that gives maximum flexibility on selecting colors. I often use <a href="https://htmlcolorcodes.com">HTML color codes</a> to find colors and their associated hexcode.
 
 Note that I usually specify the `geom_line()` before the `geom_point()`, because the geoms are drawn in the order they're specified. Specifying the opposite order will make the lines cross over the points and doesn't look as nice. I also made the linewidth a bit thicker than default.
 ```{r p2, fold.plot = F, fig.height = 3, fig.width = 5, fig.align = 'center'}
