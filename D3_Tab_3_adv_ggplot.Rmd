@@ -161,7 +161,7 @@ Now we're going to play with adding lines to the graphs. First we'll add the `ge
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
-  geom_line() +
+  geom_line() + # new line
   geom_point(color = "dimgrey") +
   scale_color_manual(values = site_cols, name = "Lake") +
   scale_fill_manual(values = site_cols, name = "Lake") +
@@ -180,13 +180,42 @@ I added a transparency via `alpha = 0.5` to the `geom_point()`, so the lines sho
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
-  geom_smooth(se = FALSE, span = 0.5, linewidth = 1) +
+  geom_smooth(se = FALSE, span = 0.5, linewidth = 1) + # new line
   geom_point(color = "dimgrey", alpha = 0.5) +
   scale_color_manual(values = site_cols, name = "Lake") +
   scale_fill_manual(values = site_cols, name = "Lake") +
   scale_shape_manual(values = site_shps, name = "Lake")  +
   labs(x = "Year", y = "Temp. (F)") 
 ```
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you make the points less transparent and the smoothed line thinner?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r challd3lmcd}
+# Need to run these first
+site_cols <- c("ACBUBL" = "#7FC7E1", "ACEAGL" = "#ED5C5C", 
+               "ACECHO" = "#F59617", "ACJORD" = "#A26CF5", 
+               "ACLONG" = "#1952CF", "ACSEAL" = "#F3F56C", 
+               "ACUHAD" = "#FFA6C8", "ACWHOL" = "#8FD184")
+site_shps <- c("ACBUBL" = 21, "ACEAGL" = 23, 
+               "ACECHO" = 24, "ACJORD" = 25, 
+               "ACLONG" = 23, "ACSEAL" = 21, 
+               "ACUHAD" = 25, "ACWHOL" = 24)
+
+# Now generate the plot
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.85) + # or remove the alpha
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake")  +
+  labs(x = "Year", y = "Temp. (F)") 
+```
+</details>
+</div>
+
 
 <div class="alert alert-info">
 <strong>CHALLENGE: How would you change the smooth from LOESS to linear?</strong>
@@ -227,9 +256,8 @@ p_site <-
 p_site
 ```
 
-Faceting on year can also be a handy way to see how consistent seasonal patterns are across years. Note that we changed the x variable from date to doy (day of year). I also filtered on the dataset within the ggplot line to only include years after 2015, increased the point size, and switched to `geom_line()` instead of the smoother to just connect the points. We'll revisit this plot to use more meaningful x-axis labels in the next section. 
-
 <p class = 'code'>Facet on year instead of site</p>
+Faceting on year can also be a handy way to see how consistent seasonal patterns are across years. Note that we changed the x variable from date to doy (day of year) in the code below. I also filtered on the dataset within the ggplot line to only include years after 2015, increased the point size, and switched to `geom_line()` instead of the smoother to just connect the points. We'll revisit this plot to code more meaningful x-axis labels in the next section. 
 ```{r plotyr, fold.output = F, fig.height = 3.5, fig.width = 7, fold.plot = F}
 p_year <- 
   ggplot(lakes_temp |> filter(year > 2015), 

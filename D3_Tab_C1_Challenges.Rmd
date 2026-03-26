@@ -189,6 +189,16 @@ head(temp_data)
 <strong>CHALLENGE: Review labels from Day 2. How would you change the X-axis label to "Year", and the Y-axis label to "Temp. (F)"?</strong>
 <details><summary class='drop2'>Answer</summary>
 ```{r challd3labd3}
+# Will need to run these first
+site_cols <- c("ACBUBL" = "#7FC7E1", "ACEAGL" = "#ED5C5C", 
+               "ACECHO" = "#F59617", "ACJORD" = "#A26CF5", 
+               "ACLONG" = "#1952CF", "ACSEAL" = "#F3F56C", 
+               "ACUHAD" = "#FFA6C8", "ACWHOL" = "#8FD184")
+site_shps <- c("ACBUBL" = 21, "ACEAGL" = 23, 
+               "ACECHO" = 24, "ACJORD" = 25, 
+               "ACLONG" = 23, "ACSEAL" = 21, 
+               "ACUHAD" = 25, "ACWHOL" = 24)
+# Now generate the plot
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
@@ -202,9 +212,54 @@ ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode,
 </div>
 
 <div class="alert alert-info">
-<strong>CHALLENGE: How would you change the smooth from LOESS to linear?</strong>
+<strong>CHALLENGE: How would you make the points less transparent and the smoothed line thinner?</strong>
 <details><summary class='drop2'>Answer</summary>
 ```{r challd3lmc1}
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.85) + # or remove the alpha
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake")  +
+  labs(x = "Year", y = "Temp. (F)") 
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you make the points less transparent and the smoothed line thinner?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r challd3lmcdb}
+# Need to run these first
+site_cols <- c("ACBUBL" = "#7FC7E1", "ACEAGL" = "#ED5C5C", 
+               "ACECHO" = "#F59617", "ACJORD" = "#A26CF5", 
+               "ACLONG" = "#1952CF", "ACSEAL" = "#F3F56C", 
+               "ACUHAD" = "#FFA6C8", "ACWHOL" = "#8FD184")
+site_shps <- c("ACBUBL" = 21, "ACEAGL" = 23, 
+               "ACECHO" = 24, "ACJORD" = 25, 
+               "ACLONG" = 23, "ACSEAL" = 21, 
+               "ACUHAD" = 25, "ACWHOL" = 24)
+
+# Now generate the plot
+ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
+                       fill = SiteCode, shape = SiteCode)) + 
+  theme_bw() +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.5) +
+  geom_point(color = "dimgrey", alpha = 0.85) + # or remove the alpha
+  scale_color_manual(values = site_cols, name = "Lake") +
+  scale_fill_manual(values = site_cols, name = "Lake") +
+  scale_shape_manual(values = site_shps, name = "Lake")  +
+  labs(x = "Year", y = "Temp. (F)") 
+```
+</details>
+</div>
+
+<div class="alert alert-info">
+<strong>CHALLENGE: How would you change the smooth from LOESS to linear?</strong>
+<details><summary class='drop2'>Answer</summary>
+```{r challd3lmc1c1}
 ggplot(lakes_temp, aes(x = date, y = Value, color = SiteCode, 
                        fill = SiteCode, shape = SiteCode)) + 
   theme_bw() +
