@@ -143,7 +143,7 @@ Sys.timezone()
 ```
 
 <p class = 'code'>Check the timezones built into base R</p>
-```{r tzon, fold.output = F}
+```{r tzon, fold.output = T}
 OlsonNames()
 ```
 
