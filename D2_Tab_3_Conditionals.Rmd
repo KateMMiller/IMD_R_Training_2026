@@ -48,7 +48,7 @@ Remember that we used `%in%` instead of `==` because alive has multiple status c
 <br>
 
 <details open><summary class = 'drop2'>`case_when()`</summary>
-The `case_when()` function allows you to have multiple conditions, each with their own return. The syntax is a bit different than `ifelse()` to allow for the multiple conditions and returns. Using the same approach as above, we'll create a third status code with `case_when()`. We'll specify the output for when a tree status code is in the dead category, recruit, and live category. We'll then add a fourth output for status codes that don't match any of the previous conditions and set that as 'unknown'. Basically the `TRUE` just means, any records left are assigned 'unknown'. Note also the order of operations in `case_when()`. The alive group includes "RS", but is not assigned "live", because it was alreay matched. The `case_when()` function starts with the first statement at the top (i.e. dead trees). Any record that matches the first statement is then dropped from additional statements. The second statement considers all trees not matched as dead. The third statment considers all trees not matched as dead or recruit. Then the fourth statement considers any trees not matched as dead, recruit, or live. Rather than relying on this function behavior, it's better to not have overlapping categories (e.g. not include "RS" in alive). I include it here to demonstrate the point. 
+The `case_when()` function allows you to have multiple conditions, each with their own return. The syntax is a bit different than `ifelse()` to allow for the multiple conditions and returns. Using the same approach as above, we'll create a third status code with `case_when()`. We'll specify the output for when a tree status code is in the dead category, recruit, and live category. We'll then add a fourth output for status codes that don't match any of the previous conditions and set that as 'unknown'. Basically the `TRUE` just means, any records left are assigned 'unknown'. Note also the order of operations in `case_when()`. The alive group includes "RS", but is not assigned "live", because it was alreay matched. The `case_when()` function starts with the first statement at the top (i.e. dead trees). Any record that matches the first statement is then dropped from additional statements. The second statement considers all trees not matched as dead. The third statement considers all trees not matched as dead or recruit. Then the fourth statement considers any trees not matched as dead, recruit, or live. Rather than relying on this function behavior, it's better to not have overlapping categories (e.g. not include "RS" in alive). I include it here to demonstrate the point. 
 
 <p class = 'code'>Create status column conditioning on TreeStatusCode</p>
 ```{r statc2}
@@ -79,7 +79,7 @@ if(nrow(inv) > 0){print("Invasive species were detected in the data.")
 
 ```
 
-<p class = 'code'>Force the else statement to print, by filtering out invasive species before testing. I added another potential else statment just to show that syntax.</p>
+<p class = 'code'>Force the else statement to print, by filtering out invasive species before testing. I added another potential else statement just to show that syntax.</p>
 ```{r ifelsebug2, fold.output = F}
 native_only <- ACAD_wetland |> filter(Invasive == FALSE) 
 inv2 <- native_only |> filter(Invasive == TRUE)
